@@ -1,0 +1,30 @@
+Found {{lunghezza}} results for the query 
+{%for word in query%}
+	<strong>{{word}}</strong>
+{%endfor%}:<br/>
+
+{%for paper in resultSet%}
+<p>
+<font color="blue"><strong>{{paper.title}}</strong></font><br/>
+<font size=2 color="green">
+{{paper.authors}}
+</font><br/>
+
+{%if paper.abstract%}
+<font size=2 color="black">
+<i>Abstract:</i> {{paper.abstract}}
+</font><br/>
+{%endif%}
+
+<font size=2>
+
+{%if paper.citedBy%}
+	<a href="cited{{paper.urn}}">Cited by {{paper.citedBy}}</a>
+	- 
+{%endif%}
+
+<a>Similar papers</a>
+</font>
+
+</p>
+{%endfor%}

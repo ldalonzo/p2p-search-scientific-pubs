@@ -1,0 +1,102 @@
+digraph citation_graph {
+
+/* Nodes */
+1 [label="Survey of research t..."];  // node 01
+2 [label="Associative search i..."];  // node 02
+3 [label="Design Patterns from..."];  // node 03
+4 [label="Range queries in tri..."];  // node 04
+5 [label="Epidemic-Style Manag..."];  // node 05
+6 [label="Peer-to-Peer Managem..."];  // node 06
+7 [label="Energy Aspects of Pe..."];  // node 07
+8 [label="An overlay network f..."];  // node 08
+9 [label="Self-Organizing Dist..."];  // node 09
+10 [label="Applying Ant-based M..."];  // node 10
+11 [label="Global State Detecti..."];  // node 11
+12 [label="Using FIPA Agents wi..."];  // node 12
+13 [label="A Grid-Based Infrast..."];  // node 13
+14 [label="Tork: A Variable-Hop..."];  // node 14
+15 [label="Peer to Peer Securit..."];  // node 15
+16 [label="An Architecture for ..."];  // node 16
+17 [label="An Analysis of BitTo..."];  // node 17
+18 [label="ToA"];  // node 18
+19 [label="Adaptive Probabilist..."];  // node 19
+20 [label="How to Disappear Com..."];  // node 20
+21 [label="Exploiting paralleli..."];  // node 21
+22 [label="A Novel Load Balanci..."];  // node 22
+23 [label="Packet Marking Based..."];  // node 23
+24 [label="Proactive gossip-bas..."];  // node 24
+25 [label="P2P Based Architectu..."];  // node 25
+26 [label="J. Parallel Distrib...."];  // node 26
+27 [label="Smart Search over De..."];  // node 27
+28 [label="Efficient Semantic b..."];  // node 28
+29 [label="Musings Upon the The..."];  // node 29
+30 [label="Tribler: A social-ba..."];  // node 30
+31 [label="2Fast: Collaborative..."];  // node 31
+32 [label="Personalization on a..."];  // node 32
+33 [label="ON THE ROLE OF HELPE..."];  // node 33
+34 [label="Scalable Resource An..."];  // node 34
+35 [label="GrenchMark: A Framew..."];  // node 35
+36 [label="MyNet: a Platform fo..."];  // node 36
+37 [label="Social Topology Anal..."];  // node 37
+38 [label="Sociable P2P: using ..."];  // node 38
+39 [label="ENHANCING PEER-TO-PE..."];  // node 39
+40 [label="The Design and Deplo..."];  // node 40
+41 [label="A Hybrid P2P/Infrast..."];  // node 41
+42 [label="Personalization of S..."];  // node 42
+43 [label="Searching for Answer..."];  // node 43
+44 [label="On the Quality of Ex..."];  // node 44
+45 [label="Peer-to-Peer Social ..."];  // node 45
+46 [label="Give-to-Get: Free-ri..."];  // node 46
+47 [label="Peer-to-Peer Informa..."];  // node 47
+48 [label="MOB: Zero-configurat..."];  // node 48
+49 [label="Managing Clouds: A C..."];  // node 49
+50 [label="One hop Reputations ..."];  // node 50
+51 [label="Managing peer-to-pee..."];  // node 51
+52 [label="First experiences wi..."];  // node 52
+53 [label="Efficient Top-k Quer..."];  // node 53
+54 [label="The Orchard Algorith..."];  // node 54
+55 [label="An Amortized Tit-For..."];  // node 55
+56 [label="The Bittorrent P2P F..."];  // node 56
+57 [label="Chord: A Scalable Pe..."];  // node 57
+
+/* Edges */
+2->1;
+4->1;
+7->1;
+8->1;
+9->1;
+10->1;
+11->1;
+12->1;
+13->1;
+14->1;
+16->1;
+17->1;
+19->1;
+20->1;
+22->1;
+23->1;
+27->1;
+28->1;
+29->1;
+10->3;
+8->4;
+30->5;
+16->6;
+20->15;
+36->15;
+7->17;
+38->31;
+55->31;
+41->36;
+40->54;
+17->56;
+30->56;
+33->56;
+2->57;
+6->57;
+19->57;
+37->57;
+47->57;
+51->57;
+}

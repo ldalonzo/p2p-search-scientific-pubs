@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+
+.class1 A:link {text-decoration: none}
+.class1 A:visited {text-decoration: none}
+.class1 A:active {text-decoration: none}
+.class1 A:hover {text-decoration: underline; color: blue;}
+
+.class3 A:link {text-decoration: none; color: black;}
+.class3 A:visited {text-decoration: none; color: black;}
+.class3 A:active {text-decoration: none; color: black;}
+.class3 A:hover {text-decoration: underline; color: red;}
+
+ #container
+{
+width: 98%;
+margin: 10px auto;
+background-color: #fff;
+color: #333;
+<!--border: 1px solid gray;-->
+line-height: 130%;
+font-family: sans-serif;
+}
+
+#top
+{
+padding: .5em;
+background-color: #000000;
+border-top: 4px solid red;
+text-align: center;
+color: #ffffff;
+}
+
+#top h1
+{
+padding: 0;
+margin: 0;
+}
+
+#rightnav
+{
+float: right;
+width: 200px;
+margin: 0;
+padding: 1em;
+text-align: center;
+}
+
+#content
+{
+margin-right: 20px;
+padding: 1em;
+max-width: 47em;
+}
+
+#searchlocal
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 45em;
+background-color: #eeffed;
+border-top: 2px solid #5599ff;
+}
+
+#recommendations
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 45em;
+background-color: #ffffff;
+border-top: 2px solid #a5ff55;
+}
+
+#recommendations-title
+{
+margin-right: 5px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 45em;
+background-color: #ffffff;
+border-top: 1px solid #a5ff55;
+}
+
+#searchlocal__DEPRECATED
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 46em;
+background-color: #eeffed;
+border-top: 2px solid #5599ff;
+}
+
+#searchp2p
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 46em;
+background-color: #ddd;
+border-top: 1px solid gray;
+}
+
+#footer
+{
+clear: both;
+margin: 0;
+padding: .5em;
+color: #333;
+background-color: #ddd;
+border-top: 1px solid gray;
+}
+
+#rightnav p { margin: 0 0 1em 0; }
+#content h2 { margin: 0 0 .5em 0; }
+</style>
+</head>
+
+
+<body>
+
+<div id="container">
+
+	<div id="top">
+	
+	Hi <strong>{{name}}</strong>. Enter your query...
+		
+	</div>
+
+    <div id="rightnav">    
+		{%if tagCloud%}
+		<p>
+			
+			<!-- CLOUD -->
+			{%for tag in tagCloud%}
+			
+			<!-- <span style="font-size: {{tag.size}}pt">  -->
+			<span class="class3" style="font-size: {{tag.size}}pt">
+			
+			
+			<a href="keywordSearch_{{tag.term}}">{{tag.term}}</a></span>
+			{%endfor%}
+			
+		</p>
+		{%endif%}	
+	</div>
+	
+	<div id="searchlocal">
+		<h3>Search on your local index</h3>
+		
+		<table width="99%" border="0" cellpadding="0" cellspacing="0">
+		
+		<!-- <tr bgcolor="#ffffff">  -->
+		
+		<td>Find articles with <strong>at least</strong> one of the words
+		</td>
+		<form action="/keywordSearch/" method="post">
+			<td><input type="text" name="queryText"></td>
+			<td>in
+			<select name="textRegion">
+			  <option value="title">title</option>
+			  <option value="abstract">abstract</option>
+			  <option value="fulltext">fulltext</option>
+			</select></td>
+		
+			<td><input type="submit" value="Search!"></td>
+		</form>
+
+		</tr>
+		
+		<tr>
+		<td>Find articles <strong>written by</strong></td>		
+		<form action="/search/" method="post"> 
+				<td><input type="text" name="author"></td>
+				<td></td>
+				<td><input type="submit" value="Search!"></td>
+		</form>
+		</tr>
+		</table>
+		
+		<p>
+			<strong>{{docs}}</strong> documents have been indexed.
+			{%if rss%}
+			<br/>
+			Cluster centroid <strong>RSS</strong> = {{rss}}
+			{%endif%}
+		</p>  
+		
+	</div>
+	
+	<div id="searchlocal">
+		<h3>P2P search</h3>
+		
+		<table width="99%" border="0" cellpadding="0" cellspacing="0">
+		<!-- <tr bgcolor="#ffffff">  -->
+		<td>Find articles with <strong>at least</strong> one of the words
+		</td>
+		<form action="/p2pKeywordSearch/" method="post">
+			<td><input type="text" name="queryText"></td>
+			<td>in
+			<select name="textRegion">
+			  <option value="title">title</option>
+			  <option value="abstract">abstract</option>
+			  <option value="fulltext">fulltext</option>
+			</select></td>
+		
+			<td><input type="submit" value="Search!"></td>
+		</form>
+
+		</tr>
+		</table>
+		
+		{%if buddies%}
+		<p>
+			You have <strong>{{numOfBuddies}}</strong> taste buddies:
+			<table width="50%" cellpadding="0" cellspacing="1">
+			<tr>
+				<td>Name</td><td></td><td>IP address</td><td align="center">Similarity</td>
+			</tr>
+			{%for buddy in buddies%}
+			<tr>
+				<td><strong>{{buddy.name}}</strong></td><td>@</td><td>{{buddy.address}}:{{buddy.port}}</td><td align="center"><strong>{{buddy.sim}}</strong>%</td>
+			</tr>
+			{%endfor%}
+			</table>
+		</p>
+		{%endif%}
+		
+		{%if approx%}
+		<p>
+			Buddycast cluster centroid approximation = <strong>{{approx}}</strong>% of the norm
+			</p>
+		{%endif%}
+		
+		
+		
+	</div>
+	
+	{%if recommendations%}
+	<div id="recommendations">
+		<h3>Recommendations</h3>
+		
+		{%for recommendation in recommendations%}
+		<p>
+			<strong>{{recommendation.buddy}}</strong> recommends you:<br/>
+			
+			
+			
+			{%for paper in recommendation.resultSet%}
+				<div id="recommendations-title">
+				
+				<span class="class1">
+				{%if paper.resourceURL%}
+				<a href="{{paper.resourceURL}}" target="_blank">
+				{%endif%}
+				
+				
+				<strong>{{paper.title}}</strong><br/>
+				
+				{%if paper.resourceURL%}</a>{%endif%}</span>
+				
+				
+				
+				
+				
+				<span style="font-size: 9pt; color: #1f6400">{{paper.authors}}</span>
+				
+				
+				
+				{%if paper.similarity%}
+				<table width=100% border=0 cellpadding=0 cellspacing=0>
+					<tr bgcolor=#f6f1db>
+						<td height=15 valign=top nowrap>
+							<font color="red" size=2>{{paper.similarity}}</font>,
+							<font color="b94600" size=2>{{paper.pagerank}}</font>
+						</td>
+					</tr>
+				</table>
+				{%endif%}				
+				
+				{%if paper.abstract%}
+				
+				<span style="font-size: 9pt; color: #474646"><i>Abstract:</i> {{paper.abstract}}</span>
+				
+				
+				
+				
+				<br/>
+				{%endif%}
+				
+				
+				</div>
+			{%endfor%}
+			
+		</p>
+		{%endfor%}
+		
+		
+	</div>
+	{%endif%}
+	
+</div>
+</body>
+</html>

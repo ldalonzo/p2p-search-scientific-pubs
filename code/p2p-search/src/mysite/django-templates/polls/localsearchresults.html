@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+
+.class1 A:link {text-decoration: none}
+.class1 A:visited {text-decoration: none}
+.class1 A:active {text-decoration: none}
+.class1 A:hover {text-decoration: underline; color: blue;}
+
+ #container
+{
+width: 98%;
+margin: 10px auto;
+background-color: #fff;
+color: #333;
+<!--border: 1px solid gray;-->
+line-height: 130%;
+font-family: sans-serif;
+}
+
+#top
+{
+padding: .5em;
+background-color: #000000;
+border-top: 4px solid red;
+color: #ffffff;
+text-align: center;
+}
+
+#top h1
+{
+padding: 0;
+margin: 0;
+}
+
+#rightnav
+{
+float: right;
+width: 190px;
+margin: 0;
+padding: 1em;
+text-align: center;
+}
+
+#content
+{
+margin-right: 20px;
+padding: 1em;
+max-width: 47em;
+}
+
+#searchlocal
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 46em;
+background-color: #eeffed;
+border-top: 2px solid #5599ff;
+}
+
+#searchlocal-results
+{
+margin-right: 5px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 98%;
+border-top: 2px solid #5599ff;
+}
+
+#recommendations
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 46em;
+background-color: #ffffff;
+border-top: 2px solid #a5ff55;
+}
+
+#recommendations-title
+{
+margin-right: 5px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 98%;
+background-color: #ffffff;
+border-top: 1px solid #a5ff55;
+}
+
+#searchlocal__DEPRECATED
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 46em;
+background-color: #eeffed;
+border-top: 2px solid #5599ff;
+}
+
+#searchp2p
+{
+margin-right: 40px;
+margin-left: 5px;
+margin-top: 10px;
+padding: 0.5em;
+max-width: 46em;
+background-color: #ddd;
+border-top: 1px solid gray;
+}
+
+#footer
+{
+clear: both;
+margin: 0;
+padding: .5em;
+color: #333;
+background-color: #ddd;
+border-top: 1px solid gray;
+}
+
+#rightnav p { margin: 0 0 1em 0; }
+#content h2 { margin: 0 0 .5em 0; }
+</style>
+</head>
+
+
+<body>
+
+<div id="container">
+
+	<div id="top">
+		
+		Search results for the query
+		{%for word in query%}
+			<strong>{{word}}</strong>
+		{%endfor%}: (ordered by decreasing similarity)
+		
+	</div>
+	
+	<div id="searchlocal-results">
+		Found <strong>{{lenLocalResults}}</strong> documents in the <strong>{{peerName}}</strong>'s <strong>local index</strong> in <strong>{{jobTime}}</strong> seconds:
+		
+		{%for paper in resultSet%}
+			<div id="recommendations-title">
+			
+				<span class="class1">
+				{%if paper.resourceURL%}<a href="{{paper.resourceURL}}" target="_self">{%endif%}
+				<strong>{{paper.title}}</strong><br/>				
+				{%if paper.resourceURL%}</a>{%endif%}</span>
+				
+				<span style="font-size: 9pt; color: #1f6400">{{paper.authors}}</span>
+				
+				{%if paper.similarity%}
+				<table width=100% border=0 cellpadding=0 cellspacing=0>
+					<tr bgcolor=#f6f1db>
+						<td height=15 valign=top nowrap>
+							<font color="red" size=2>{{paper.similarity}}</font>,
+							<font color="b94600" size=2>{{paper.pagerank}}</font>
+						</td>
+					</tr>
+				</table>
+				{%endif%}
+				
+				{%if paper.abstract%}
+				<span style="font-size: 9pt; color: #474646"><i>Abstract:</i> {{paper.abstract}}</span>
+				{%endif%}
+				
+				{%if paper.citedBy%}
+				<br/>
+				<span style="font-size: 9pt; color: #474646"><a href="/citing{{paper.urn}}">Cited by {{paper.citedBy}}</a></span>
+				{%endif%}
+				
+			</div>
+		{%endfor%}
+		
+		
+	</div>
+	
+	
+	
+	
+	{%if recommendations%}
+	<div id="recommendations">
+		<h3>Recommendations</h3>
+		
+		{%for recommendation in recommendations%}
+		<p>
+			<strong>{{recommendation.buddy}}</strong> recommends you:<br/>
+
+			{%for paper in recommendation.resultSet%}
+				<div id="recommendations-title">
+				
+				<span class="class1">
+				{%if paper.resourceURL%}
+				<a href="{{paper.resourceURL}}" target="_blank">
+				{%endif%}
+								
+				<strong>{{paper.title}}</strong><br/>
+				
+				{%if paper.resourceURL%}</a>{%endif%}</span>
+				
+				<span style="font-size: 9pt; color: #1f6400">{{paper.authors}}</span>
+				
+				{%if paper.similarity%}
+				<table width=100% border=0 cellpadding=0 cellspacing=0>
+					<tr bgcolor=#f6f1db>
+						<td height=15 valign=top nowrap>
+							<font color="red" size=2>{{paper.similarity}}</font>,
+							<font color="b94600" size=2>{{paper.pagerank}}</font>
+						</td>
+					</tr>
+				</table>
+				{%endif%}				
+				
+				{%if paper.abstract%}
+				
+				<span style="font-size: 9pt; color: #474646"><i>Abstract:</i> {{paper.abstract}}</span>
+
+				<br/>
+				{%endif%}
+				
+				
+				</div>
+			{%endfor%}
+			
+		</p>
+		{%endfor%}
+		
+		
+	</div>
+	{%endif%}
+	
+</div>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+digraph citation_graph {
+
+//graph [margin=0, fontname="Helvetica", fontsize="24.0", ratio=auto, sep=.25, overlap=false, splines=true, ranksep="0.2"];
+//graph [margin=0, ratio=auto, sep=.15, overlap=false, splines=true, ranksep="0.2"];//buono
+graph [margin=0, page="56,42", ratio=0.75, sep=.02, overlap=false, splines=true, ranksep="0.05"];
+
+node [fontname="Deja", style=filled, fillcolor="#def5ff", fontsize=26]
+
+edge [arrowhead=normal, arrowsize=1.25]
+
+/* Nodes */
+1 [label="Survey of\nresearch t..."];  // node 01
+2 [label="Associative\nsearch i..."];  // node 02
+3 [label="Design Patterns\nfrom..."];  // node 03
+4 [label="Range queries\nin tri..."];  // node 04
+5 [label="Epidemic-Style\nManag..."];  // node 05
+6 [label="Peer-to-Peer\nManagem..."];  // node 06
+7 [label="Energy Aspects\nof Pe..."];  // node 07
+8 [label="An overlay\nnetwork f..."];  // node 08
+9 [label="Self-Organizing\nDist..."];  // node 09
+10 [label="Applying\nAnt-based M..."];  // node 10
+11 [label="Global State\nDetecti..."];  // node 11
+12 [label="Using FIPA\nAgents wi..."];  // node 12
+13 [label="A Grid-Based\nInfrast..."];  // node 13
+14 [label="Tork: A\nVariable-Hop..."];  // node 14
+15 [label="Peer to Peer\nSecurit..."];  // node 15
+16 [label="An Architecture\nfor ..."];  // node 16
+17 [label="An Analysis\nof BitTo..."];  // node 17
+18 [label="ToA"];  // node 18
+19 [label="Adaptive\nProbabilist..."];  // node 19
+20 [label="How to\nDisappear Com..."];  // node 20
+21 [label="Exploiting\nparalleli..."];  // node 21
+22 [label="A Novel\nLoad Balanci..."];  // node 22
+23 [label="Packet\nMarking Based..."];  // node 23
+24 [label="Proactive\ngossip-bas..."];  // node 24
+25 [label="P2P Based\nArchitectu..."];  // node 25
+26 [label="J. Parallel\nDistrib...."];  // node 26
+27 [label="Smart Search\nover De..."];  // node 27
+28 [label="Efficient\nSemantic b..."];  // node 28
+29 [label="Musings Upon\nthe The..."];  // node 29
+30 [label="Tribler:\nA social-ba..."];  // node 30
+31 [label="2Fast:\nCollaborative..."];  // node 31
+32 [label="Personalization\non a..."];  // node 32
+33 [label="ON THE ROLE\nOF HELPE..."];  // node 33
+34 [label="Scalable\nResource An..."];  // node 34
+35 [label="GrenchMark:\nA Framew..."];  // node 35
+36 [label="MyNet:\na Platform fo..."];  // node 36
+37 [label="Social Topology\nAnal..."];  // node 37
+38 [label="Sociable P2P:\nusing ..."];  // node 38
+39 [label="ENHANCING\nPEER-TO-PE..."];  // node 39
+40 [label="The Design\nand Deplo..."];  // node 40
+41 [label="A Hybrid\nP2P/Infrast..."];  // node 41
+42 [label="Personalization\nof S..."];  // node 42
+43 [label="Searching\nfor Answer..."];  // node 43
+44 [label="On the Quality\nof Ex..."];  // node 44
+45 [label="Peer-to-Peer\nSocial ..."];  // node 45
+46 [label="Give-to-Get:\nFree-ri..."];  // node 46
+47 [label="Peer-to-Peer\nInforma..."];  // node 47
+48 [label="MOB:\nZero-configurat..."];  // node 48
+49 [label="Managing Clouds:\nA C..."];  // node 49
+50 [label="One hop\nReputations ..."];  // node 50
+51 [label="Managing\npeer-to-pee..."];  // node 51
+52 [label="First\nexperiences wi..."];  // node 52
+53 [label="Efficient\nTop-k Quer..."];  // node 53
+54 [label="The Orchard\nAlgorith..."];  // node 54
+55 [label="An Amortized\nTit-For..."];  // node 55
+56 [label="The Bittorrent\nP2P F..."];  // node 56
+57 [label="Chord:\nA Scalable Pe..."];  // node 57
+
+/* Edges */
+1->57 [style=dashed, color="#ff6600"];
+2->1;
+3->1  [style=dashed, color="#ff6600"];
+4->1;
+4->57 [style=dashed, color="#ff6600"];
+5->1  [style=dashed, color="#ff6600"];
+6->1;
+7->1;
+8->1;
+9->1;
+10->1;
+11->1;
+12->1;
+13->1;
+14->1;
+15->1 [style=dashed, color="#ff6600"];
+16->1;
+17->1;
+18->1 [style=dashed, color="#ff6600"];
+19->1;
+20->1;
+21->1;
+22->1;
+23->1;
+24->1 [style=dashed, color="#ff6600"];
+25->1 [style=dashed, color="#ff6600"];
+25->57 [style=dashed, color="#ff6600"];
+26->1;
+26->57 [style=solid, color=red];
+27->1;
+28->1;
+28->57 [style=solid, color=red];
+29->1;
+10->3;
+8->4;
+30->5;
+16->6;
+20->15 [style=dashed, color=blue];
+36->15 [style=dashed, color=blue];
+7->17;
+14->21;
+31->30;
+32->30 [style=solid, color=red];
+33->30;
+34->30;
+35->30;
+36->30;
+37->30;
+38->30;
+39->30;
+40->30 [style=solid, color=red];
+41->30;
+42->30;
+43->30;
+44->30;
+45->30;
+46->30 [style=dashed, color="#ff6600"];
+47->30;
+48->30;
+49->30 [style=dashed, color="#ff6600"];
+50->30;
+51->30;
+52->30 [style=dashed, color="#ff6600"];
+53->30;
+54->30 [style=dashed, color="#ff6600"];
+54->31 [style=dashed, color="#ff6600"];
+55->30;
+38->31;
+55->31;
+41->36;
+53->47;
+40->54;
+17->56;
+30->56;
+33->56;
+2->57;
+6->57;
+7->57;
+16->57;
+19->57;
+22->57;
+37->57;
+47->57;
+51->57;
+}
