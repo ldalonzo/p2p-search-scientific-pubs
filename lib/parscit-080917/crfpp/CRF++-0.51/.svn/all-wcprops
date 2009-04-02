@@ -1,0 +1,359 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51
+END
+mmap.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/mmap.h
+END
+configure
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/configure
+END
+param.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/param.cpp
+END
+stream_wrapper.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/stream_wrapper.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/Makefile.in
+END
+libcrfpp.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/libcrfpp.cpp
+END
+path.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/path.h
+END
+lbfgs.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/lbfgs.h
+END
+AUTHORS
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/AUTHORS
+END
+config.log
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/config.log
+END
+depcomp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/depcomp
+END
+scoped_ptr.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/scoped_ptr.h
+END
+merge-models.pl
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/merge-models.pl
+END
+crf_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/crf_test.cpp
+END
+config.guess
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/config.guess
+END
+config.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/config.h
+END
+ltmain.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/ltmain.sh
+END
+config.sub
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/config.sub
+END
+tagger.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/tagger.h
+END
+feature_cache.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/feature_cache.cpp
+END
+encoder.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/encoder.cpp
+END
+darts.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/darts.h
+END
+node.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/node.cpp
+END
+INSTALL
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/INSTALL
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/COPYING
+END
+feature_index.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/feature_index.h
+END
+crf_test
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/crf_test
+END
+crf_learn.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/crf_learn.cpp
+END
+NEWS
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/NEWS
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/Makefile
+END
+path.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/path.cpp
+END
+lbfgs.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/lbfgs.cpp
+END
+mkinstalldirs
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/mkinstalldirs
+END
+Makefile.msvc
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/Makefile.msvc
+END
+configure.in
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/configure.in
+END
+param.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/param.h
+END
+config.status
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/config.status
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/ChangeLog
+END
+Makefile.msvc.in
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/Makefile.msvc.in
+END
+tagger.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/tagger.cpp
+END
+stamp-h1
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/stamp-h1
+END
+crf_learn
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/crf_learn
+END
+thread.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/thread.h
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/README
+END
+config.h.in
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/config.h.in
+END
+crfpp.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/crfpp.h
+END
+freelist.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/freelist.h
+END
+feature_index.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/feature_index.cpp
+END
+libtool
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/libtool
+END
+feature_cache.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/feature_cache.h
+END
+encoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/encoder.h
+END
+timer.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/timer.h
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/Makefile.am
+END
+missing
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/missing
+END
+node.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/node.h
+END
+feature.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/feature.cpp
+END
+aclocal.m4
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/aclocal.m4
+END
+install-sh
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/install-sh
+END
+common.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/common.h
+END

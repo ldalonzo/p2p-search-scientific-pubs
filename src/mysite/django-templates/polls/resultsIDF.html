@@ -1,0 +1,69 @@
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr bgcolor=#dcf6db>
+<td height=15 valign=top nowrap>
+	Found {{lunghezza}} results for the query 
+{%for word in query%}
+	<strong>{{word}}</strong>
+{%endfor%}: (ordered in decreasing similarity)
+</td>
+</tr>
+</table>
+
+{%for paper in resultSet%}
+<p>
+
+
+{%if paper.resourceURL%}
+<a href="{{paper.resourceURL}}" target="_blank">
+{%endif%}
+
+<font color="blue"><strong>{{paper.title}}</strong></font>
+
+{%if paper.resourceURL%}
+</a>
+{%endif%}
+
+
+
+
+
+
+
+{%if paper.similarity%}
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr bgcolor=#f6f1db>
+
+<td height=15 valign=top nowrap>
+	<font color="red" size=2>{{paper.similarity}}</font>,
+	<font color="b94600" size=2>{{paper.pagerank}}</font>
+</td>
+</tr>
+</table>
+{%endif%}
+
+
+
+
+
+
+<font size=2 color="green">
+{{paper.authors}}
+</font><br/>
+
+{%if paper.abstract%}
+<font size=2 color="black">
+<i>Abstract:</i> {{paper.abstract}}
+</font><br/>
+{%endif%}
+
+
+<font size=2>
+
+{%if paper.citedBy%}
+	<a href="cited{{paper.urn}}">Cited by {{paper.citedBy}}</a>
+	- 
+{%endif%}
+</font>
+
+</p>
+{%endfor%}

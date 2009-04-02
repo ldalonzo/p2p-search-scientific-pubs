@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin
+END
+redo.pl
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/redo.pl
+END
+ParsCitClient.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/ParsCitClient.rb
+END
+archtest.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/archtest.pl
+END
+citeExtract.pl
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/citeExtract.pl
+END
+conlleval.pl
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/conlleval.pl
+END
+parscit-client.pl
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/parscit-client.pl
+END
+parseRefStrings.pl
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/parseRefStrings.pl
+END
+tr2crfpp.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/tr2crfpp.pl
+END
+output2xml.pl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/output2xml.pl
+END
+parscit-service.pl
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/parscit-service.pl
+END
+ParsCitServer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/bin/ParsCitServer.rb
+END

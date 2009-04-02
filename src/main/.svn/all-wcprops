@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/!svn/ver/11051/abc/branches/leo/p2p-search/src/main
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/main/__init__.py
+END
+clusterTest.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/main/clusterTest.py
+END
+main.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/11051/abc/branches/leo/p2p-search/src/main/main.py
+END

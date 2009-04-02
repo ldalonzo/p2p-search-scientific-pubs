@@ -1,0 +1,68 @@
+<!--
+<h2 align="center">Hi {{name}}, you have indexed {{docs}} papers. Enter your query</h2>
+-->
+
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr bgcolor=#f6f1db>
+<td height=15 align="center" valign=top nowrap>
+	Hi <strong>{{name}}</strong>, you have indexed <strong>{{docs}}</strong> papers. Enter your query...
+</td>
+</tr>
+</table>
+
+<br/>
+
+
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+
+<tr bgcolor="#dcf6db">
+
+<td>Find articles</td>
+<td>with <strong>at least</strong> one of the words in </td>
+<td>title</td>
+
+<form action="/searchTitle/" method="post"> 
+		<td><input type="text" name="searchAtLeast"></td>
+		<td><input type="submit" value="Search"></td>
+</form>
+
+</tr>
+
+<tr bgcolor="#dcf6db">
+<td></td>
+<td></td>
+<td>abstract</td>
+
+<form action="/searchAbstract/" method="post"> 
+		<td><input type="text" name="searchAtLeast"></td>
+		<td><input type="submit" value="Search"></td>
+</form>
+
+</tr>
+
+<tr bgcolor="#dcf6db">
+<td></td>
+<td></td>
+<td>anywhere</td>
+
+<form action="/searchAll/" method="post"> 
+		<td><input type="text" name="searchAtLeast"></td>
+		<td><input type="submit" value="Search"></td>
+</form>
+</tr>
+
+
+
+
+<tr>
+<td>Author</td>
+<td>Return articles written by</td>
+<td></td>
+
+<form action="/search/" method="post"> 
+		<td><input type="text" name="author"></td>
+		<td><input type="submit" value="Search"></td>
+</form>
+</tr>
+
+</table>

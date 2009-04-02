@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/11049/abc/branches/leo/p2p-search/src/mysite/polls
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/11049/abc/branches/leo/p2p-search/src/mysite/polls/views.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/mysite/polls/__init__.py
+END
+search.html___DEPRECATED
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/mysite/polls/search.html___DEPRECATED
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/mysite/polls/models.py
+END
+forms_test.py
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/mysite/polls/forms_test.py
+END

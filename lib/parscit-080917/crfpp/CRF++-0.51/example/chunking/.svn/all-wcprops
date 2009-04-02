@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/example/chunking
+END
+train.data
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/example/chunking/train.data
+END
+test.data
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/example/chunking/test.data
+END
+template
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/example/chunking/template
+END
+exec.sh
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/parscit-080917/crfpp/CRF++-0.51/example/chunking/exec.sh
+END

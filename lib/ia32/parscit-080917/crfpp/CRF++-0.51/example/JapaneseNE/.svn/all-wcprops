@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/crfpp/CRF++-0.51/example/JapaneseNE
+END
+train.data
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/crfpp/CRF++-0.51/example/JapaneseNE/train.data
+END
+test.data
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/crfpp/CRF++-0.51/example/JapaneseNE/test.data
+END
+template
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/crfpp/CRF++-0.51/example/JapaneseNE/template
+END
+exec.sh
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/11022/abc/branches/leo/p2p-search/lib/ia32/parscit-080917/crfpp/CRF++-0.51/example/JapaneseNE/exec.sh
+END

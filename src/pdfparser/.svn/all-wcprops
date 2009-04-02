@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/11044/abc/branches/leo/p2p-search/src/pdfparser
+END
+PDFPaperParser.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/pdfparser/PDFPaperParser.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/pdfparser/__init__.py
+END
+filter.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/pdfparser/filter.py
+END
+referenceStringsParser.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/pdfparser/referenceStringsParser.py
+END
+citationParser.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/pdfparser/citationParser.py
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/!svn/ver/11044/abc/branches/leo/p2p-search/src/common
+END
+porterStemmer.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/common/porterStemmer.py
+END
+nlp.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/common/nlp.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/common/__init__.py
+END
+stringdiff.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/11022/abc/branches/leo/p2p-search/src/common/stringdiff.py
+END

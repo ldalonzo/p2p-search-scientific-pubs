@@ -1,0 +1,73 @@
+<algorithm name="ParsCit" version="1.0">
+<citationList>
+<citation>
+<authors>
+<author>C A R Hoare</author>
+</authors>
+<volume>30</volume>
+<date>1987</date>
+<title>et al. Laws of programming</title>
+<journal>Communications of the ACM</journal>
+</citation>
+<citation>
+<authors>
+<author>M Frappier</author>
+<author>J Desharnais</author>
+<author>A Mili</author>
+</authors>
+<booktitle>Science of Computer Programming</booktitle>
+<volume>6</volume>
+<date>1996</date>
+<title>A calculus of program construction by parts</title>
+</citation>
+<citation>
+<authors>
+<author>P Gardiner</author>
+<author>C C Morgan</author>
+</authors>
+<volume>87</volume>
+<date>1991</date>
+<title>Data refinement of predicate transformers</title>
+<journal>Theoretical Computer Science</journal>
+</citation>
+<citation>
+<authors>
+<author>E C R Hehner</author>
+</authors>
+<date>1993</date>
+<title>A Practical Theory of Programming</title>
+<publisher>Springer-Verlag</publisher>
+</citation>
+<citation>
+<authors>
+<author>E Sekerinski</author>
+</authors>
+<booktitle>Mathematics of program construction : second international conference, number 669 in Lecture Notes in Computer Science</booktitle>
+<editor>In R.S. Bird, C.C. Morgan, and J.C.P. Woodcock, editors</editor>
+<location>Oxford, UK</location>
+<date>1992</date>
+<title>A calculus for predicative programming</title>
+<publisher>Springer-Verlag</publisher>
+</citation>
+<citation>
+<authors>
+<author>D R Skuce</author>
+<author>A Mili</author>
+</authors>
+<date>1995</date>
+<title>Behavioral specifications in object oriented programming</title>
+<journal>Journal of Object Oriented Programming</journal>
+<pages>41--49</pages>
+</citation>
+<citation>
+<authors>
+<author>J Von_Wright</author>
+</authors>
+<tech>Technical report</tech>
+<location>Finland</location>
+<date>1990</date>
+<title>A lattice theoretical basis for program refinement</title>
+<institution>Dept. of Computer Science, Abo Akademi</institution>
+</citation>
+</citationList>
+</algorithm>
