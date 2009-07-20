@@ -1,0 +1,69 @@
+\part*{Peer-to-Peer search~and~recommendations of scientific~literature}
+\addcontentsline{toc}{part}{P2P search and recommendations of scientific literature}
+
+\setcounter{chapter}{0}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\def\chaptername{Chapter}
+
+\chapter{\label{chap:intro}Introduction}
+
+\textit{
+Peer-to-peer (p2p) distributed computing model enables the design of very large applications with very low cost. Content location is a general problem in p2p networks. Recent solutions have proposed to organize network topology around data semantics and to exploit the resulting topology in order to facilitate content location. By resorting on this latter model we craft the foundations for a fully decentralized search and recommendation system tailored for scientific literature.}
+
+\textit{Section~\ref{sec:intro_p2p} introduces the peer-to-peer computing model and scope of usage. Section~\ref{sec:intro_content_location} discusses the problem of locating content in distributed systems and highlight some solution which have been proposed. Section~\ref{sec:intro_contribution} specifies system requirements and introduce our approach to the solution. Section~\ref{sec:thesis_outline} outlines the thesis content organization.
+}
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{\label{sec:intro_p2p}Peer-to-Peer computing model}
+Peer-to-Peer (\textsc{p2p}) computing model is a class of distributed architectures which are designed by interconnecting nodes with the purpose of sharing their resources such as content, computational power, storage, bandwidth or even human presence by direct exchange rather than requiring the intermediation of a centralized server. Communication between peers is completely symmetric meaning that nodes act as both clients and servers. This leads to the design of fully-decentralized service in which there is no central server coordinating the operation of the entire network.
+
+P2P computation relies on a network of nodes connected between them. This network is formed on top of, and independently from, the underlying physical computer (typically \textsc{ip}) network and thus is referred as an \textit{overlay network}. The topology structure, degree of centralization and routing and location mechanism it employs for messages are crucial to the operation of the system as they affects its fault-tolerance, self-maintainability, adaptability to failures, performance, scalability and security \cite{ATS04}.
+
+\subsection{Scope}
+Client-server model of computation partitions a task between service provider (server) and service requesters (clients). While scaling a service based on a client-server architecture is technically feasible (e.g.\ Google, YouTube, Wikipedia, Facebook) it requires a sizeable capital investment in the infrastructure. This approach can only be adopted when there is an underlying business model to the application. Moreover client are highly dependent on centralized entities with complete authority are therefore prone to become the victims of possible exploitation.
+
+In contrast P2P computing model leads to decentralized designs which need no large infrastructure expenditures since the system is self-administered and does not depend upon any central entity, which means that the service is handled by the peers themselves. Administration maintenance, responsibility for the operation and even the notion of ownership of \textsc{p2p} system are distributed among the users instead of being handled by a single company.
+
+Ability to function, scale, and self-organize to deal with fault and in presence of high dynamics, without the need of a central server and the overhead of its administration are key concerns while designing a P2P systems. Large scale P2P networks exhibit properties comparable to biological and social entities and a suitable approach consist on modeling them as societies resorting to models borrowed from social theory such computational sociology and evolutionary economics \cite{MH08}.
+
+\subsection{Content distribution systems}
+Content distribution systems (e.g.\ Napster, Gnutella, BitTorrent) have been the killer application for \textsc{p2p} computing model. These systems rely upon overlay network made up high dynamic node population in which resources, such as contents and bandwidth, should be donated by each peer. This leads to a complete decentralized service which can achieve the same performance of high-cost central solution architectures.
+
+\section{\label{sec:intro_content_location}Content location}
+Content distribution presuppose that content in which a user is interested has been located since it is spread out over the network. This task is usually carried out by an information retrieval service which provides to a user the content which are expected to be relevant according to its needs. This service usually relies on a global view of the content from which it pick up those items which are expected to be relevant to the user according to a certain relevance model. Such a system, which requires a global view of the content, can be easily mapped into a client-server service in which the server has a global knowledge of contents. Some popular P2P content distribution systems such as the former Napster and BitTorrent, tackle the concern of locating content by delegating this task to a client-server service.
+
+The main difficult while resorting to \textsc{p2p} computational model lies in the cost required on providing a global view of the network to each peer. Solutions which rely on broadcasting are inherently not scalable~\cite{CRB+03}. Solutions which rely on distributed hashing middlewares have been used in order to map systems conceived as central services into fully-distributed computation. However this approach leads to high overhead cost which is not suitable while dealing with high dynamics large size networks such as content distribution \textsc{p2p} systems~\cite{RV03, LLH+03}.
+
+Recent solutions have proposed to organize network topology around data semantics and to exploit the resulting topology in order to facilitate contents location~\cite{RM06}. Since data and node population are supposed to have high dynamics, network topology should evolve consequently. Epidemic protocols have been used as the basis of lightweight and reliable services for managing topologies in these settings~\cite{VS05}. Tribler is a \textsc{P2P} file sharing system built on top of the BitTorrent protocol which forms a semantic overlay network to identify related content, facilitate search, and recommend content to user without the need of a central service~\cite{PGW+08}. Network topology emerges around user's information needs which are automatically learned by tracking user's download preferences. Resulting topology is exploited in order to recommend contents and facilitate search.
+
+Clustering together users with similar information needs leads to the construction of a social network in which friendships emerges around data. Such distributed social network approach may be considered as a framework on top of which many application which claims for personalization, collaborative filtering and ontological classification can be developed~\cite{AHP+09}.
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{\label{sec:intro_contribution}Contribution}
+Purpose of this research consists of crafting the foundations for a \textsc{p2p} search and recommendation system tailored for scientific literature. We will focus on solutions suitable for highly-populated highly-dynamics \textsc{p2p} networks such as those employed for content distribution systems.
+
+Search and recommendation should be considered as a service which can be developed on top of a social network in which friendships are based on similarities in user's information needs. By identifying people with similar research interest a social network for researchers can be built. This can be exploited in order to facilitate search and for recommending interesting articles and researcher to the user~\cite{HPK08}.
+
+We resort to the same model adopted by Tribler file-sharing systems though modifications application-tailored are required in order to capture the notion of researcher's information needs. The relevance model used for file-sharing system, which relies on download history, is not suitable for text-based documents since two users may found relevant the same subject even if they did not read the same papers. Semantics of text-based documents can be learned by relying on statistical model of language, such as the vector space model of text. By using this model the relationships between papers and users can be exploited for locating relevant content. Recommendations would thus help researchers to discover literature that could be of interest to them.
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{\label{sec:thesis_outline}Thesis outline}
+This work is organized around the three key concerns which crop up while designing an information retrieval system: how data are represented, how the user expresses the query and how the system satisfy the user's information needs.
+
+Chapter~\ref{chap:data_model} concerns on finding a data model for scholarly literature and discusses about trade-offs while claiming for an automatic metadata extraction from presentation-oriented documents such as \textsc{pdf} files. We designed and implemented a prototype of a component which automatically extracts metadata, full-text and cited references from research papers in order to set up a local scientific literature database.
+
+Chapter~\ref{chap:irmodels} reviews models and techniques which have been traditionally employed while analyzing text documents with links between them, such as scientific literature or Web pages. A retrieval model should rely on these techniques while modelling the notion of document relevance with respect to user's information needs.
+
+Chapter~\ref{chap:p2p_content_location} discusses about concerns on locating contents and points out problems while claiming for a fully decentralized approach. We review models which have been traditionally employed while distributing an information retrieval and we highlights their limits while dealing with highly-populated, highly-dynamic \textsc{p2p} networks. In order to meet our requirements we consider a solution which dynamically organizes network topology around data semantics by relying on a gossip-based protocol.
+
+Chapter~\ref{chap:prototype} discusses about the design of a proof-of-concept retrieval model tailored for scientific literature which can be used for learning the user's information needs. We specify message which should be employed by a gossip-based protocol in order to proactively build a social network around user's information needs. We implemented a prototype to prove that the proposed solution can be designed to meet our goals.
+
+Chapter~\ref{chap:conc} gives an overview of the project's contributions and points out some ideas for future work.
+
+Appendix~\ref{chap:bib_an} contains an analysis of the bibliography of this thesis which gives a briefly idea of its content. Analysis has been done by using the tools developed while designing the retrieval model.

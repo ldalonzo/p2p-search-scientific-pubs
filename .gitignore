@@ -1,1 +1,11 @@
 __pycache__/
+
+*.log
+
+/thesis/**/*.aux
+/thesis/*.bbl
+/thesis/*.blg
+/thesis/*.brf
+/thesis/*.lof
+/thesis/*.out
+/thesis/*.toc

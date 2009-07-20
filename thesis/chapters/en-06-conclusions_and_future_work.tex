@@ -1,0 +1,33 @@
+\chapter{\label{chap:conc}Conclusions and future work}
+
+\textit{This chapter gives an overview of the project's contributions. After this overview, we will reflect on the results and draw some conclusions. Finally, some ideas for future work will be discussed.}
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{Summary and contributions}
+Content location is a general problem in p2p networks. Most of p2p file sharing systems delegates the task of finding relevant content to a client-server based information retrieval system. This approach requires sizeable capital investments in the infrastructure in order to achieve high scalability levels. Moreover central solutions are prone to possible data exploitation.
+
+\subsection{Contributions}
+We designed and implemented a proof-of-concept prototype of a fully~decentralized search and recommender system tailored for scientific literature. We proactively maintain a dynamic social network which aggregates users with similar information needs by relying on a lightweight gossip-based topology management protocol. User's information needs are automatically learned by tracking users reading habits. We designed and implemented a prototype of a component which automatically extracts metadata, full-text and cited references from pdf research papers in order to set up a local scientific literature database. This local database is used to learn user's information needs by performing analysis which relies on statistical model of language, such as the vector space model of text. User's learned information needs are summarized into a profile which is gossiped over the network in order to find users with similar information needs. Content location and recommendation are carried out by exploiting the dynamically evolving social network which is expected to satisfy user's information needs. Interesting paper are recommended by users with similar reading interests.
+
+\section{Discussion and reflection}
+Our solution is inspired by the fully-decentralized search and recommendation architecture employed in the Tribler file-sharing system~\cite{PGW+08}. It dynamically builds a network topology reflecting user's information needs which are automatically learned by tracking user's download preferences. However, a download's history based relevance model is not suitable for text-based content such as scientific literature.
+
+At the same time while we were investigating this solution a recommender system for scientific literature was under development. Mendeley\footnote{\url{https://www.mendeley.com}} is a service similar to Last.fm%\footnote{\url{www.last.fm}}%
+for managing and sharing research papers, discovering research data and recommend contents to researcher. It automatically learns the user's preference by tracking his read habits~\cite{HR08}. In contrast to our solution, it utilizes a traditional client-server approach which implies high dependence on predefined central server.
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{Future work}
+With this work we showed the proof-of-concepts of a fully-decentralized search and recommendation system semantically-based for scientific literature.
+
+Future work should pursue the state-of-the-art while extracting structured information from unstructered text document such as \textsc{pdf} files by employing machine learning approaches.
+
+A machine learning approach should be employed also for learning user's information needs. This may take into account some objective measurements such as time spent on reading a paper, frequency of readings, tracking of search queries and so on.
+
+User's profile and ranking function which are employed by the gossip-based social network management protocol should be tuned in order to achieve well-desirable properties regarding network's dynamics and topology features such as node's in-degree and out-degree.
+
+\subsection{Vision}
+P2P architectures have the potential to accelerate communication process and reduce collaboration costs through ad-hoc administration of working group. This potential could be leveraged in the world of research leading to a platform which relies on a social network of researcher which could help in collaboration. A researcher could discover many researcher with similar interests and share ideas, papers and experiences. Interesting data could be recommended by relying on reputation metrics and collaborative filtering.

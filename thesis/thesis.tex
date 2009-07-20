@@ -1,0 +1,84 @@
+\documentclass[twoside,a4paper,11pt]{memoir}
+
+\let \sc = \textsc
+
+\usepackage{a4}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+
+\linespread{1.05}
+
+\usepackage{subfigure}
+\usepackage[small, sc, nooneline]{caption}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{url}
+\usepackage{mscthesis}
+\usepackage{multirow}
+\usepackage{vector}
+\usepackage{amsmath}
+\usepackage[pdftex]{graphicx}
+\usepackage[bookmarksnumbered,colorlinks, backref, bookmarks, breaklinks, linktocpage]{hyperref}
+
+\pdfinfo{
+   /Author (Leonardo D'Alonzo)
+   /Title  (P2P search and recommendations of scientific literature)
+   /CreationDate (\today)
+}
+
+\title{P2P Search and Recommendations of Scientific Literature}
+\subtitle{Version of \today}
+
+\author{Leonardo D'Alonzo}
+\authoremail{\url{leonardo.dalonzo@studio.unibo.it}}
+\birthplace{Atessa, Italy}
+\studentid{0000244357}
+
+\setcounter{tocdepth}{1}
+\setsecnumdepth{subsection}
+\maxsecnumdepth{subsection}
+
+\overfullrule=0pt
+\hfuzz=3pt
+\tolerance=1000
+
+\begin{document}
+\frontmatter
+
+\makefrontespizio
+\makeformaltitlepages{\input{abstract}}
+
+\include{preface}
+
+\cleardoublepage\tableofcontents
+\cleardoublepage
+\mainmatter
+
+%-------------------------------------------------------%
+% Bologna                                               %
+%-------------------------------------------------------%
+\include{chapters/it-01-cap1}
+\include{chapters/it-02-cap2}
+\include{chapters/it-03-cap3}
+
+%-------------------------------------------------------%
+% Delft                                                 %
+%-------------------------------------------------------%
+\include{chapters/en-01-introduction}
+\include{chapters/en-02-datamodel}
+\include{chapters/en-03-irmodels}
+\include{chapters/en-04-p2psearch}
+\include{chapters/en-05-prototype}
+\include{chapters/en-06-conclusions_and_future_work}
+
+\appendix
+\def\chaptername{Appendix}
+\include{appendix}
+
+\bibliographystyle{alpha}
+\bibliography{biblio}
+
+\end{document}

@@ -1,0 +1,123 @@
+\tool{Un sistema decentralizzato di ricerca e raccomandazioni}
+
+\textit{
+Questo capitolo illustra la soluzioni alla base di un servizio completamente decentralizzato di ricerca e raccomandazioni di articoli scientifici. Ciascun utente è supportato da un agente che stima automaticamente le sue esigenze informative analizzandone le abitudini di lettura. Il sistema informativo è basato sull'interazione di una popolazione dinamica di agenti che, organizzandosi in una topologia di interconnessione che riflette le similarità tra le esigenze informative degli utenti, filtra i contenuti resi disponibili in modo da adattarli alle specificità di ciascun utente.
+}
+
+\textit{
+Il paragrafo~\ref{sez:architettura_del_sistema} illustra l'architettura generale dell'agente informativo e introduce il funzionamento dei moduli componenti. Il paragrafo~\ref{sez:raccolta_dati} descrive il modulo adibito all'estrazione dei dati dagli articoli scientifici. Il paragrafo~\ref{sez:stima_esigenze_informative} discute delle modalità con le quali l'agente stima le esigenze informative dell'utente che sono usate per organizzare una popolazione dinamica di agenti in una topologia di interconnessione. Il protocollo adibito a ciò è descritto nel paragrafo~\ref{sez:social_network}. Il paragrafo~\ref{sez:ricerca_e_raccomandazioni} descrive come sfruttare la topologia risultante per facilitare la ricerca e le raccomandazioni di articoli scientifici.
+}
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\sezione{\label{sez:architettura_del_sistema}Architettura del sistema informativo}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=140mm]{img/architecture.png}
+\caption{Architettura dell'agente informativo e flusso dei dati attraverso i suoi componenti. Dagli articoli scientifici letti dall'utente vengono estratti i metadati, le citazioni e l'intero contenuto testuale, i quali vengono localmente indicizzati. Questa base di dati è sfruttata per stimare le esigenze informative dell'utente, che guidano l'organizzazione degli agenti in una topologia di interconnessione, la quale è sfruttata dal meccanismo di ricerca e raccomandazioni.
+}
+\label{fig_it:architettura}
+\end{center}
+\end{figure*}
+
+In figura~\ref{fig_it:architettura} è schematizzata l'architettura dell'agente informativo. Gli articoli scientifici collezionati da ciascun utente sono localmente indicizzati con il supporto di un sistema di estrazione dell'informazione. Questa base di dati è sfruttata dall'agente per stimare le esigenze informative dell'utente, le quali guidano l'organizzazione della popolazione di agenti in una topologia di interconnessione che rifletta le similarità nelle esigenze informative.
+
+Il servizio di ricerca e raccomandazioni di articoli scientifici è realizzato dall'interazione di una popolazione dinamica di agenti, ciascuno dei quali filtra i contenuti resi disponibili dall'intera popolazione in modo da adattarli alle esigenze informative specifiche di ciascun utente.
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\sezione{\label{sez:raccolta_dati}Raccolta dei dati}
+La nozione di esigenza informativa dell'utente è supportata da un modello che dipende dalle caratteristiche intrinseche degli oggetti informativi, che nel caso specifico sono articoli scientifici. In generale un modello dei dati che catturi molte caratteristiche permette una sintesi più accurata del modello di recupero dell'informazione. Ad esempio, una caratteristica molto importante per gli articoli scientifici sono le citazioni, che costituiscono delle raccomandazioni di lettura fornite dall'autore. Altre peculiarità importanti sono il titolo, gli autori, l'abstract, che caratterizzano ciascun articolo scientifico e dovrebbero essere tenuti in considerazione nella definizione del modello di recupero.
+
+Il mezzo più diffuso per la distribuzione degli articoli scientifici è il formato standard \textsc{pdf} che è un formato orientato alla presentazione, i.e.\ le informazioni memorizzate sono non strutturate. L'estrazione di informazione strutturata da documenti non strutturati è un problema di difficile formalizzazione e per questo l'approccio migliore fa uso di tecniche di apprendimento automatico~\cite{chakrabarti2003mwd, manning2008iir}.
+
+Per i nostri scopi abbiamo realizzato un sistema dimostrativo che estrae automaticamente una serie di informazioni strutturate, quali il titolo, l'abstract, l'intero contenuto testuale e le citazioni, da articoli scientifici in formato \textsc{pdf} (cfr.\ capitolo~\ref{chap:data_model}).
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\sezione{\label{sez:stima_esigenze_informative}Stima delle esigenze informative}
+Le necessità informative dell'utente possono essere stimate facendo uso di un modello che tenga in considerazione una serie di misure oggettive riguardanti l'interazione dell'utente con il sistema informativo, come ad esempio l'analisi degli articoli scientifici che sono stati letti, il tempo impiegato nella lettura di ciascuno di essi, le parti sulle quali l'utente si è maggiormente soffermato, l'analisi delle query sottoposte al sistema, etc.\
+
+Un modello che dia una stima delle esigenze informative dell'utente a partire da tali segnali è di difficile formalizzazione. In situazioni di questo tipo si adotta un approccio basato su tecniche di apprendimento automatico. Tuttavia, poiché vogliamo indagarne solo le idee fondanti, ci limiteremo a considerare le tecniche che possono essere impiegate nell'analisi di collezioni di articoli scientifici, i quali possono essere trattati alla stregua di pagine Web, i.e.\ documenti di testo che possono riferirsi tra di loro. Il capitolo~\ref{chap:irmodels} illustra in modo più dettagliato le tecniche maggiormente utilizzate nell'analisi di collezioni di questo tipo.
+
+\subsezione{Modello a spazio vettoriale del testo}
+Il modello a spazio vettoriale del testo caratterizza il contenuto semantico di un documento di testo adottando un modello lessicale del linguaggio (cfr.\ sezione~\ref{sec:VSM}). Il vocabolario è trattato come base di uno spazio vettoriale i cui vettori sono combinazioni di vocaboli, i.e.\ documenti di testo. Ciò è supportato da modelli statistici del linguaggio che cercano di dare un modello della semantica basato sulle occorrenze lessicali dei vocaboli in un testo. Lo schema tf-idf valuta l'importanza di un vocabolo $i$ in un testo $j$ con un peso $w_{ij}$ dipendente da due fattori, uno locale (tf, i.e. \textit{term frequency}), che dipende dal numero delle occorrenze del vocabolo nel testo, e l'altro globale (idf, i.e.\ \textit{inverse document frequency}) che valuta l'importanza di un vocabolo in base alla sua località nell'intera collezione, e.g.\ se un termine appare in un solo documento, si suppone che abbia un alto potere caratterizzante.
+\begin{equation}\label{equaz:idf-wij_definition}
+ w_{ij} = \mbox{tf}_{ij} \cdot \mbox{idf}_i
+\end{equation}
+
+La similarità semantica tra due documenti è valutabile in base alla distanza tra i due corrispondenti vettori (normalizzati).
+\begin{equation}\label{equaz:similarity}
+ sim(\bvec{doc_j},\bvec{doc_k}) = \cos \theta_{j,k} = \frac{\bvec{doc_j} \cdot \bvec{doc_k}}{\|\bvec{doc_j}\| \|\bvec{doc_k}\|} = \frac{\sum_i w_{i,j} \cdot w_{i,k}}{\sqrt{\sum_i w_{i,j}^2 } \sqrt{\sum_i w_{i,k}^2 }  }
+\end{equation}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=100mm]{img/inverted-index_building_2_bis.png}
+\caption{Il contenuto testuale degli articoli scientifici è indicizzato localmente adottando il modello a spazio vettoriale del testo. A ciascun vocabolo è associata la lista dei documenti nei quali occorre, unitamente al peso calcolato secondo il modello statistico tf-idf.}
+
+\end{center}
+\end{figure*}
+
+\paragraph{Criticità} Il modello a spazio vettoriale del testo, poiché modella il contenuto del testo su base lessicale, risente delle ambiguità tipiche del linguaggio naturale, quali ad esempio la molteplicità di significati associabili ad un vocabolo (polisemia) e viceversa (sinonimia). Esistono modelli più raffinati che in base ad operazioni di algebra lineare cercano di cogliere correlazioni tra vocaboli in modo da disaccoppiare maggiormente la semantica insita in un testo dal veicolo lessicale (cfr.~paragrafo~\ref{sec:LSI}).
+
+\subsezione{Stima della semantica associata a una collezione}
+La semantica associata ad una collezione $D_i$ di documenti di testo può essere modellata con il vettore centroide $\vec{\mu}$, risultante dalla media dei vettori $\bvec{x}$ associati a ciascun documento:
+\begin{equation}
+\vec{\mu} = \frac{1}{|D_i|} \sum_{\bvec{x} \in D_i}\bvec{x}
+\label{equaz:cl_centroid}
+\end{equation}
+
+Le esigenze informative dell'utente possono essere stimate con il centroide $\vec{\mu}$ della collezione degli articoli scientifici $D_i$.
+\begin{figure*}
+\begin{center}
+
+\includegraphics[width=130mm]{img/site/abstract-comparison_lsi_2d_centroids_v2.png}
+\caption{Proiezione in uno spazio semantico bidimensionale (cfr.~paragrafo~\ref{sec:LSI}) dei vettori degli articoli scientifici relativi alle esigenze informative di tre utenti. Per ciascuna collezione è indicato il centroide dei documenti. Si noti che questo non corrisponde al contenuto semantico medio della collezione. Per ciascun centroide sono riportati i 50 termini di peso più elevato, secondo il modello statistico tf-idf.}
+\label{fig_it:esigenze_informative}
+\end{center}
+\end{figure*}
+
+\sezione{\label{sez:social_network}Gestione del social network}
+Una popolazione di agenti, ciascuno caratterizzato da delle proprie esigenze informative, può essere organizzata in una topologia di interconnessione che rifletta la similarità tra le loro esigenze informative. Poiché queste sono supposte dinamiche, dipendentemente dalle loro esigenze individuali, la topologia di interconnessione è in continua evoluzione. La gestione di topologie in contesti dinamici e altamente popolati può essere effettuata in maniera completamente distribuita facendo affidamento a protocolli su base epidemica che garantiscono una buona efficienza a fronte di un basso livello di intrusione (cfr. sezione~\ref{sec:gossip_topology}).
+
+Le esigenze informative dell'utente sono sintetizzate nel profilo $\pi$ dell'agente in base al quale il protocollo aggrega agenti con esigenze informative simili calcolate da un'apposita funzione di similarità $\rho$. Per motivi di efficienza nell'adattamento alle dinamicità della popolazione di agenti, si richiede che $\rho$ sia una distanza definita su uno spazio metrico (cfr.\ paragrafo~\ref{subsec:gen_req}).
+
+\subsezione{Profilo dell'agente}
+Il profilo dell'agente, che ne sintetizza le esigenze informative, dovrebbe essere di dimensioni contenute poiché da questo dipende il livello di intrusione del protocollo.
+
+Nel precedente paragrafo~\ref{sez:stima_esigenze_informative} abbiamo modellato le esigenze informative di un utente con il centroide $\vec{\mu}$ degli articoli scientifici letti. Questo è un vettore in uno spazio vettoriale ad alta dimensionalità, nel quale la base è data dal vocabolario. Al fine di contenere le dimensioni del profilo, il centroide è approssimato con un vettore a dimensione ridotta ottenuto selezionando le $k$ componenti con peso $w_{ij}$ maggiore (\ref{equaz:poc_profile_approx}). La qualità dell'approssimazione può essere valutata dal rapporto tra le norme (\ref{equaz:poc_norms_approx_eval}):
+\begin{subequations}
+\begin{equation}
+   \vec{\nu} = \{\mu_1, \mu_2, \ldots, \mu_k\}, \; \mu_i \in (\vec{\mu}, \ge)_k
+   \label{equaz:poc_profile_approx}
+\end{equation}
+\begin{equation}
+   \eta = \frac{\|\vec{\nu}\|}{\|\vec{\mu}\|}
+   \label{equaz:poc_norms_approx_eval}
+\end{equation}
+\end{subequations}
+
+Il profilo $\vec{\nu}$ dell'agente così calcolato è quindi normalizzato e utilizzato dal protocollo epidemico di gestione della topologia al fine di individuare gli $m$ agenti che abbiano le esigenze informative più simili, secondo la funzione di similarità $\rho$. Ciò richiede che i profili degli agenti siano vettori dello stesso spazio vettoriale, i.e.\ ciascun agente usi la stessa base. Ciò può essere aggirato accludendo nel profilo la base del vettore $\vec{\nu}$, i.e.\ il profilo dovrà contenere anche la lista dei $k$ termini selezionati dal centroide $\vec{\mu}$.
+
+Poiché la qualità del profilo influenza la topologia della rete di interconnessione, questo dovrebbe essere accuratamente valutato. Nella nostra emulazione abbiamo usato come profilo i $30$ termini di peso maggiore selezionati dal centroide dei documenti.
+
+\subsezione{Funzione di similarità}
+La similarità tra le esigenze informative degli agenti è calcolata come la distanza tra i corrispondenti vettori dei profili, in modo analogo alla similarità tra documenti secondo il modello a spazio vettoriale del testo.
+\begin{equation}
+ sim(\vec{\nu_j},\vec{\nu_k}) = \cos \theta_{j,k} = \frac{\vec{\nu_j} \cdot \vec{\nu_k}}{\|\vec{\nu_j}\| \|\vec{\nu_k}\|} = \frac{\sum_i \nu_{i,j} \cdot \nu_{i,k}}{\sqrt{\sum_i \nu_{i,j}^2 } \sqrt{\sum_i \nu_{i,k}^2 }  }
+\label{equaz:poc_profile_similarity}
+\end{equation}
+
+Ciascun agente mantiene la lista degli $m$ agenti con esigenze informative più simili. Le dimensioni di tale lista, che influenza la topologia della rete di interconnessione, dovrebbero essere accuratamente valutate al fine di ottenere proprietà desiderabili in termini di località degli interessi informativi.
+
+\sezione{\label{sez:ricerca_e_raccomandazioni}Ricerca e raccomandazione di contenuti}
+Il servizio di ricerca e raccomandazione di articoli scientifici è realizzato con il supporto della rete di interconnessione tra gli agenti che riflette la prossimità tra le esigenze informative degli utenti.
+
+Quando un utente interroga l'agente con una query che ne descrive le esigenze informative, l'agente ricerca contenuti rilevanti inoltrando la richiesta agli agenti vicini in accordo alla topologia di interconnessione. Tale modello di ricerca risulta efficiente qualora le richieste dell'utente avvengano secondo una logica di continuità che possa essere prevista dall'agente.
+
+Anziché usare questo modello di recupero dell'informazione, l'agente può invece proporre in modo proattivo all'utente contenuti ritenuti rilevanti in accordo alle sue esigenze informative. Ciò è effettuato interrogando il vicinato con il profilo dell'utente. Questo schema consente di adattare i contenuti resi disponibili dalla popolazione di agenti alla specificità di ciascuno di essi.

@@ -1,0 +1,246 @@
+\chapter{\label{chap:p2p_content_location}Distributed content location}
+
+\textit{Information retrieval system task lies in retrieving the information which is expected to satisfy user's information needs. This is carried out by picking out of the entire collection those documents which appears to be relevant according to a certain relevance model. Such a system, which requires a global knowledge of the information, leads on the adoption of a client-server paradigm.}
+
+\textit{The main difficult while relying upon peer-to-peer computation model lies in the cost required by maintaining a global knowledge of the network from each peer. Since this cost becomes unacceptable as increasing network size, recent researches have proposed to map the semantic proximity of information into the network connection topology which should be exploited while locating content. Assuming the cluster hypothesis, network topology can be proactively modified in order to push each node towards relevant information.}
+
+\textit{Section~\ref{sec:content_location} discusses about concerns on locating contents and points out problems while claiming for a fully decentralized approach. Section~\ref{sec:distr_models} outlines models which have been employed while distributing an information retrieval system and discusses about limitations emerging while dealing with large scale highly-dynamics networks. Section~\ref{sec:son} discusses about Semantic Overlay Networks which leads to the topology construction problem. Section~\ref{sec:gossip_topology} reviews a gossip-based approach for proactive topology management.}
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{\label{sec:content_location}Problem definition}
+The task demanded to an Information Retrieval (IR) system is to provide access to information which may be distributed over different locations. A user in need of some information issues a query to the IR system which picks out of the entire collection those documents which are expected to be relevant with respect to the user's information need. The selection of relevant documents is performed by resorting on a relevance model which has a global access to information, i.e.\ it knows about its existence.
+
+\subsection{Client-server mapping}
+A client-server computing paradigm fits better this requirements of having a global view of the information. In case of contents are spread out the entire network it is necessary to let the service know about its existence, i.e.\ contents need to be published on the service in order to be located afterwards.
+
+\paragraph{Publishing contents}Publishing can be done by using a pull or a push approach. The former paradigm, which is employed by Google's spiders \cite{BP98}, resorts on the use of agents which traverse the network looking for new contents. The latter follow a symmetrically approach for which information sources are in charge of publish contents by contacting the IR-service. This approach was adopted by the Napster peer-to-peer file sharing service in which each peer wishing to share some contents contacted a central service in charge of keeping track of the whole shared contents. BitTorrent content distribution protocol \cite{Coh03} relies on Web server in which information about contents (i.e.\ \texttt{.torrent} files) are published in order to be distributed.
+
+\paragraph{Criticism}
+A user wishing to search for some information plays the role of the client which issues a query to the central server. As for every computation which relies on a client/server distribution model, this suffers for scalability problems both in increasing number of query requests and size of indexed content. A general solution to these limitations relies on replication and distribution. Google adopts a strategy for which individual tasks of an information retrieval service, (e.g.\ document indexing, document analysis, retrieval task) are demanded to cluster of servers which are highly coupled.
+
+Clearly this approach requires large investments in resources as increasing service requirements. Moreover a solution based on a client-server approach has high dependence on predefined central server which results in possible exploitation of private data.
+
+\begin{figure}
+\centering
+\subfigure[In order that content can be searched, central service must know about it. A push approach requires that clients publish their content to the central service (e.g.\ BitTorrent). In contrast a pull paradigm requires an agent which traverses the network looking for new contents (e.g.\ Google's spiders).]{
+\includegraphics[width=64mm]{img/napster_publish.png}
+\label{fig:napster_A}
+}
+\hspace{4mm}
+\subfigure[A client, which needs some information, issues a query to the central service which replies providing the location in which the desired information resides. Then the client contacts the target location asking for the required information.]{
+\includegraphics[width=64mm]{img/napster_query.png}
+
+\label{fig:napster_B}
+}
+\caption{Protocol employed while interacting with a centralized information retrieval system which has a global knowledge of the content which is spred out the entire network. Information retrieval systems such Google follow this paradigm. Content location services of Napster and BitTorrent file sharing systems rely also on this approach.}
+\label{fig:napster}
+\end{figure}
+
+
+\subsection{Peer-to-peer mapping}
+In peer-to-peer (\textsc{p2p}) computational paradigm each node plays the same role (i.e.\ it is a \textit{peer}) meaning that the computation is fully distributed. Since there is not privileged node over the entire population, the main difficult of locating content within such a scenario lies in the cost required to allow each node to have a global knowledge of the entire network. This can be done by accepting high levels of overhead which are required for acquiring a global view of the network.
+
+Different solutions have been proposed \cite{ATS04, RM06} for distributing IR-systems over \textsc{p2p} networks. There is no absolute best choice among them \cite{ZMSM05}, but their adoption depends on networks size and dynamics, number of documents, query throughput. They could be placed into different taxonomies depending on the extent of the distribution, i.e.\ from the heterogeneity of client-server architectures to the complete homogeneity of pure \textsc{p2p} systems, or on the kind of communication topology whit which nodes are connected each other.
+
+\paragraph{Requirements} We are interested in a fully decentralized keyword-based IR service which can be used for large scale highly-dynamics \textsc{p2p} network such as \textsc{p2p} content distribution networks.
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section[Distribution models]{\label{sec:distr_models}Distribution models of keyword-based IR systems}
+In this section we outline the costs of naive implementations of two straightforward means of distributing a keyword-based IR-system in which the user's query is a set of keywords and the indexed documents contains text. The basic tool which have been widely used for this purpose is the Vector Space Model (VSM) which turns on a vector space both documents and queries in order to ease the computation of relevance (cf.\ section~\ref{sec:VSM}). The knowledge of the whole collection is encapsulated within a very large term-by-document matrix (equation~\ref{eq:term_doc_matrix}). This large matrix can also be viewed as an index containing a list of terms, for each of them a posting list stores the list of documents in which that word occurs (cf.\ figure~\ref{fig:ii_example}). These posting lists are intersected while a query involves more than one keyword.
+
+An IR system has a global knowledge of the content while it has access to that very large term-by-document matrix. Two straightforward proposals could be employed in order to distribute these large matrix over multiples nodes.
+
+\subsection{Partition-by-document} Partition-by-document scheme splits the term-by-document matrix by columns. Documents are divided up among peers each of them maintains a local inverted index of the documents it is responsible for. Each query posed by a user must be broadcast to all peers of the systems, regardless to the number of keywords in the query. Each of them returns its most highly ranked documents to the requester node which will merge all the results by ranking them in a unique list.
+
+\subsection{Partition-by-term} Partition-by-terms scheme splits the term-by-document matrix by rows. Responsibility for the words which appears in the document corpus is divided up among the peer population. Each peer stores the posting list of the words it is responsible for.
+
+A query involving multiple terms requires that posting list concerning one or more terms be sent over the network. This scheme ensures that, in order to serve a query containing $n$ keywords, no more than $n$ nodes are involved in the coordination, which requires intersection of posting lists located on different nodes. Communication cost grows linearly with the number of documents in the system.
+
+\subsection{Support of DHTs middlewares}
+Different policies can be employed while partition the term-by-document matrix according to one or a combination of the two strategies described above. If an exact knowledge of the content is required (as a database view) we should provide a unique name to each item, typically by using an \textsc{urn} scheme.
+
+While partition the term-by-document matrix each item (term, or document) should be mapped into a node by relying on middlewares which provides Distributed Hashing Tables (DHTs) service. They provide distributed hashing services by hiding names to the physical object location. These middlewares can also ensures availability and fault-tolerance by relying on replication of objects, obviously by accepting an extra overhead.
+
+Applications database-like in which exact recall are needed should typically be built by using those partition schemes which relyies on a \textsc{dht} middleware service.
+
+\subsection{Literature proposed solutions and scope of usage} A number of IR-system built on top of DHTs middlewares have been proposed. \cite{RV03, LLH+03} evaluate the cost required for those applications and mapped out some possible optimizations such as caching, pre-computation and compression in order to limit the required bandwidth. However the cost required for deploying this kind of system are infeasible for large scale applications such as \textsc{p2p} file sharing systems \cite{YDRC06, ZMSM05}. Moreover while dealing with high node churn and unavailability which typically affects large scale high-dynamics \textsc{p2p} DHT-based approach requires an overhead is not documented to date for those kind of networks.
+
+\paragraph{Scope}For these reasons this kind of applications should be employed in those situation in which high overhead can be accepted, e.g.\ services with an underlying solid business model, federation of digital libraries which have resources and in general in those scenario in which there is no high dynamics regarding node population and document publishing.
+
+\subsection{Query routing over random connection topologies}
+By give up database oriented application in which there are constraint on object naming, some forms of object replication should be accepted. Object replication is due to its popularity over the nodes. In such scenario partition-by-document scheme have been employed.
+
+A query issued by a peer should be broadcast to all peers in the population in order to have guarantees of recall (cf.\ figure~\ref{fig:gnutella}).
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=100mm]{img/gnutella_query_6.png}
+\caption{Protocol employed while locating content on a network in which each peer knows only about its content. A peer wishing to retrieve some content must broadcast the query to the whole network in order to acquire a global knowledge of the content location. A common solution adopted for query broadcast in case each node has only a partial view of the entire network resorts on flooding (e.g.\ Gnutella). Main drawback of this approach is huge overhead required for broadcast whit consequent scalability limitations.}
+\label{fig:gnutella}
+\end{center}
+\end{figure*}
+
+\paragraph{Gnutella's flooding} Gnutella uses broadcast based on flooding in order to locate content. When a node issues a query it send the request to its neighbours which in turn propagate the query to their neighbours and so on until the query reaches all the clients within a certain radius from the original querier. In order to limit the number of hops each query has limit to maximum number of hops in which it can be forwarded. By adopting this solution each peer establish a virtual horizon beyond which their messages could not be forwarded.
+
+This solution can easily locate very popular items which are replicated in many nodes out of the entire population. Items in file sharing systems are distributed according to the Zipf's law, i.e.\ few items are highly replicated across node population while other items are extremely rare.
+
+Because load on each node grows linearly with the total number of queries, which in turn grows with system size, this approach does not scale for large systems.
+
+\subsubsection{Exploiting connection topology}
+Connection topology of Gnutella's peers are completely random, i.e.\ unstructured. A query is simple broadcast over the network by using this random topology. In order to improve scalability random walks have been proposed \cite{LCC+02} to replace flooding. A query is forwarded to a randomly chosen neighbour at each step until sufficient responses to the query are found. However, as flooding, random walks are essentially a blind search since at each step a query is forwarded to a random node without taking into account any indication of how likely it is that node to have responses for the query.
+
+Several modification to Gnutella's design have been proposed in order to improve scalability. Connection topology should be modified in order to avoid the traffic which comes from flooding. For instance node heterogeneity could be exploited in order to adapt the overall connection topology avoiding overloaded hot spots \cite{CRB+03}. PlanetP \cite{CPM+03} summarizes contents on each node and floods the summaries to the entire system in order to forward the query only to a small subset of promising peers. \cite{CFK07} uses guide rules to organize nodes into an associative network.
+
+%----------------------------------------------------------------------------------------------------%
+%                                                                                                    %
+%----------------------------------------------------------------------------------------------------%
+\section{\label{sec:son}Semantic Overlay Networks}
+Gnutella scalability problems are due to the random connection topology of the peers. Since there is no global knowledge of the content spread among nodes a query is forwarded with a blind mechanism towards neighbours nodes. Connection topology should be modified in order to organize nodes with similar semantics close to each other. In such scenario broadcast could be avoided by routing the query towards those nodes which are expected to be closer to the query semantics. That kind of network topologies, which aggregates node with similar contents, are known as Semantic Overlay Networks (SONs). In these network topologies contents are organized around their semantics such that the distance (e.g. routing hops) between two documents in the network is proportional to their dissimilarity in contents.
+
+When a nodes issues a query a routing mechanism should route the query towards the region which are close in semantics to the query.
+
+\paragraph{Solutions adopted in literature} pSearch \cite{TXD03} maps each document into points of a semantic vector space. Each document is placed into a node by resorting on the use of a Content Addressable Network (CAN) which provides DHTs service. When a peer issues a query, this is projected into a semantic subspace and based on this it is routed towards the peers which are close in semantics as a classic nearest neighbour search strategy. As this solution appears to be efficient and elegant it should be noted that pSearch relies on the use of some global statistics as the basis of the semantic space which must be distributed over all the nodes in the network.
+
+\subsection{Strategies on exploiting network topology}
+There are two strategies on exploiting network topologies for improve the content searching.
+
+\paragraph{Reactive approach} Reactive approach makes usage of the underlying search mechanism in order to infer semantic relations based on the query placed and the corresponding replies received. The network topology is changed each time a user poses a query to the system \cite{VKM+04, SMZ03}. They generally rely on heuristics to decide which peers that served a node recently are likely to be useful again for future queries. One of the hidden assumptions those solutions make is that the network is static both in terms of node joining and leaving and changes in nodes' profiles. \cite{VKM+04} examines different policies in order to modify the network topology to improve search performance.
+
+\paragraph{Proactive approach} Proactive approach builds a semantic overlay topology by making use of a peer profile and a ranking function which induces an order over the peers. The network topology construction is done proactively in a completely implicit way, that is decoupled to the execution of queries. The peer profile could capture the user's search trends through analysis of query posed, the results and his file cache.
+
+The reactive approach minimize the resource usage, but leads to low hit ratio. Proactive approach his more intrusive but it can leads in high quality semantic overlay topologies, based on the choice of a proper ranking function and a peer profile.
+
+\subsubsection{Locality of interest principle} Locality of interest principle posits that if a peer has a particular piece of content that one is interested in, it is very likely that it will have other items that one is interested in as well. This has been demonstrated by examining traces of content distribution applications such as \textsc{p2p} file sharing systems \cite{SMZ03}. 
+
+\subsection{\label{subsec:topology_problem}Topology construction problem}
+We consider a set of processes distributed over a network. Each process is reachable by using a network address and a port, which is necessary and sufficient for sending it a message. Each node knows about $c$ other nodes of the networks through a partial view which is a set of node descriptors. The local knowledge of each node about the network, i.e.\ their partial views, define the links of the overlay network topology. In addition each node $p_i$ has a profile $\pi_i$ as part of its descriptor. The input of the problem is a set of $n$ nodes, the view size $c$ and a ranking function $\rho$ defined over the node profiles $\Pi$ which induces an order over the nodes $p_1, \ldots, p_n$.
+\begin{equation}
+ \rho:\Pi \times \Pi \mapsto \mathbb{R}
+\label{eq:nodes_ranking_function}
+\end{equation}
+
+The goal is to build the views of the nodes such that for each node $p_i$ its view $v(p_i)$ contains exactly the first $c$ elements according to the order induced by the scoring function $\rho$ out of the whole network.
+
+\paragraph{Ranking functions} The topology of the network is defined by the choice of the ranking function $\rho$ which induces an order over the nodes. It can be based on an approximate property of components including geographical location, semantic proximity, available bandwidth or simply on an abstract, pre-defined topology over an ID-space like a ring or a torus. Since we are interested in clustering nodes which are close in their semantics we should resort on a ranking function defined over the node's profile which takes into account semantic proximity.
+
+One way of generating ranking functions is through the distance function $\rho(\pi_i,\pi_j)$ where the profiles $\pi_i, \pi_j$ of the nodes are elements in a metric space. In such case the ranking function can simply order the given set according to the distance between elements. 
+
+A metric space is such that for any element in the set it holds the triangle inequality:
+\begin{equation}
+ \rho(\pi_x,\pi_z) \leq \rho(\pi_x,\pi_y) + \rho(\pi_y,\pi_z)
+\label{eq:triangle_inequality}
+\end{equation}
+
+\section{\label{sec:gossip_topology}Gossip-based topology management}
+Topology management can be identified as an abstract membership service middleware which eases development of applications by hiding distributing concerns. There has been some proposal for creating and managing a network topology in a large scale, dynamic, fully distributed system. Because these settings all the proposed solution are based on a gossip-based probabilistic solution to this problem.
+
+Section~\ref{subsec:gossip} gives an overview of gossip protocols and highlight scope of usage. We focus on solution which use a proactive approach, i.e.\ autonomously build a topology my making usage of the peer's profile and ranking function as stated in the topology construction problem in section~\ref{subsec:topology_problem}. Section~\ref{subsec:gen_req} delineates desirable properties of ranking function and node's profile while dealing in those settings. Section~\ref{subsec:sampling_service} discusses on peer sampling service which allows a probabilistic global view of the network to each peer. Section~\ref{subsec:vicinity} reviews two solutions which have been recently proposed for proactive management of topologies which leads to the construction of a semantic overlay network.
+
+\subsection{\label{subsec:gossip}Gossip protocols}
+Gossip protocols (also known as epidemic protocols) are probabilistic multicast schemes in which no hard guarantees are given concerning the delivery of a multicast message. They are a model to spread a piece of information among a large number of processes with a dynamic connection topology. They exhibit a very robust and scalable features even in the presence of a high rate of link failures. They have been studied theoretically and their analysis is built on mathematical foundations. The survey \cite{EUG04} provides an introduction to the field and delineates some key issues while designing a gossip protocols.
+
+\paragraph{Typical application} The use of epidemics algorithms has been explored in applications such as database replication, failure detection, data aggregation, resource discovering and monitoring. We will make use of epidemic protocols in order to dynamically build a network topology which reflects the semantic clustering of information.
+
+\paragraph{Model}The principle underlying this information dissemination techniques mimics the spread of epidemics. Another close analogy is with the spread of a rumour among humans via gossiping.
+
+A process that wishes to disseminate a new piece of information to the population, does not need to know all the participants, which membership could have high dynamics, but only a small subset of other peer processes.
+
+Every process buffers every message (information unit) it receives up to a certain buffer capacity $b$. It forwards that message a limited number $t$ of times to a randomly chosen subset of processes of limited size $f$ (i.e.\ the fanout of the dissemination). The reliability of information delivery will depend both on these values as well as on the size $n$ of the whole population.
+
+\subsection{\label{subsec:gen_req}General requirements}
+We assume dynamic collection of distributed nodes that want to participate in a common epidemic protocol. Nodes may join and leave and they may crash at any time resulting in a possible high node churn rate. There are two sides to the construction of a topology under these settings. It is desirable to chose a ranking function which holds the triangle inequality (\ref{eq:triangle_inequality}) since it eases the use of epidemic algorithms while managing topologies. Exploiting the triangle inequality property of the ranking function (\ref{eq:nodes_ranking_function}) should quickly leads to high quality local views. For instance if node $q$ is in the local view of $p$ and $r$ is in the local view of $q$ it makes sense to check whether $r$ is also close to $p$.
+
+Node that triangle inequality property of the ranking function does not constitute an hard requirement for the system. In its absence closer neighbours are discovered based only on random encounters.
+
+Candidates from all over the networks should be examined. The problem with examining only neighbours' neighbours is that we will be eventually searching only within a single cluster, although a good neighbour may have just joined at a random point in the network. Likewise, when new nodes joins the network or they quickly changes their profile they should easily find an appropriate cluster to join. These issues call for a randomization when selecting nodes to inspect for adding to a local view.
+
+\subsection{\label{subsec:sampling_service}Peer sampling service}
+Epidemic protocols makes the assumptions that each node has a full view of the network since each node periodically gossips with a random node out of the whole set. In reality, scalability concerns requires that each node has only a partial view of the network, i.e.\ it knows just a set of $c$ neighbours.
+
+Peer sampling service aims to provide to each node a probabilistic global access to the entire network. As the input it takes the distributed collection of nodes and as output it returns a peer as a result of an independent uniform random sampling among the collection.
+
+\paragraph{Newscast} Newscast is a highly reliable and fully distributed dissemination scheme for implementing information dissemination and membership management \cite{JKvS03}. It leads to a small world network, i.e.\ a topology connection with features as high clustering and low diameter. These features are bad for flooding because it results in many redundant messages and in self-healing since strongly connected clusters are weakly connected to the rest of the network.
+
+\paragraph{Cyclon} Cyclon is a gossip-based membership management protocol which leads to the construction of graphs which have low diameter, low clustering and highly symmetric node degrees which results roughly in a random graph \cite{VGvS05}. Moreover it is highly resilient to massive node failures by reactive restoring randomness. It offers a fully decentralized service for delivering information of new events that can happens everywhere in the network.
+
+Importantly it can achieve this property fairly quickly even when a small number of items (such $3$ or $4$) is exchanged in each communication. Therefore it is ideal as a lightweight service that can offer a node randomly selected peer from the current set of nodes. 
+
+\subsection{\label{subsec:vicinity}Topology management protocols}
+
+\textsc{T-Man} \cite{JB04} gradually evolves the topology to match it to one defined by the ranking function by using only local gossip messages. However it does not takes into account the network dynamics concerning both nodes churn and variation in peer's profile or in the ranking functions. 
+
+In order to adapt to network dynamics a topology management protocol should sample the network for changes. These requirements calls for the use of a peer sampling service which gives a support to the dynamics by a probabilistic access to the network.
+
+A gossip-based topology management protocol which dynamics requirements should resorts on a two-layered set of gossip protocols in which a peer sampling service, which lies in the lower layer, provide a probabilistic access to the whole network to the top protocol which is responsible for manage the overlay network topology.
+
+This approach have been proposed for gossip-based management of semantic overlay networks \cite{VS05, VSI06}. The top layer protocol \textit{Vicinity} is in charge discovering peers which are semantically as close as possible and on adding these nodes to the local view of each peer. It resorts on the use of Cyclon peer-sampling service. It has been showed through simulations that this multi-layer approach ensures rapid convergence of network topology and at the same time guarantees highly adaptivity and low overhead.
+
+\paragraph{Tribler BuddyCast} These ideas have been applied to the design of BuddyCast \cite{PYM+08}, i.e.\ the first large-scale internet deployed epidemic protocol stack for managing dynamically evolving network topologies. The main features are discovery of peers, discovery of content and formation on semantic overlay. All of these services are performed in a complete decentralized fashion. BuddyCast forms the core of the peer-to-peer file sharing system Tribler \cite{PGW+08}.
+
+\begin{algorithm}[t]
+\caption{Cyclon and Vicinity epidepic protocols skeleton}
+\begin{algorithmic}[1]
+\Procedure{ActiveThread}{}\Comment{Runs periodically every $T$ time units}
+
+\State q $\gets$ \textsc{selectPeer}()
+\State myItem $\gets$ (myAddress, timestamp, myProfile)
+\State bufSend $\gets$ \textsc{selectItemsToSend}()
+\State \textsc{send} bufSend to q
+\State \textsc{receive} bufRecv from q
+\State view $\gets$ \textsc{selectItemsToKeep}()
+
+\EndProcedure
+
+\Statex
+
+\Procedure{PassiveThread}{}\Comment{Runs when contacted by some peer $p$}
+
+\State \textsc{receive} bufRecv from p
+\State myItem $\gets$ (myAddress, timestamp, myProfile)
+\State bufSend $\gets$ \textsc{selectItemsToSend}()
+\State \textsc{send} bufSend to p
+\State view $\gets$ \textsc{selectItemsToKeep}()
+
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Design key issues}
+In this section we point out key concern while design a gossip-based overlay network management protocol. We refer to the solution proposed in \cite{VS05, VSI06}.
+
+\paragraph{Gossip items} All information exchange between peers is carried out by means of gossip items. A gossip item created by peer $p_i$ is a tuple containing the following three fields:
+\begin{itemize}
+\item peer $p_i$'s contact information (e.g.\ network address and port);
+\item item's creation time, i.e.\ timestamp;
+\item peer's profile;
+\end{itemize}
+Each node maintains locally a number of items per protocol called the protocol's view.
+
+\paragraph{Cache size} A large cache size provides higher chances of making better items selection and therefore accelerate the construction of near-optimal semantic views. On the other hand the larger the cache size, the longer it takes to contact all peers in it, resulting in the existence of older and therefore more likely to be invalid links.  Experiments have been conducted with a cache size of 50 items for each of the two layers.
+
+\paragraph{Gossip length} The number of items exchanged in each communication is predefined and is called the protocol gossip length. It is the number of items gossiped per gossip exchange per protocol and it is a crucial factor for the amount of bandwidth used. It is $g_V$ for Vicinity and $g_C$ for Cyclon. Even though exchanging more items per gossip exchange allows information to disseminate faster, low-intrusion concerns calls for a trade-off. Experiments have been conducted by keeping the gossip length for each of the two layer equal to $3$.
+
+\paragraph{Gossip period} The gossip period is a parameter that does not affect the protocol behaviour. The protocol evolves as a function of the number of messages exchanged. The gossip period only affects how fast the protocol's evolution will take place in time. The single constraint is that the gossip period should be adequately longer than the worse latency throughout the network, so that the gossip exchanges are not favoured or hindered due to latency heterogeneity. A typical gossip period would be 1 minute.
+
+\paragraph{Node profile and ranking function} Construction of the topology relies on the definition of an order over node's. While dealing with gossip protocols convergence and adaptivity to dynamics are better achieved by resorting on a triangle inequality (\ref{eq:triangle_inequality}).
+
+A node profile $\pi_i \in \Pi$ should be elements of a metric space $(\Pi,\rho)$ in which $\Pi$ is the set of node's profile and the ranking function $\rho$ is a metric on $\Pi$, i.e.\ a distance function which holds the following conditions:
+\begin{subequations}\label{eq:metric_space}
+\begin{equation}
+ \rho(\pi_x,\pi_y) = 0 \Leftrightarrow \pi_x = \pi_y
+\end{equation}
+\begin{equation}
+ \rho(\pi_x,\pi_y) = \rho(\pi_y,\pi_x)
+\end{equation}
+\begin{equation}
+ \rho(\pi_x,\pi_z) \leq \rho(\pi_x,\pi_y) + \rho(\pi_y,\pi_z)
+\label{eq:triangle_inequality}
+\end{equation}
+\end{subequations}
+
+\paragraph{\label{par:vicinity_bandwidth}Bandwidth considerations} Due to the periodic behaviour of gossiping, the price of having rapidly converging protocols leads to high usage of network resources (i.e.\ bandwidth). In each cycle, a node gossips on average twice (i.e.\ once as an initiator and once as a responder). In each gossip $2 \cdot (g_V+g_C)$ items are transferred to and from the node, resulting in a total traffic of $4 \cdot (g_V+g_C)$ items for a node per cycle. Since an item's size is dominated by the profile it carries, by assuming that a node's profile takes on average $\phi$ bytes we approximate with this the item's size. So in each cycle the total number of bytes transferred to and from the node is $4 \cdot \phi \cdot (g_V+g_C)$. For $g_V=g_C=3$ the average amount of data transferred to and from a node in one cycle is $24 \cdot \phi $ bytes, while for $g_V=g_C=1$ it is just $8 \cdot \phi$ bytes. With $g_V=g_C=3$ the systems adapts a little faster to changes, but if bandwidth is of high concern (minimal intrusion) $g_V=g_C=1$ can also provide good results.

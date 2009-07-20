@@ -1,0 +1,18 @@
+{
+    "name": "p2p-search-scientific-pubs",
+    "dockerFile": "Dockerfile",
+    "context": ".",
+    "features": {},
+    "forwardPorts": [],
+    "portsAttributes": {},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.autopep8",
+                "ms-azuretools.vscode-docker",
+                "ms-toolsai.datawrangler"
+            ]
+        }
+    },
+    "remoteUser": "vscode"
+}

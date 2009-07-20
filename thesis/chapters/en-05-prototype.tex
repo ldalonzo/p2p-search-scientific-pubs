@@ -1,0 +1,125 @@
+\chapter{\label{chap:prototype}A proof-of-concepts prototype}
+
+\textit{
+This chapter makes usage of the insights acquired in previous chapters in order to design a proof-of-concept prototype of a fully distributed text-based search and recommendation system. Individual task of the information system are described highlighting the employed solution, which represents the fundamental of the system, and future extensions towards the state-of-the-art.}
+
+\textit{Section~\ref{sec:poc_collecting_data} describes the subsystem in charge of building a local database of scientific literature which constitute the key feature of the system. Section~\ref{sec:poc_learning_needs} concerns on meaning of learning user's information needs by relying on a certain number of objective measurements which includes the analysis of the locally built database. Section~\ref{sec:poc_social_network_management} concerns the definition of the user's profile and ranking function which are used by a gossip-based topology management in order to set-up a social network of users. Section~\ref{sec:poc_searching_and_recommendations} discusses how to exploit the social network in order to locate and recommend interesting content to the user. Section~\ref{sec:poc_prototype} describes our prototype which have been used for an emulation of the system.
+}
+
+%----------------------------------------------------------------------------------------------------------%
+%                                                                                                          %
+%----------------------------------------------------------------------------------------------------------%
+\section{\label{sec:poc_architecture}System architecture}
+Overall system architecture and data flow through components are depicted in figure~\ref{fig:poc_data_flow}.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=140mm]{img/architecture.png}
+\caption{Data flow through the information system architecture. Metadata, full-text and cited references are automatically extracted from \textsc{pdf} files research papers in order to set up a local scientific literature database which is exploited for automatically learn user's information needs. This are summarized into a profile which is gossiped over the network in order to find user's with similar information needs. Content location and recommendation are carried out by exploiting the dynamically evolving social network.
+}
+\label{fig:poc_data_flow}
+\end{center}
+\end{figure*}
+
+%----------------------------------------------------------------------------------------------------------%
+%                                                                                                          %
+%----------------------------------------------------------------------------------------------------------%
+\section{\label{sec:poc_collecting_data}Collecting data}
+Papers which have been read by the users are locally indexed. In section~\ref{sec:design} we discuss the design, the implementation and the effectiveness assessment of a component which automatically extracts metadata, full-text and cited references from \textsc{pdf} files research papers in order to set up a local scientific literature database. The main concern of this task is related to the automatic extraction of structured information from presentation-oriented unstructured text document such as the popular \textsc{pdf}. A state-of-the art solution adopts a machine learning algorithm for giving back semantics to text chunks.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=100mm]{img/inverted-index_building_2_bis.png}
+\caption{Text extracted from \textsc{pdf} research paper is used for building an inverted index relying on the vector space model of text.}
+\end{center}
+\end{figure*}
+
+%----------------------------------------------------------------------------------------------------------%
+%                                                                                                          %
+%----------------------------------------------------------------------------------------------------------%
+\section{\label{sec:poc_learning_needs}Learning user's information needs}
+In order to automatically push the user towards the information which he finds as relevant, his information needs should be learned relying upon his interaction behavior with the information system. A machine learning approach should be employed. A number of objective measurements of this behavior could be considered, such as the papers which have been read, the time spent reading each of them, history of search queries and so on.
+
+A number of objective analysis, which have been reviewed in chapter~\ref{chap:irmodels}, can be performed over this database. The key model while dealing with text documents is the vector space model of text. However, since it is a lexicon-based model, it suffers from its inability to cope with ambiguity of natural language such as synonymy and polysemy of terms. Latent semantic analysis relies on linear algebraic operations performed over the vector space model in order to extract the text' semantics.
+
+\paragraph{PoC design} In our Proof-of-Concept (PoC) design we learn user's information needs by relying just on his local scientific literature database. We considered just the vector space model of text collected from abstract sections since it leads to easier management of the vector space basis which is required in order to compute similarities between user's information needs (cf.\ section~\ref{sec:poc_social_network_management}).
+
+%----------------------------------------------------------------------------------------------------------%
+%                                                                                                          %
+%----------------------------------------------------------------------------------------------------------%
+\section{\label{sec:poc_social_network_management}Social network management}
+User's learned information needs have to be summarized into a profile which has to be gossiped over the network in order to find users with similar interests. Notion of similarity between user are computed resorting to a certain ranking function.
+
+Gossip-based topology network management advises that the user profile $\Pi$ with the ranking function $\rho$ to be a metric space $(\Pi,\rho)$ since by leveraging triangle inequality~(\ref{eq:triangle_inequality}) it leads to faster adaption to network dynamics (cf.\ section~\ref{subsec:gen_req}).
+
+\subsection{User's profile}
+User's profile should be a lightweight summary of the user's information needs which can be be easily gossiped over the network.
+
+We model users' profile as elements in a vector space in order to ease the computation of similarities between them. This approach requires that elements are in the same vector space, i.e.\ each user adopts the same vector space basis. The basis of the vector space model of text is given by the ordered set of terms which have been considered. Latent Semantic Indexing projects document into a lower dimension semantic vector space whose basis is more difficult to manage. For this reason, for our PoC prototype we rely just on the vector space model.
+
+\paragraph{PoC design} We considered as a model for user's information needs the centroid $\vec{\mu}$ of the term-by-document matrix as stated in the equation~\ref{eq:cl_centroid}. In order to keep light the size of the profile $\vec{\nu}$, we retain just the top-$k$ tf-idf weighted terms of the centroid (\ref{eq:poc_profile_approx}). An evaluation of the approximation extent is given by the norms' ratio (\ref{eq:poc_norms_approx_eval}):
+\begin{subequations}
+\begin{equation}
+   \vec{\nu} = \{\mu_1, \mu_2, \ldots, \mu_k\}, \; \mu_i \in (\vec{\mu}, \ge)_k
+   \label{eq:poc_profile_approx}
+\end{equation}
+\begin{equation}
+   \eta = \frac{\|\vec{\nu}\|}{\|\vec{\mu}\|}
+   \label{eq:poc_norms_approx_eval}
+\end{equation}
+\end{subequations}
+
+
+The vector profile $\vec{\nu}$ is then normalized and gossiped through the network in order to find similar profiles by relying on a similarity function $\rho$ defined over this vector space. This approach requires to include within the gossip message the vector space basis, i.e.\ the list of terms together with their respective weights $\nu_i$.
+
+Since the information retained by the gossiped profile affects the resulting social network topology, it should be carefully evaluated. In our emulation we choose to retain just the most top-$30$ tf-idf weighted distinct term stems obtained by using the Porter's stemming algorithm which collapses together terms of the vector profile with the same stem \cite{POR97}.
+
+\subsection{Ranking function}
+
+Similarities between users' infomation needs are computed by relying on the cosine similarity wich have been used for compute document similarities according to the vector space model (cf.\ equation~\ref{eq:similarity}). Similarity between two vector profiles $\nu_j, \nu_k$ is given by (\ref{eq:poc_profile_similarity}):
+\begin{equation}
+ sim(\vec{\nu_j},\vec{\nu_k}) = \cos \theta_{j,k} = \frac{\vec{\nu_j} \cdot \vec{\nu_k}}{\|\vec{\nu_j}\| \|\vec{\nu_k}\|} = \frac{\sum_i \nu_{i,j} \cdot \nu_{i,k}}{\sqrt{\sum_i \nu_{i,j}^2 } \sqrt{\sum_i \nu_{i,k}^2 }  }
+\label{eq:poc_profile_similarity}
+\end{equation}
+
+Each peer retain the top-$h$ similar users which have been encountered. The choice of the friendships out-degree $h$ affects the social network topology and therefore the quality of content search and recommendations. It affects also scalability which should be carefully evaluated. In our emulation we choose that each node has at most $5$ friends.
+
+\subsection{Bandwidth requirements estimation}
+Dynamic management of network topology is achieved by employing the gossip-based protocol reviewed in section~\ref{subsec:vicinity}. Its bandwidth requirements, which have been pointed out in~\ref{par:vicinity_bandwidth}, depends upon the size of the user's profile which are gossiped through the network.
+
+In this section we gives an estimation of this bandwidth requirements. We assume that each word is made up of an average of $8$ characters. By using the ASCII encoding scheme each word request on average 8 bytes. Words' weight can be stored by using 2 bytes resulting on roughly 10 bytes for each (word,term) pair.
+
+Under these assumptions a profile consisting of $30$ terms requires on average $\varphi = 10 \cdot 30 = 300$~bytes. In each gossip cycle the total number of bytes transferred to and from the node is $4 \cdot \phi \cdot (g_V+g_C)$ in which node profile $\phi$ is dominated by user's profile, i.e.\ $\phi \simeq \varphi$ (cf.\ \ref{par:vicinity_bandwidth}).
+
+For $g_V=g_C=3$ the average amount of data transferred to and from a node in one cycle is $24 \cdot \phi \simeq 7$~kB, while for $g_V=g_C=1$ it is just $8 \cdot \phi \simeq 2.3$~kB. Considering the gossip period $T$ equal to 1 minute, this translates to an average bandwidth of $120$ and $40$ bytes/s respectively. Increasing the node profile up to $50$ words leads to an average bandwidth requirements of $\simeq 200$ and $\simeq 67$ bytes/s respectively.
+
+%----------------------------------------------------------------------------------------------------------%
+%                                                                                                          %
+%----------------------------------------------------------------------------------------------------------%
+\section{\label{sec:poc_searching_and_recommendations}Searching and recommending contents}
+Content search and recommendation are carried out by exploiting the dynamically-evolving social network. While a user issues a query to the system, query is routed exploiting the network topology expecting that relevant information is located in the user's neighborhood since the network topology has been constructed around user's information needs, i.e.\ user's has been pushed towards the relevant information locality. Effectiveness of this model resides in the ability of the system to learn user's information needs.
+
+By using the same model, user's neighborhood can be queried with the expected user's information needs leading to provide reading recommendation to the user. 
+
+Ranking of relevant information are carried out according to a certain user's relevance model which should be take into account a number of objective measurement. As instance we should consider that citations already acts as reading recommendation (cf.\ appendix~\ref{chap:bib_an}) and they should be considered while designing a recommendation model.
+
+\paragraph{PoC design} In our PoC design we resort just to the vector space model. Neighborhood is queried by using the terms of the user's profile in order to recommend the top-k documents which are expected to be relevant to the user. Intuitively each taste buddy recommends his content which are semantically closer to user's preference centroid (e.g.\ cf. figure~\ref{fig:cluster_hyp_abstract_3D}).
+
+%----------------------------------------------------------------------------------------------------------%
+%                                                                                                          %
+%----------------------------------------------------------------------------------------------------------%
+\section{\label{sec:poc_prototype}Putting all together: a fully functioning prototype}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=130mm]{img/prototype/leo-cloud.png}
+\caption{Screenshot of the system prototype user interface. A web-server has been used for interacting with the system. Term-cloud shows the top-50 weighted terms, according to tf-idf weighting scheme, of the centroid of the term-by-doc matrix built upon the abstract sections of papers. System discovers friendships by gossiping this cloud and using it for calculating cosine similarities. Recommendation of interesting paper are carried out by querying friends with the term-cloud.}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=130mm]{img/prototype/Screenshot-1_negative.png}
+\caption{Screenshot of the standard output of a local emulation of a network made up of just $3$ peers and a superpeer in charge of simulating the epidemic-based topology management protocol. Each peer send to the superpeer its vector profile $\nu$. The superpeer computes similarities between peers and builds up the social network topology.}
+\end{center}
+\end{figure*}

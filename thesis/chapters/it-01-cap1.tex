@@ -1,0 +1,109 @@
+\thispagestyle{empty}
+\part*{Ricerca e raccomandazioni di articoli scientifici in reti peer-to-peer}
+\addcontentsline{toc}{part}{Ricerca e raccomandazioni di articoli scientifici in reti p2p}
+
+%--------------------------------------------------------------------------------%
+% Parte necessaria per la numerazione diversa dei capitoli in italiano           %
+%--------------------------------------------------------------------------------%
+
+% define new counters
+\newcounter{save}
+\newcounter{tool}
+
+\renewcommand{\thetool}{\Roman{tool}}
+
+\let\myChapter\thechapter
+
+\newcommand{\tool}[1]{%
+ % set the name
+ \renewcommand{\chaptername}{Compendio}
+ % increase the counter
+ \stepcounter{tool}
+ % save the chapter counter
+ \setcounter{save}{\thechapter}
+ % redefine the chapter counter
+ \let\thechapter\thetool
+ % redefine the hyperlink chapter counter to have an unique anchor
+ \renewcommand\theHchapter{Tool-\thechapter}
+ % use chapter as normal
+ \chapter{#1}
+%\addcontentsline{toc}{chapter}{#1}  %% uncomment for unnumbered chapters
+ % restore the original counter definitions and values
+ \renewcommand{\chaptername}{Chapter}
+ \let\thechapter\myChapter
+ \setcounter{chapter}{\thesave}
+ \renewcommand\theHchapter{\thechapter}
+}
+
+% define the new command
+\newcommand{\sezione}[1]{%
+ % redefine the chapter counter
+ %\let\thesection\thetool
+ \def\thesection {\thetool.\arabic{section}}
+ \section{#1}
+
+ \def\thesection {\thechapter.\arabic{section}}
+ % restore the original counter definitions and values
+}
+
+\newcommand{\subsezione}[1]{%
+ % redefine the chapter counter
+ 
+ \def\thesubsection {\thetool.\arabic{section}.\arabic{subsection}}%%%%
+ \subsection{#1}
+
+ \def\thesubsection {\thechapter.\arabic{section}.\arabic{subsection}}
+ % restore the original counter definitions and values
+}
+
+\newcommand{\subsubsezione}[1]{%
+ 
+ \def\thesubsubsection {\thetool.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+ \subsubsection{#1}
+
+ \def\thesubsubsection {\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+}
+
+\tool{Introduzione}
+
+\textit{
+Il modello di computazione distribuito peer-to-peer (p2p) permette la realizzazione a basso costo di servizi attraverso la condivisione delle risorse messe a disposizione da ciascuna delle entità partecipanti (\textit{peer}).
+}
+
+\textit{Un problema di carattere generale in questo tipo di reti è quello della localizzazione dei contenuti, che sono visti come risorse messe a disposizione da ciascun nodo. La maggiore difficoltà nel localizzare contenuti in maniera completamente distribuita è legata al costo richiesto nel fornire una visione globale della rete a ciascuna località. Un approccio alternativo consiste nell'organizzare la topologia della rete in modo che rifletta la semantica dei contenuti messi a disposizione dai singoli nodi e di sfruttare la topologia risultante per facilitare la ricerca. Facendo riferimento a questo ultimo approccio, indagheremo i modelli alla base di un sistema informativo completamente decentralizzato che offra ad utenti accademici un servizio di ricerca e di raccomandazioni di articoli scientifici.
+}
+
+\textit{Il paragrafo~\ref{sec_it:intro_p2p} introduce il modello di computazione p2p precisandone lo scenario d'uso e di preferibilità al modello client-server. Il paragrafo~\ref{sec_it:intro_content_location} introduce le problematiche legate alla localizzazione dei contenuti e dà una panoramica degli approcci di soluzione possibili. Il paragrafo~\ref{sec_it:intro_contribution} precisa i requisiti del sistema e introduce l'approccio di soluzione.% Section~\ref{sec_it:thesis_outline} outlines the thesis content organization.
+}
+
+\sezione{\label{sec_it:intro_p2p}Modello di computazione peer-to-peer}
+Il modello di computazione peer-to-peer (p2p) si basa sulla interconnessione di un insieme di nodi (\textit{peer}) ciascuno dei quali mette a disposizione una parte delle proprie risorse (e.g.\ contenuti, potenza computazionale, memoria, banda) per la realizzazione di un servizio. Per contro, il modello client-server partiziona un servizio tra il server, che lo fornisce mettendo a disposizione proprie risorse, e i clienti, che da questo dipendono per poterne usufruire.
+
+Il modello p2p prevede che la computazione avvenga in modo completamente distribuito tra tutti i nodi partecipanti che sono agenti della stessa classe, i.e.\ ciascuno di essi agisce sia come client che come server. La computazione si basa sull'interazione tra i nodi partecipanti, ciascuno dei quali ha una conoscenza locale degli altri nodi. Tale conoscenza locale è modellabile con una topologia di interconnessione tra gli agenti partecipanti (\textit{overlay network}) che è indipendente dall'interconnessione, tipicamente IP, delle macchine (\textit{host}) che li ospitano. Tale struttura topologica influisce sulle caratteristiche del sistema, in modo particolare per ciò che concerne la scalabilità~\cite{ATS04}.
+
+\subsezione{Applicabilità}
+Anche se un servizio basato sul modello client-server è tecnicamente scalabile (e.g.\ Google, YouTube, Wikipedia, Facebook), ciò richiede generalmente un considerevole investimento in termini di infrastrutture, che è generalmente possibile solo qualora il servizio sia supportato da un solido modello di business. Inoltre, dato che il servizio è gestito in modo centralizzato, possono emergere problematiche legate alla sicurezza e alla riservatezza dei dati che sono concentrate in un unica entità.
+
+Il modello di computazione p2p induce alla progettazione a basso costo di servizi completamente decentralizzati nei quali non ci siano punti di centralizzazione. I costi legati all'amministrazione, configurazione e sicurezza del servizio sono distribuiti tra tutti gli utenti anziché essere gestiti da un'unica entità. Proprietà desiderabili, quali la scalabilità, la capacità di auto-configurazione e l'adattamento a fronte di guasti e dinamicità della rete senza il supporto di punti di centralizzazione, devono essere tenute in considerazione in fase di progettazione. I sistemi p2p, in particolare modo quelli costituiti su un ampia base dinamica di nodi partecipanti, manifestano proprietà che possono essere descritte con modelli usati tradizionalmente per sistemi biologici o sociali. Un approccio alternativo alla progettazione di sistemi p2p prevede il ricorso a tali modelli~\cite{MH08}.
+
+\subsezione{Distribuzione di contenuti}
+Il modello di computazione p2p è stato esaltato dai sistemi di distribuzione di contenuti (e.g.\ Napster, Gnutella, BitTorrent). Questi sistemi sono costituiti sulla base di un elevato numero di nodi partecipanti tra loro interconnessi a formare una rete, ciascuno dei quali dovrebbe mettere a disposizione del sistema delle risorse, tipicamente contenuti e banda passante. Ciò permette la realizzazione a basso costo di un servizio che avrebbe altrimenti richiesto costi elevati qualora fosse stato realizzato secondo il classico modello client-server.
+
+\sezione{\label{sec_it:intro_content_location}Localizzazione di contenuti}
+Affinché i contenuti a cui un utente è interessato possano essere acceduti, eventualmente con il supporto di un sistema di distribuzione, è necessario che questi vengano prima localizzati. Ciò è generalmente il compito di cui si occupa un servizio di recupero dell'informazione (IR, i.e.\ \textit{Information Retrieval}) che indica all'utente i contenuti che possano soddisfare le sue esigenze informative. Servizi di questo tipo richiedono generalmente una visione globale delle informazioni disponibili al fine di selezionare quelle che più si adattano alle esigenze dell'utente, in accordo ad un certo modello di rilevanza. Ciò trova una naturale mappatura nel modello client-server, nel quale il server ha una conoscenza globale delle informazioni messe a disposizione. I più diffusi sistemi di distribuzione di contenuti p2p (e.g.\ Napster, che ne è stato l'archetipo, ora BitTorrent) risolvono il problema della localizzazione di contenuti delegando questo compito a un servizio di IR basato sul modello client-server.
+
+La maggiore difficoltà nel localizzare contenuti in maniera completamente distribuita, i.e.\ senza fare affidamento su punti di centralizzazione, è legato al costo richiesto nel fornire una visione globale della rete a ciascuna località. La soluzione più semplice, che è quella di acquisire tale conoscenza contattando tutti i nodi partecipanti, è intrinsecamente non scalabile~\cite{CRB+03}.
+
+Un servizio pensato secondo il modello client-server può essere completamente distribuito facendo uso del supporto di opportuni middleware che forniscano un servizio di hashing distribuito, i.e.\ che nascondano la località al nome di una risorsa. Approcci di questo tipo richiedono generalmente un'elevata interazione tra i nodi, in modo particolare qualora si cerchi di distribuire un servizio di IR basato sull'uso di parole chiave per accedere alle informazioni desiderate, tipicamente testuali. Livelli di coordinamento tra i nodi ancora maggiori sono necessari qualora si richiedano proprietà di tolleranza ai guasti ovvero in presenza di alte dinamicità della rete, sia in termini di popolazione dei nodi che di disponibilità delle informazioni. La realizzazione di sistemi di IR che facciano uso di questo approccio mostrano limiti di scalabilità~\cite{RV03, LLH+03}.
+
+Un approccio alternativo consiste nell'organizzare la topologia della rete di interconnessione in modo che rifletta la semantica dei contenuti messi a disposizione dai singoli nodi e di sfruttare efficientemente la topologia risultante per localizzare le informazioni desiderate~\cite{RM06}. Poiché la disponibilità delle informazioni e la popolazione della rete sono supposti dinamici, la topologia di interconnessione dovrebbe evolversi in accordo a tali dinamiche. In situazioni di questo genere, la gestione della topologia può essere affidata a protocolli epidemici che, basandosi su un modello probabilistico della diffusione delle informazioni, sono a bassa intrusione~\cite{VS05}. Tribler\footnote{\url{www.tribler.org}} è un sistema di distribuzione di contenuti (\textit{file sharing}) basato su BitTorrent che organizza dinamicamente i nodi in una topologia di interconnessione che rifletta la località semantica dei contenuti (SON, i.e.\ \textit{Semantic Overlay Network}) in modo da facilitarne la ricerca e la raccomandazione agli utenti senza il supporto di punti di centralizzazione che supportino una visione globale della rete~\cite{PGW+08}. La topologia della rete emerge sulla base delle necessità informative degli utenti che vengono automaticamente stimate dal sistema osservando la storia dei file che sono stati scaricati.
+
+Il raggruppamento di utenti con simili esigenze informative guida la costruzione di un \textit{social network} nel quale le relazioni tra gli utenti emergono dall'analisi dei dati. Tale approccio può essere considerato un framework sul quale basare lo sviluppo di applicazioni che offrano servizi personalizzati, di filtraggio collaborativo di contenuti e di classificazione ontologica dei dati~\cite{AHP+09}.
+
+\sezione{\label{sec_it:intro_contribution}Contributo}
+Lo scopo di questo lavoro consiste nell'indagare i modelli alla base di un sistema informativo completamente decentralizzato che offra a utenti accademici un servizio di ricerca e di raccomandazioni di articoli scientifici. Faremo riferimento a soluzioni impiegabili in reti altamente popolate ad elevate caratteristiche di dinamicità sulla base del modello dei diffusi sistemi di file-sharing.
+
+I servizi di ricerca e raccomandazioni possono essere sviluppati facendo uso di un framework di social network nel quale le relazioni tra gli utenti sono basate sulla similarità tra le loro esigenze informative. L'identificazione di utenti con simili interessi si riflette nella struttura topologica della rete di interconnessione che può essere sfruttata per facilitare la ricerca e raccomandare all'utente sia articoli scientifici che utenti con interessi simili~\cite{HPK08}.
+
+Indagheremo una soluzione basata sul modello adottato dal sistema di file sharing Tribler, adattando il sistema informativo alla specificità dei contenuti, i.e.\ gli articoli scientifici. Il modello di rilevanza utilizzato per stimare le esigenze informative degli utenti in un sistema di file sharing, può essere ragionevolmente basato sull'analisi dei file scaricati che tuttavia è poco adatto per contenuti testuali. Per questo tipo di contenuti la semantica delle esigenze informative dell'utente può essere dedotta ricorrendo a modelli algebrici del linguaggio. Il modello a spazio vettoriale del testo si basa sull'analisi statistica delle ricorrenze lessicali nel testo al fine si modellarne la semantica. La similarità semantica, tra due documenti testuali è riconducibile al computo di distanze tra vettori di uno spazio vettoriale. Tale modello può essere usato come base per stimare le esigenze informative degli utenti, che possono essere quindi utilizzate per indurre una topologia della rete di interconnessione che rifletta, in base allo stesso modello, similarità nelle esigenze informative. La topologia del social network risultante può quindi essere utilizzata in modo da facilitare la ricerca e raccomandare sia contenuti che utenti.

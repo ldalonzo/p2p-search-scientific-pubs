@@ -1,0 +1,515 @@
+\chapter{\label{chap:irmodels}Models and techniques for linked text collections analysis}
+
+\textit{In chapter~\ref{chap:data_model} we defined a data model for scientific literature in which a paper is considered basically as a container of text zones, each of them with an associated semantics. Moreover papers are strongly connected each other by citations.}
+
+\textit{This chapter focuses on models and techniques which have been traditionally employed while analyzing text documents with links between them, such as Web pages. A retrieval model should resort on these techniques while modelling the notion of document relevance with respect to user's information needs.}
+
+\textit{Section~\ref{sec:VSM} discusses about the Vector Space Model which relies on a statistical model in order to map text into vectors leading to a huge term-by-document matrix. By performing linear algebraic operations on this matrix, semantics relationships between documents can be better highlighted. Section~\ref{sec:LSI} treats about this technique which is known as Latent Semantic Analysis. Section~\ref{sec:clustering} discusses about usefulness of clustering together related documents. Section~\ref{sec:link_analysis} discusses about link analysis which aims to exploit information which lies onto the topological structure of the directed graph induced by citations between papers.}
+
+%-----------------------------------------------------------------------------------------------%
+%                                                                                               %
+%-----------------------------------------------------------------------------------------------%
+\section{\label{sec:VSM}The Vector Space Model}
+In the Vector Space Model (VSM) \cite{berry1999mvs} each document in a collection is represented as a vector in a $\mathbb{R}^t$ vector space. Each component of the vector reflects a particular concept, keyword or term associated with the given document. The value assigned to that component reflects the importance of the term in representing the semantics of the document. Typically, that value is a function of the frequency with which the term occurs in the document or in the whole collection.
+
+A database containing a total of $n$ documents described by $m$ terms is represented by a $m \times n$ term-by-document matrix $\bvec{A}$ (\ref{eq:term_doc_matrix}). The $n$ vectors representing the $n$ documents form the columns of the matrix. Thus, the matrix element $w_{ij}$ gives a measure on how well the term $i$ represents the semantics of the document $doc_j$.
+\begin{equation}\label{eq:term_doc_matrix}
+\bvec{A} = 
+\bordermatrix{
+  & \mbox{doc}_1   & \mbox{doc}_2      & \cdots & \mbox{doc}_n \cr
+\mbox{term}_1      & w_{11} & w_{12} & \cdots & w_{1n} \cr
+\mbox{term}_2      & w_{21} & w_{22} & \cdots & w_{2n} \cr
+  \; \;     \vdots      & \vdots & \vdots & \ddots & \vdots \cr
+\mbox{term}_m      & w_{m1} & w_{m2} & \cdots & w_{mn} \cr}
+\end{equation}
+
+We refer the columns of $\bvec{A}$ as \emph{document vectors} and the rows of $\bvec{A}$ as \emph{term vectors}. The semantic content of the database is wholly contained in the column space of $\bvec{A}$, meaning that the document vectors span the content. Geometric relationships between document vectors can be exploited to model similarities and differences in content.
+
+\subsection{Stop-listing and word stemming}
+The choice of terms used to describe the database determines not only its size but also its utility. Including very common terms like \emph{to} or \emph{the} would do little to improve the quality of the term-by-document matrix. The process of excluding such high-frequency words is known as \emph{stoplisting}.
+
+In constructing a term-by-document matrix, terms are usually identified by their word stems. For example, the word \emph{communities} counts as the term \emph{community} and the word \emph{downloading} counts as the term \emph{download}. Stemming reduces storage requirements by decreasing the number of words maintained. We use the Porter' stemming algorithm for this purpose \cite{POR97}.
+
+
+\subsection{\label{subsec:tfidf}The tf-idf weighting scheme}
+A variety of schemes are available for weighting the matrix elements $w_{ij}$. The tf-idf weighting scheme assigns to each element a weight that depends on two factors, as defined in (\ref{eq:idf-wij_definition}).
+
+\begin{equation}\label{eq:idf-wij_definition}
+ w_{ij} = \mbox{tf}_{ij} \cdot \mbox{idf}_i
+\end{equation}
+
+\paragraph{Term frequency} The term frequency $\mbox{tf}_{i,j}$ is a local weight that reflects the importance of a term $t_i$ within the document $\mbox{doc}_j$. A document $\mbox{doc}_j$ which mentions a term $t_i$ more often than a document $\mbox{doc}_k$ should receive an higher score with respect to the term $t_i$.
+
+\paragraph{Inverse document frequency} The inverse document frequency $\mbox{idf}_i$ is a global weight that reflects the overall value of term $t_i$ as an indexing term for the entire collection. Terms common to many documents give less information about the semantic content of a document. As one example, consider a very common term like \emph{computer} within a collection of papers on \emph{computer science}. Including that term in the description of a document gives little information about its content. The $\mbox{idf}_i$ factor takes into account the discriminative power of the term $t_i$ within the collection and it is negatively correlated with the number of documents $N_i$ in which $t_i$ appears. It can be computed as defined in (\ref{eq:idf-definition}), where $N$ is the total number of document in the collection. According to this definition, a term present in each document of the collection as no discriminative power, that is $\mbox{idf}_i = 0$.
+
+\begin{equation}\label{eq:idf-definition}
+ \mbox{idf}_i = \log\frac{N}{N_i}, \quad N_i =|\{\mbox{doc}_j : t_i \in \mbox{doc}_j\}|
+\end{equation}
+
+The tf-idf weighting scheme assigns to term $t_i$ a weight $w_{ij}$ with respect to the document $\mbox{doc}_j$ that is: highest when $t_i$ occurs many times within a small number of documents; lower when $t_i$ occurs fewer times in a document or occurs in many documents; lowest when the term occurs in virtually all documents.
+
+\subsection{Documents similarity}
+For a document $doc_j$, the set of weights may be viewed as a quantitative digest of the document. According to this view, known as \emph{bags of words model}, the exact ordering of the terms is ignored, but we only retain statistical information about the frequency of occurrence of each term. This model assumes that two documents with similar bags of words representations are close in their semantic content.
+
+The VSM proposes to evaluate the similarity of two documents by measuring the correlation of the corresponding document vectors. A common way to measure correlation is computing the cosine of the angles between the two vectors, as defined in (\ref{eq:similarity}).
+
+\begin{equation}\label{eq:similarity}
+ sim(\bvec{doc_j},\bvec{doc_k}) = \cos \theta_{j,k} = \frac{\bvec{doc_j} \cdot \bvec{doc_k}}{\|\bvec{doc_j}\| \|\bvec{doc_k}\|} = \frac{\sum_i w_{i,j} \cdot w_{i,k}}{\sqrt{\sum_i w_{i,j}^2 } \sqrt{\sum_i w_{i,k}^2 }  }
+\end{equation}
+
+Because the query and document vectors are typically sparse, the dot product and norms in (\ref{eq:similarity}) are generally inexpensive to compute. Furthermore, the document vector norms need to be computed only once for any given term-by-document matrix. Note that multiplying either $\bvec{doc_j}$ or $\bvec{doc_k}$ by a constant does not change the cosine value. Thus document vectors may be scaled by any convenient value. Because the content of a document is determined by the relative frequencies of the terms and not by the total number of times particular terms appear, the matrix elements in (\ref{eq:term_doc_matrix}) can be scaled so that the Euclidean norm of each column is 1, that is $\|\mbox{doc}_{j}\| = 1$. With this choice the similarity computed with (\ref{eq:similarity}) gives the geometric distance between a document vector pair.
+
+\subsection{Query representation}
+When a user is wishing to retrieve some information from the collection, he queries the system by describing his information needs. This can be done by providing a set of terms, perhaps with weights, which aims to reflect the semantics of his information need. According to the VSM, the query can be represented just like a document. It is likely that many of the terms in the database do not appear in the query, meaning that many of the query vector components are zero.
+
+\begin{equation}
+\bvec{q} = \left(
+\begin{array}{ccc}
+   q_1 & \cdots & q_t
+\end{array}
+\right)^T
+\end{equation}
+
+Query matching is finding the documents most similar to the query. In the VSM the documents selected are those geometrically closest to the query, according to the similarity measure defined in (\ref{eq:similarity}). The search for relevant document is carried out by computing the cosines of the angles $\theta_{j}$ between the query vector $\bvec{q}$ and the document vectors $\mbox{doc}_j$. Relevant documents can be ranked according to their similarity with the query.
+
+\subsection{Inverted index and posting files}
+As a document generally uses only a small subset of the entire dictionary of terms generated for a given database, most of the elements $w_{ij}$ of a term-by-document matrix are zero. Storing the matrix in a naive way results in a wasteful use of the memory. A much better representation is to record only the non-zero values. The commonest solution adopted in text retrieval systems is a data structure known as \emph{inverted index}. Basically it is a list containing all the $t$ different terms of the collection, so it has as many items as the number of rows in (\ref{eq:term_doc_matrix}). For each term we maintain a list, known as \emph{posting list}, which stores the weights only for the documents in which the given word occurs. By using this solution we store the same information retained by the term-by-document matrix avoiding the zero entries.
+
+When a user queries the system, the search for relevant document is carried out by retrieving the posting lists of the query terms and taking their intersection in order to compute the cosine similarities as defined in (\ref{eq:similarity}).
+
+\paragraph{Example} Consider a collection made up of $n$ documents and a vocabulary of $m$ terms. Assuming that each entry $w_{ij}$ in the term-by-doc matrix requires $k$ bytes, $n \cdot m \cdot k$ bytes are required to store the whole matrix in the memory. As instance, the collection represented by the equation~(\ref{eq:ii_example}) requires $30 \cdot k$ bytes.
+\begin{equation}\label{eq:ii_example}
+ \bvec{A} = 
+\bordermatrix{
+                & \mbox{doc}_1 & \mbox{doc}_2  & \mbox{doc}_3 & \mbox{doc}_4 & \mbox{doc}_5 & \mbox{doc}_6 \cr
+\mbox{content}  & \mathtt{0}     & \mathtt{0.807} & \mathtt{0}     & \mathtt{0}     & \mathtt{0.938} & \mathtt{0} \cr
+\mbox{network}  & \mathtt{0.653} & \mathtt{0}     & \mathtt{0.610} & \mathtt{0.863} & \mathtt{0}     & \mathtt{0} \cr
+\mbox{overlay}  & \mathtt{0.653} & \mathtt{0.509} & \mathtt{0.610} & \mathtt{0}     & \mathtt{0}     & \mathtt{0} \cr
+\mbox{peer-to-peer} & \mathtt{0} & \mathtt{0}     & \mathtt{0.357} & \mathtt{0.505} & \mathtt{0.346} & \mathtt{0.707}\cr
+\mbox{semantic} & \mathtt{0.382} & \mathtt{0.298} & \mathtt{0.357} & \mathtt{0}     & \mathtt{0}     & \mathtt{0.707}\cr
+}
+\end{equation}
+
+The same content could be stored by relying on the inverted index and posting files data structures, as depicted in figure~\ref{fig:ii_example}, which avoids storing zero entries. However it requires to store document identifiers, which we suppose to require $h$ bytes, and $n$ pointers each of them tooks $p$ bytes. This representation become advantageous as increasing sparsity of the matrix $\bvec{A}$.
+
+\begin{figure*}
+\begin{center}
+
+\includegraphics[width=75mm]{img/inverted-index_example.pdf}
+\caption{Example of using the inverted index and posting files data structure for representing large sparse matrix. The content of the term-by-document matrix in (\ref{eq:ii_example}) can be represented by storing each term as an entry in the inverted index, each of them pointing to a \textit{posting list} of non-zero values. Each entry in the posting lists refers to a document $doc_j$. This strategy avoids wasting of resources due on storing zero entries, although it requires to store the document $id$ and $m$ pointers for each entry. Therefore this representation becomes useful as increasing sparsity of the term-by-document matrix.}\label{fig:ii_example}
+\end{center}
+\end{figure*}
+
+\subsection{Zone indexing}\label{sec:zone_indexing}
+The VSM treats a document as an unstructured sequence of terms. It aims to model the semantics of a document by using statistical informations about words occurrences. However most documents have additional structure. Text within human readable document often comes with typographic information. As example, a word written in bold font should be considered much more important since the author emphasized it. Moreover the text content could be organized within a number of paragraphs that may have different importance. For instance, with respect to our case study, the abstract section within a scholarly work, which summarizes paper's content, can convey better the semantics of the document. The words chosen for the title can be very important as well. In order to improve the notion of relevance we can exploit also the structure within the document.
+
+Because we are dealing with scholarly literature, we treat each document as a container of predefined text zones, such as the title, the abstract and the body. We can represent each zone with its zone vector and store it as column in the matrix (\ref{eq:term_doc_matrix}). Tf-idf weight computation will refer to zone instead of document in order to compute the global \emph{idf} factor (\ref{eq:idf-definition}).
+
+Instead of use a unique term-by-document matrix we use multiple term-by-zone matrix, each of them charged for a specific zone. A much more efficient solution could be using a unique inverted index encoding the zones directly in the posting lists.
+
+The relevance of a document to a given query can be computed by calculating the linear combination of the relevance scores of each zone (\ref{eq:zone_indexing_scoring}). Coefficient are properly chosen in order to reflect the importance of each section within the document. 
+\begin{equation} \label{eq:zone_indexing_scoring}
+ sim(\bvec{q},\bvec{doc_j}) = \alpha \, sim(\bvec{q}, \bvec{title_j}) + \beta \, sim(\bvec{q}, \bvec{abs_j})
+\end{equation}
+
+For instance, we can consider finding the word \emph{tribler} within the title much more important than finding it within the body. We can also support queries as searching for documents which contains a certain word in a certain section of the document, e.g.\ search for documents that contains the word \emph{tribler} within the title.
+
+\subsection{Implementation issues}
+
+\begin{algorithm}
+\caption{Global Inverse Document Frequency computation algorithm}
+\begin{algorithmic}[1]
+\Procedure{updateIdf}{$\mbox{dictionary}, N$}\Comment{$N$ documents in the collection}
+\ForAll {term $\in$ dictionary}
+	\State postingFile $\gets$ dictionary[term]
+	\State $N_i \gets |\mbox{postingFile}|$ \Comment{Number of documents in which \textit{term} occurs}
+	\State $\mbox{idf} \gets \log\frac{N}{N_i}$
+
+	\ForAll {$\mbox{docId} \in \mbox{postingFile}$}
+		\State $(t_f, w_{ij}) \gets \mbox{postingFile[docID]}$
+		\State $w_{ij} \gets t_f \cdot \mbox{idf}$
+		\State $\mbox{postingFile[docID]} \gets (t_f, w_{ij})$
+	\EndFor
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Document vectors normalization algorithm}
+\begin{algorithmic}[1]
+\Procedure{normalizeDocumentVectors}{dictionary}
+\State $\mbox{docWeights} \gets \{\}$
+\ForAll {$\mbox{term} \in \mbox{dictionary}$}
+	\State $\mbox{postingFile} \gets \mbox{dictionary[term]}$
+	\ForAll {$\mbox{docId} \in \mbox{postingFile}$}
+		\State $(t_f, w_{i,j}) \gets \mbox{postingFile[docId]}$
+		\State $\mbox{docWeights[docId]} \gets \mbox{docWeights[docId]} + w_{ij}^2$
+	\EndFor
+\EndFor
+\ForAll {$\mbox{term} \in \mbox{dictionary}$}
+	\State $\mbox{postingFile} \gets \mbox{dictionary[term]}$
+	\ForAll {$\mbox{docId} \in \mbox{postingFile}$}
+		\State $(t_f, w_{ij}) \gets \mbox{postingFile[docID]}$
+		\State $w_{ij} \gets w_{ij} / \sqrt{\mbox{docWeights[docId]}}$
+	\EndFor
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Computation of the $k$ best documents}
+\begin{algorithmic}[1]
+\Function{computeTopKDocuments}{query}
+\State $\mbox{resultSet} \gets \{\}$
+\ForAll {$\mbox{term} \in \mbox{query}$}
+	\If{$\mbox{term} \in \mbox{dictionary}$}
+		\State $\mbox{postingFile} \gets \mbox{dictionary[term]}$
+		\ForAll {$\mbox{docId} \in \mbox{postingFile}$}
+			\State $(\mbox{t}_f, w_{ij}) \gets \mbox{postingFile[docId]}$
+			\State $\mbox{resultSet[docId]} \gets \mbox{resultSet[docId]} + w_{ij}$
+		\EndFor
+
+	\EndIf
+\EndFor
+\State $\mbox{topK} \gets$ \textsc{orderK}(ResultSet)
+\State \textbf{return} topK
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+%------------------------------------------------------------------------------------------%
+%                                                                                          %
+%------------------------------------------------------------------------------------------%
+\section{\label{sec:LSI}Latent Semantic Indexing}
+In the Vector Space Model each term is modelled as a dimension in a $\mathbb{R}^t$ vector space where $t$ is the number of different terms which appears in the corpus. This result in a high dimensional vector space. This scheme suffers from synonyms and noise in documents and this may results in a lack on capturing the semantics of documents. By making usage of linear algebraic operation over the term-by-doc matrix $\bvec{A}$ (cf.\ equation~\ref{eq:term_doc_matrix}) similarities between terms can be revealed since they are expected to occurs in semantically close documents. One way to reveal the rank of $\bvec{A}$ is to compute its Singular Value Decomposition (SVD) \cite{berry1999mvs, chakrabarti2003mwd}.
+
+\subsection{Singular Value Decomposition}
+SVD transforms a high dimensional vector, such as a document vector $\bvec{A_j}$ of $\bvec{A}$, into a lower-dimensional semantic vector by projecting the former into a semantic subspace. Each element of a semantic vector corresponds to the importance of an abstract concept. SVD decomposes $\bvec{A}$ into the product of three matrices as described in equation~\ref{eq:svd} where $r$ is the rank of $\bvec{A}$, matrices $\bvec{U}$, $\bvec{V}$ are column orthonormal and the diagonal matrix $\Sigma$ can be organized such that equation~\ref{subeq:sigmas} holds.
+\begin{subequations}
+\begin{equation}
+\bvec{A_{m \times n}} = 
+\bvec{U_{m \times r}}
+\underbrace{
+\left(
+ \begin{array}{ccc}
+ \sigma_1 & \cdots & 0        \\
+ \vdots   & \ddots & \vdots   \\
+        0 & \cdots & \sigma_r \\
+\end{array}
+ \right)}_{\Sigma_{r \times r}}
+\bvec{V_{r \times n}^T}
+\end{equation}
+\begin{equation}
+\bvec{U}^T \bvec{U} = \bvec{V}^T \bvec{V} = \bvec{I}
+\end{equation}
+\begin{equation}
+\sigma_1 \geq \cdots \geq \sigma_r
+\label{subeq:sigmas}
+\end{equation}
+\label{eq:svd}
+\end{subequations}
+
+The $i^{th}$ row of $\bvec{A}$ may be regarded as a $n$-dimensional representation of term $t_i$, just as the $j^{th}$ column of $\bvec{A}$ as the $m$-dimensional representation of document $\mbox{doc}_j$.
+
+The $i^{th}$ row of $\bvec{U}$ is a refined representation of term $t_i$ and the $j^{th}$ column of $\bvec{V}$ is a refined representation of document $\mbox{doc}_j$. Both are vectors in a $r$-dimensional subspace.
+
+The standard cosine measure similarity between documents can be applied to the $\bvec{A}$ matrix: entries of $(\bvec{A}^T\bvec{A})_{n \times n}$ may be interpreted as the pairwise document similarities in vector space. Symmetrically we can regard the entries of $(\bvec{A} \bvec{A}^T)_{m \times m}$ as the pairwise term similarity based on their co-occurrences in documents.
+
+Since $\bvec{A}$ has redundancy revealed by SVD, we can compute documents pairwise similarities as $\bvec{V} \Sigma^2 \bvec{V}^T$ and terms pairwise similarities as $\bvec{U} \Sigma^2 \bvec{U}^T$.
+
+\subsection{Low rank approximation}
+Latent Semantic Indexing (LSI) approximates the matrix $\bvec{A}$ of rank $r$ with a matrix $\bvec{A_k}$ of lower rank $k$ by retaining only the largest $k$ singular values out of $r$, i.e.\ $\sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_k \ge \ldots \ge \sigma_r$.
+\begin{equation}
+\bvec{A}_k = \bvec{U}_k \bvec{\Sigma}_k \bvec{V}_k^T
+\label{eq:low_rank_approx}
+\end{equation}
+
+By choosing an appropriate $k$ the important structure of the corpus is retained while the noise and variability in word usage, which is related to smaller $\sigma_i$, is eliminated. Studies on LSI suggest setting $k\in [50,350]$ \cite{deerwester1990ils}.
+
+LSI is capable of bringing together documents that are semantically related even if they not share terms, by learning from co-occurring word usage. Symmetrically it can discover polysemy and synonymity of terms.
+
+\subsection{Examples}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=125mm]{img/clustering/title-leo2d.pdf}
+\caption{Projection on a 2-dimensional subspace of documents vectors (rows of $\bvec{V}_2^T$) from our test collection. Since LSI maps similar documents into similar vectors, closest points have similar contents. Note that the projection of the document vectors' centroid does not represents the average semantics of the whole collection.}
+\label{fig:LSI_example_A}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=125mm]{img/clustering/term-term_comparison.pdf}
+\caption{Projection on a 2-dimensional subspace of term vectors (rows of $\bvec{U}_2$) from our test collection. We take into account just words which forms titles. Some words have been removed for clarity.}% Since LSI maps to similar vectors words which co-occurs in same documents, closer points are expected to have some correlation.}
+\label{fig:LSI_example_B}
+\end{center}
+\end{figure}
+
+LSI maps similar terms into close vectors exploiting correlation between terms. Symmetrically it maps similar documents into close vectors. By retaining just $k=2,3$ singular values, term vectors and document vectors can be plotted. As example we considered our test collection, which is the same considered in figure~\ref{fig:graphviz_1}, and we performed the LSI by retaining just $k=2$ singular values on the term-by-doc matrix $\bvec{A}$, which has built by using the Vector Space Model for just the words which forms the title for each paper.
+
+We resort to the Matlab command \texttt{[U,S,V]=svds(A,K)}, where \texttt{K} is the number of singular values of \texttt{A} to be retained, which computes the approximated matrix as described in equation~(\ref{eq:low_rank_approx}).
+
+In figure~\ref{fig:LSI_example_A} is depicted the projection on a $2-$dimensional subspace of the document vectors, i.e.\ the rows of the approximated matrix $\bvec{V}_2^T$. Since LSI maps exploit correlations between documents, it maps similar documents to similar vectors. Two-dimension Cartesian space may be interpreted as a semantics space in which a notion of distance in semantics between points can be considered. A collection of documents, resulting in a certain distribution over the semantic space may be summarized by a unique point, which may be the average, which gives a measure of the whole collection' semantics. Note that this is not the same of the average document vectors computed from the VSM matrix $\bvec{A}$ which does not take into account correlation between terms, but treat all of them referring to orthogonal dimensions.
+
+In figure~\ref{fig:LSI_example_B} is depicted the projection on a $2-$dimensional subspace of the term vectors, i.e.\ the rows of the approximated matrix $\bvec{U}_2$. 
+
+%------------------------------------------------------------------------------------------%
+%                                                                                          %
+%------------------------------------------------------------------------------------------%
+\section{\label{sec:clustering}Clustering}
+
+\subsection{Problem statement}
+We are given a collection $D$ of items which are characterized by an internal property which can be employed for defining a measure of distance between any two pairs of items. The clustering function $\gamma$ partitions the collection $D$ of items into $k$ parts $\{D_1, \ldots, D_k\}$, i.e.\ $\gamma : D \mapsto \{D_1, \ldots, D_k\}$, so as to minimize the intra-cluster distance. Items within a cluster should be as close as possible while items in one cluster should be as far as possible from those items of other clusters.
+
+Internal representation of items specify also the representation of the cluster. Assuming that each item may be represented as a vector $\bvec{x}$ in a vector space, a cluster of items may be represented by the centroid $\vec{\mu}$ (average) of the items vectors:
+\begin{equation}
+\vec{\mu} = \frac{1}{|D_i|} \sum_{\bvec{x} \in D_i}\bvec{x}
+\label{eq:cl_centroid}
+\end{equation}
+
+A measure of how well the centroids represent the member of their clusters is the residual sum of squares i.e.\ the squared distance of each vector from its centroid summed over all vectors:
+\begin{subequations}
+\begin{equation}
+\mbox{RSS}_i = \sum_{\bvec{x} \in D_i} | \bvec{x} - \vec{\mu}(D_i) |^2
+\end{equation}
+\begin{equation}
+\mbox{RSS} = \sum_1^k \mbox{RSS}_i
+\end{equation}
+\end{subequations}
+
+\paragraph{Example} We can consider as items the documents of a collection and we can use as internal property the Vector Space Model, which gives a measure of distance between any two pairs of document vectors. Similarly we may consider as internal property the low $k$-rank approximation of document vectors given by the Latent Semantic Analysis. In the former case we cluster documents in a high-dimension subspace, in the latter option we can refer to the semantic Cartesian space, such as the one in the figure~\ref{fig:LSI_example_A} and cluster documents in this semantic space.
+
+\subsection{Clustering algorithms}
+Algorithm which employs the clustering function $\gamma$ can follow two different paradigms \cite{chakrabarti2003mwd, manning2008iir}.
+
+Bottom-up approach of clustering, as known as agglomerative, considers each items in a group of its own and proceed by collapsing together groups of items until the number of partitions is suitable.
+
+Top-down approach of clustering declares the number $k$ of partitions and assigns items to partitions $\gamma : D \mapsto \{D_1, \ldots D_k\}$ in order to minimize the intra-cluster distance of elements and maximize the distance between items which belongs to different clusters. $k-$means is an example of clustering algorithm which follows this paradigm.
+
+\subsection{Cluster hypothesis}
+The utility of clustering for information retrieval lies in the so-called cluster hypothesis: given a suitable clustering of a collection, if the user is interested in document $\mbox{doc}_j$ he is likely to be interested in other members of the cluster $D_i$ to which $\mbox{doc}_j$ belongs, i.e.\ documents in the same cluster behave similarly with respect to relevance to information needs.
+
+The cluster hypothesis is not limited to document alone. If documents are similar because they share terms, terms can also be represented as term-vectors representing the documents in which they occurs, and these term-vectors can be used to cluster the terms (cf.\ figure~\ref{fig:LSI_example_B}).
+
+As with terms and documents, we can set up a bipartite relation for people liking documents and use this to cluster both people and documents, with the premise that similar people like similar documents and vice versa. This important ramification of clustering is called collaborative filtering.
+
+\paragraph{Example}
+In order to show the proof-of-concepts of the clustering hypothesis I collected the research paper which have been read by my colleagues while performing their researches. Each paper has been modelled as a vector by using the Vector Space Model. By performing a low rank reduction with the Latent Semantic Indexing, document vectors have been projected into a 2-dimensional subspace, which is intended as a semantic subspace according to the LSI capabilities.
+
+\begin{figure}
+\centering
+\subfigure[Projection of document vectors into a 2-d semantic subspace, i.e.\ obtained by retaining the $2$ largest singular values while performing LSI]{
+\includegraphics[width=120mm]{img/clustering/abstract-comparison.pdf}
+\label{fig:cluster_hyp_abstract_2D}
+}
+\hspace{2mm}
+\subfigure[Projection of document vectors into a 3-d semantic subspace, i.e.\ obtained by retaining the $3$ largest singular values while performing LSI. A further dimension allows a better distinction of users' clusters.]{
+\includegraphics[width=120mm]{img/clustering/abstract-comparison3d.pdf}
+
+\label{fig:cluster_hyp_abstract_3D}
+}
+\caption{Proof-of-concepts of cluster hypothesis. We collected papers relevant for 3 different users while performing their researches. We used a Vector Space Model resorting just on words which comes from abstract section of each paper.}
+\label{fig:cluster_hyp_abstract}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=120mm]{img/clustering/title-comparison.pdf}
+\caption{Projection on a 2-d semantic subspace of document relevant for 3 different users. Documents data set are the same of figure~\ref{fig:cluster_hyp_abstract}, but here the Vector Space Model used for document vectors refers just to words of the papers' titles.}
+\label{fig:cluster_hyp_C}
+\end{center}
+\end{figure}
+
+In figure~\ref{fig:cluster_hyp_abstract} is depicted the projection of document vectors which have been obtained resorting on the Vector Space Model of the words which forms the abstract section of each document. Clearly documents which have been relevant for each user show clustering features according to users' research directions and preferences.
+
+We can provide an insight of each user research preferences by computing the centroid of the document vectors. Centroid computed by considering the low-rank approximation of document vectors maps the average research direction as the average vector within the cluster into the semantic subspace. If we compute the centroids by using the high-dimension document vector we do not take into account correlations between words. As depicted in figure~\ref{fig:cluster_hyp_abstract_2D} these centroids does not corresponds to the semantic cluster centroid.
+
+Maybe each user could find relevant those items which are relevant for other users which are closer to its research direction semantics. We can recommend to each user those items by computing the distance, i.e.\ the similarity, of those items which are closer to their centroid.
+
+%-----------------------------------------------------------------------------------------------%
+%                                                                                               %
+%-----------------------------------------------------------------------------------------------%
+\section{\label{sec:link_analysis}Link analysis}
+Citations between semantically related work are an important feature of scientific literature since they encodes knowledge of the author about a portion of the scientific literature. By analyzing citation's patterns among scholarly articles research tendencies and influences may be discovered.
+
+Intuitively much as citations represent the conferral of authority, but not every citation implies the same authority conferral. For this reason, simply measuring the quality of an article by the number of incoming citations from other papers in not robust enough. A better model should be one in which authority of a document $\mbox{doc}_i$ depends on the number of incoming citations and on the authority of the documents $\{\mbox{doc}_j\}$ which cite $\mbox{doc}_i$. 
+
+Random walk theory has been widely used to compute the authority of a document emerging only from the topological structure of the citation graph \cite{chakrabarti2003mwd, manning2008iir}. The underlying assumption is that the authority of a document $\mbox{doc}_i$ is modelled by the probability $\Pr(p)$ of reaching that document during a random walk on the graph defined by the link structure.
+
+\paragraph{Summary} First in section~\ref{subsec:markov} we provide a briefly mathematical background on finite-state, discrete-time Markov chains. Section~\ref{subsec:markov_app} discusses the necessary modifications to be applied to a more general graph, as a citation graph, in order to leverage Markov theory. Section~\ref{subsec:markov_impl} uses previous considerations to perform the link analysis over our test collection, finally in section~\ref{subsec:markov_criticism} we point out concerns about taking into account link analysis in the shaping of the notion of user's needs.
+
+\subsection{\label{subsec:markov}Finite-state, discrete-time Markov chains}
+A finite-state discrete-time Markov chain is a stochastic process which occurs in a series of time steps in each of which a random choice $S_i$ is made. The possible values of $S_i$ form a countable set $S$ called the state space of the chain. Markov chains are often described by a directed graph, where each edge $p_{ij}$ is labeled with the probability of going from state $S_i$ to state $S_j$.
+\paragraph{Stochastic matrix} $p_{ij}$ is the probability that the state at next step will be $S_j$, conditioned on the current state being $S_i$. Each entry $p_{ij}$ is known as a transition probability and depends only on the current state $S_i$ (Markov property). Since at any given time step $k$ the Markov chain can be in one of the $n$ states,  entries in each row add up to $1$ (cf. equation~\ref{subeq:addup1}).
+\begin{subequations}\label{eq:markov_def_stochastic_matrix}
+\begin{equation}
+\bvec{P} = 
+ \left[
+ \begin{array}{ccc}
+ p_{11} & \ldots & p_{1n}\\
+ \vdots & \ddots & \vdots\\
+ p_{n1} & \cdots & p_{nn}\\
+\end{array}
+ \right]
+p_{ij} \in [0,1]
+\end{equation}
+\begin{equation}
+\sum_{j=1}^N p_{ij} = 1
+\label{subeq:addup1}
+\end{equation}
+\begin{equation}
+p_{ij} = \Pr(X_{k+1}=S_i|X_k=S_j)
+\end{equation}
+\end{subequations}
+
+\paragraph{Periodic Markov chain} A state $S_i$ is \textit{periodic} if the probability of returning to the state $S_i$ is zero except at regular intervals. Formally, the period of a state is defined as the greatest common divisor of the set of possible returning intervals in the considered state $S_i$:
+\begin{equation}
+    k = \operatorname{gcd}\{ n: \Pr(X_n = S_i | X_0 = S_i) > 0\} 
+\end{equation}
+If $k=1$ the state $S_i$ is said to be \textit{aperiodic}, otherwise (i.e.\ $k>1$) the state is said to be \textit{periodic} with period $k$.
+
+\paragraph{Irreducible Markov chain} A Markov chain is said to be irreducible if its state space is in a single communicating class i.e.\ if there is a non-zero probability of transitioning (even if in more than one step) from any state to any other state. Mathematically, the corresponding probability matrix $\bvec{P}$ is said to be irreducible if there exists a permutation matrix $\bvec{Q}$ such that:
+\begin{equation}
+\bvec{Q}\bvec{P}\bvec{Q}^T=\left(
+ \begin{array}{cc}
+ \bvec{A}_1 & \bvec{B} \\
+ \bvec{0}   & \bvec{A}_2 \\
+\end{array}
+ \right)
+\end{equation}
+
+\paragraph{Ergodic Markov chain} A state $S_i$ is said to be \textit{ergodic} if it is \textit{aperiodic} and \textit{positive recurrent}\footnote{We do not provide the formal definition of recurrence. Intuitively a state is positive recurrent if the expectation of returning in that state it is finite, i.e.\ the state is not transient.}. If all states in a Markov chain are ergodic, then the chain is said to be ergodic. It can be shown that a finite-state irreducible Markov chain is \textit{ergodic} if its states are \textit{aperiodic}.
+
+\paragraph{Steady-state analysis} We can depict the probability distribution of a random walk over the states at any time step $k$ by using a probabilty vector\footnote{Note that here we treat \bvec{x} as a row vector} $\bvec{x}$. At step $k=0$ we can start the walk may begin at a state $S_i$ whose corresponding component in the vector $\bvec{x_0}$ is $1$. After $k$ time steps the probability to be in each state of the chain is given by equation (\ref{eq:markov_ss_1})
+\begin{equation}\label{eq:markov_ss_1}
+ \bvec{x}_{k+1} = \bvec{x}_k \bvec{P}
+\end{equation}
+
+If we continue a random walk over the Markov chain, each state is visited at a different frequency which depends only on the topological structure of the chain. 
+
+\subparagraph{Theorem}For any \textit{ergodic} Markov chain, there is a \textit{unique} steady-state probability vector $\bvec{x}_s$ which is the principal left eigenvector of $\bvec{P}$, such that if $\eta_{i,k}$ is the number of visits to state $S_i$ in $k$ steps, then:
+\begin{equation}
+ \lim_{k \rightarrow \infty} \dfrac{\eta_{i,k}}{k} = x_{i}
+\end{equation}
+
+If $\bvec{x}_0$ is the initial distribution over the states of the Markov chain, then the distribution at step $k$ is given by $\bvec{x}_k = \bvec{x}_0 \bvec{P}^k $, i.e.\ by recurring applying equation (\ref{eq:markov_ss_1}). As $k$ grows large it is expected that the distribution probability $\bvec{x}$ attains to a stationary distribution $\bvec{x}_s$:
+\begin{equation}\label{eq:markov_limits}
+\lim_{k \rightarrow \infty} (\bvec{x}_0 \bvec{P}^{k+1} - \bvec{x}_0 \bvec{P}^k )= \bvec{0}
+\end{equation}
+
+Since the theorem ensures that such distribution $\bvec{x}_s$ is unique, it does not depend on the initial distribution $\bvec{x}_0$. The steady-state distribution $\bvec{x}_s$ can be found by solving the eigenvector problem\footnote{In this formulation, in which \bvec{x} is a row vector, the \bvec{x_s} which satisfies the problem \ref{eq:markov_eig_problem} is known as the left eigenvector of \bvec{P}} (\ref{eq:markov_eig_problem}), in which the normalization equation ensures that $\bvec{x}_s$ is a probability vector.
+\begin{equation}\label{eq:markov_eig_problem}
+\begin{cases}
+    \bvec{x} \bvec{P} = \lambda \bvec{x}\\
+    \sum_j x_j = 1
+  \end{cases}
+\end{equation}
+
+%-----------------------------------------------------------%
+% Subsection                                                %
+%-----------------------------------------------------------%
+\subsection{\label{subsec:markov_app}Application to link analysis}
+
+%-----------------------------------------------------------%
+% figure                                                    %
+%-----------------------------------------------------------%
+\begin{figure}
+\centering
+\subfigure[$d$ is a dangling node since it has no outgoing edges. Therefore the transition probability matrix which describes the chain is not stochastic. Note that the sub-graph $\{a,b,c\}$ is irreducible (i.e.\ each node is reachable from any other node) and aperiodic, therefore it is ergodic.]{
+\includegraphics[width=60mm]{img/link_analysis_ex_1a.pdf}
+\label{fig:markov-chain_example_A}
+}
+\hspace{8mm}
+\subfigure[In order to make the transition probability stochastic we need to add to each dangling node some outgoing edges, e.g. one edge for each state. Note that the graph is reducible since the state $d$ is not reachable from any other node, i.e.\ the graph is made up of two communicating classes. Therefore the chain is not ergodic.]{
+\includegraphics[width=60mm]{img/link_analysis_ex_1b.pdf}
+
+\label{fig:markov-chain_example_B}
+}
+\caption{Required modification to a generic graph, which comprises dangling node, in order to make it ergodic. This guarantees the existence of a unique steady-state probability distribution to being in each state after a random walk over the states.}
+\label{fig:markov-chain_example}
+\end{figure}
+
+Consider the small graph in figure~\ref{fig:markov-chain_example_A} whose topology is summarized by adjacency matrix \ref{eq:markov_adj_matrix} 
+\begin{equation}\label{eq:markov_adj_matrix}
+\bvec{A} = 
+\bordermatrix{
+  & a & b & c & d \cr
+a & 0 & 1 & 0 & 0 \cr
+b & 0 & 0 & 1 & 0 \cr
+c & 1 & 1 & 0 & 0 \cr
+d & 0 & 0 & 0 & 0 \cr}
+\end{equation}
+We assume for ease that the probability to moving from a state $S_i$ to one of its direct successors is the same for all of them, i.e.\ if state $S_i$ has $k$ direct successors, the probability to move from $S_i$ to one of them in one step is $1/k$. The probability to move among states is summarized in the probability matrix \ref{eq:markov_example_a}:
+\begin{equation}\label{eq:markov_example_a}
+\bvec{P} =
+ \left(
+ \begin{array}{cccc}
+  0   & 1   & 0 & 0 \\
+  0   & 0   & 1 & 0 \\
+  1/2 & 1/2 & 0 & 0 \\
+  0   & 0   & 0 & 0 \\
+ \end{array}
+ \right)
+\end{equation}
+Note that the transition probability matrix (\ref{eq:markov_example_a}) is not stochastic (cf.\ equation~\ref{eq:markov_def_stochastic_matrix}) since there is a row which contains all zeros. This occurs whenever the graph contains \textit{dangling nodes}, i.e.\ nodes which contains no outgoing edges ad node $d$ in figure~\ref{fig:markov-chain_example_A}. In order to make (\ref{eq:markov_example_a}) stochastic we may modify the graph by adding to each dangling node an edge to each of the  $n$ nodes (including itself) in the graph, each of them with associated transition probability of $1/n$. By allowing this expedient we yield the stochastic matrix (\ref{eq:markov_example_b}):
+\begin{equation}\label{eq:markov_example_b}
+\bvec{P_s} =
+ \left(
+ \begin{array}{cccc}
+  0   & 1   & 0 & 0 \\
+  0   & 0   & 1 & 0 \\
+  1/2 & 1/2 & 0 & 0 \\
+  1/4 & 1/4 & 1/4 & 1/4 \\
+ \end{array}
+ \right)
+\end{equation}
+However, in order to make use of the steady state analysis it is required an ergodic Markov chain i.e.\ one that is both irreducible and aperiodic. Note that in our example the chain depicted in figure~\ref{fig:markov-chain_example_B} is reducible since there is no path to return to state $d$, i.e.\ there are two communicating class $\{a,b,c\},\{d\}$.
+
+\paragraph{Perturbation of the chain} A common adopted solution to alter a graph with no dangling nodes (i.e.\ whose transition probability matrix is stochastic, irreducible and aperiodic therefore ergodic) is to consider a convex combination of the stochastic matrix $\bvec{P}$, which has no guarantees on reducibility or periodicity (as the one in our example), with a stochastic perturbation matrix\footnote{A stochastic perturbation matrix models a chain in which each node has an edges to each other node (comprising itself) in the graph, i.e.\ there is a probability to go from each state to each other state in one step} $\bvec{E}$ \cite{page98, langville2004dip, langville2005sem, langville2006rpp, bianchini2005ip}.
+\begin{equation}\label{eq:markov_convex_combination}
+\bvec{P_e} = \alpha \bvec{P}_S + (1-\alpha) \bvec{E}, \; \alpha \in [0,1]
+\end{equation}
+Google PageRank \cite{page98} gives back a practical reason to that perturbation matrix $\bvec{E}$ by modelling the behaviour of a random surfer which randomly choose to jump to a new Web page by manually entering an URL, i.e.\ without following outgoing links.
+
+Going back to our example, by choosing $\alpha=0.8$ we yield the (\ref{eq:markov_example_ss}) which models an ergodic Markov chain:
+\begin{equation}\label{eq:markov_example_ss}
+\bvec{P_e} =
+ \left(
+ \begin{array}{cccc}
+  \frac{1}{20} & \frac{17}{20} & \frac{1}{20} & \frac{1}{20} \\
+  \frac{1}{20} & \frac{1}{20} & \frac{17}{20} & \frac{1}{20} \\
+  \frac{9}{20} & \frac{9}{20} & \frac{1}{20} & \frac{1}{20} \\
+  \frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+ \end{array}
+ \right)
+\end{equation}
+
+Since the Markov chain described in (\ref{eq:markov_example_ss}) is ergodic, the theorem guarantees that it has a unique steady-state distribution of probabilities to be in each of its state during an arbitrary long random walk over its states. By solving the corresponding eigenvector problem as stated in equation~(\ref{eq:markov_eig_problem}) we yield (\ref{eq:markov_example_ss_results}) which reveals that the probability of visit the state $b$ is higher since it is easily reachable from other nodes (cf.\ figure~\ref{fig:markov-chain_example}).
+\begin{equation}\label{eq:markov_example_ss_results}
+\bvec{x_s}=
+\left(
+ \begin{array}{cccc}
+  \texttt{0.206} & \texttt{0.371} & \texttt{0.360} & \texttt{0.062}
+ \end{array}
+ \right)
+\end{equation}
+
+%-----------------------------------------------------------%
+% Subsection                                                %
+%-----------------------------------------------------------%
+\subsection{\label{subsec:markov_impl}Implementation}
+Each scholarly document is represented as a node in a very large graph. Directed arcs connecting these nodes represents citations between documents.
+
+\begin{figure}
+\centering
+\includegraphics[width=140mm]{img/pr0607.pdf}
+\caption{Probability to visit documents during a random walk over the directed graph induced by references. The result was computed by making use of PageRank algorithm with a perturbation coefficient $\alpha=0.85$ (cf. equation~\ref{eq:markov_convex_combination}). Note that the authority of a documents depends on the authority of the citing document. As example link analysis could be used to discover user's preferences and research trends. However link analysis has a bias towards older papers which are more likely to be cited.}\label{fig:graphviz_pageranktest}
+\end{figure}
+
+For our experiment we used a freely available Python implementation\footnote{\url{http://kraeutler.net/vincent/essays/google\_page\_rank\_in\_python}} of PageRank algorithm. It relies on power iteration algorithm in order to compute the steady-state distribution $\bvec{x_s}$, i.e.\ it iterative applies the equation~(\ref{eq:markov_ss_1}) unless the difference (\ref{eq:markov_limits}) between two subsequent steps becomes less than a specified amount $\epsilon$. The applicability of the power iteration method is possible since the ergodic property ensures that the convergence is fast.
+We performed the link analysis over the same data set discussed in figure~\ref{fig:graphviz_1}. As we can see in figure~\ref{fig:graphviz_pageranktest} the link analysis highlights the most authoritative items within the collection.
+
+\subsection{\label{subsec:markov_criticism}Applicability and criticism} However the use of the link analysis in order to provide a profile of the user's preference and his research directions needs to be carefully evaluated. Authoritative items are biased to older items so the research directions are not proper highlighted. However, the link analysis can be considered as one of the possible signals which comes from an analysis of the collection features that need to be evaluated by a tool which tries to combine the desired features from those signals.
