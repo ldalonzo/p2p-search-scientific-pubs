@@ -1,0 +1,121 @@
+\section{Latent Semantic Indexing}
+
+LSI represents documents and queries as vectors in cartesian space, and measuring the similarity between a query and a document, as the cosine of the angle between their vector representation
+
+literal matching scheme such as VSM suffer from synonyms and noise in documents. LSI overcomes these problems by using statistically derived conceptual indices instead of terms for retrieval.
+
+It uses Singular Value Decomposition (SVD) to transform a high-dimensional term vector (computed from VSM) into a lower-dimensional semantic vector, by projecting the former into a semantic subspace. Each element of a semantic vector corresponds to the importance of an abstract concept in the document or query
+
+Suppose the rank of A is $r$. SVD decomposes $A$ into the product of three matrices:
+\begin{subequations}
+\begin{equation}
+\bvec{A_{m \times n}} = 
+\bvec{U_{m \times r}}
+\underbrace{
+\left(
+ \begin{array}{ccc}
+ \sigma_1 & \cdots & 0        \\
+ \vdots   & \ddots & \vdots   \\
+        0 & \cdots & \sigma_r \\
+\end{array}
+ \right)}_{\Sigma_{r \times r}}
+\bvec{V_{r \times n}^T}
+\end{equation}
+\begin{equation}
+\bvec{U}^T \bvec{U} = \bvec{V}^T \bvec{V} = \bvec{I}
+\end{equation}
+\begin{equation}
+\sigma_1 \geq \cdots \geq \sigma_r
+\end{equation}
+\end{subequations}
+
+LSI approximates the matrix A of rank $r$ with a matrix $A_k$ of lower rank $k$ by omitting \ldots $k$ singular values
+\begin{equation}
+\bvec{A_k} = \bvec{U_k} \bvec{\Sigma_k} {\bvec{V_k}}^T
+\end{equation}
+
+The rows of $\bvec{V_k}\bvec{\Sigma_k}$ are the semantic vectors for documents in the corpus.
+
+By choosing an appropriate $k$ for $A_k$ the important structure of the corpus is retained while the noise or variability in word usage (small $\sigma_i$) is eliminated. Former studies on LSI suggest setting $k$ to a value between $50$ and $350$
+
+LSI is capable of bringing together documents that are semantically related even if they do not share terms, by learning from co-occurring word usage
+
+the $i^{th}$ row of $\bvec{U}$ is a refined representation of term $i$ and the $j^{th}$ row of $\bvec{V}$ is a refined representation of document $j$. Both representations are vectors in a $r$-dimensional subspace.
+
+By choosing $k=2,3$ we can plot and visualize those vectors
+
+LSI maps similar words into similar vectors exploit correlations between terms
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=130mm]{img/clustering/title-leo2d.pdf}
+\caption{2-dimensional representation of documents vectors (rows of \bvec{V}) }%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=130mm]{img/clustering/term-term_comparison.pdf}
+\caption{2-dimensional representation of term vectors (rows of \bvec{U}) }%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=120mm]{img/clustering/abstract-comparison.pdf}
+\caption{abstract-comparison.pdf}%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=120mm]{img/clustering/abstract-comparison3d.pdf}
+\caption{abstract-comparison3d}%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=120mm]{img/clustering/title-comparison.pdf}
+\caption{img/clustering/title-comparison.pdf}%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=120mm]{img/clustering/title-leo3d.pdf}
+%\caption{title-leo3d.pdf}%\label{fig:pdfParser_statechart}
+%\end{center}
+%\end{figure}
+
+\subsection{Clustering}
+\paragraph{Centroid}
+\begin{equation}
+\mu = \frac{1}{|\omega|} \sum_{\bvec{x} \in \omega}\bvec{x}
+\end{equation}
+
+\paragraph{RSS} Residual sum of squares
+\begin{subequations}
+\begin{equation}
+\mbox{RSS}_k = \sum_{\bvec{x} \in \omega_k} | \bvec{x} - \mu(\omega_k) |^2
+\end{equation}
+\begin{equation}
+\mbox{RSS} = \sum_k \mbox{RSS}_k
+\end{equation}
+\end{subequations}

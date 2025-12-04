@@ -1,0 +1,91 @@
+\chapter{\label{cha:chapter_dump}Chapter dump}
+
+Short chapter intro \ldots
+
+\section{Index types}
+A P2P index can be \emph{local}, \emph{centralized} or \emph{distributed}
+
+\subsection{Local index}
+bla bla bla
+
+\subsection{Central index}
+bla bla bla
+
+\subsection{Distributed index}
+
+\section{...}
+for optimum performace on a given query a document retrieval system should rank the documents in order of their probability of relevance to the query, according to the information available to the system. various retrieval fuctions which can be used to rank the documents in the appropriate ordr
+
+
+
+\section{Tf.idf}
+
+\subsection{Parametric and zone indexes}
+documents as a sequence of terms ... Consider queries of the form ``find documents authored by Pouwelse containing the phrase social network''. Query processing then consists as usual of posting intersections ... zones are similar to fields except the contents of a zone can be arbitrarly free text. Whereas a field may take on a relatively semall set of values, a zone can be though of as an arbitrary, unbounded amount of text. For instance, documents titles and abstracts are generally treated as zones. We may build a separate inverted index for each zone of a document to support queries such as omississ.
+
+\subsection{Text retrieval}
+is not possible to structure the information ... searching for database elements wich are similar or close to a given query element. Similarity is modeled with a distance function that satisfies the triangular inequality. ... the set of objects is a vector space where the elements consists of $v$ real value coordinates.
+
+Unstructured  text retrieval [...] textual documents are in general not structured to easily provide the desired information. Text documents may be searched for strings that are present or not, but in many cases they are searched for semantic concept of interest. For instance, ad ideal scenario would allow searching a text dictionary for a concept such as ``to free from obligation'' retrieving the word ``redeem''.
+
+A large community of researchers has been working on this problem from a long time ago. A number of measures of similarity have emerged. The problem is basically solved by retrieving documents similar to a given query. The user can even present a document as a query, so that the system finds similar documents. Some similarity approaches are based on mapping a document to a vector of real values, so that each dimension is a vocabulary word and the relevance of the word to the document is the coordinate of the document along that dimension. Similarity functions are then defined in that space. Notive however that the dimensionality of the space is very high (thousand of dimensions).
+
+\subsection{Document and query representation}
+Documents are usually represented as bags of index terms. An index term can be a keyword, chosen from a group of selected words or any word, also known as full-indexing.
+
+\subsection{Preliminaries}
+Given a set of search terms, which translates our information need, we could argue that the more such terms a document contains, the better such document is and for a given search term, the more occurrences of such term in a document, the better the doc is. We derive that not all terms need to be present for a document to be relevant and we need to take into account term the frequency information.
+
+\subsubsection{Process}
+The commonest solution adopted in text retrieval system is a structure known as inverted index.
+
+Documents are parsed to extract terms, terms are sorted, multiple occurrences of a terms in the same document are merged and frequency information is added. The index is then split into a dictionary and a posting file.
+
+\subsection{Weighting terms: tf-idf}
+A document or zone that mentions a query term more often has more to do with that query and therefore should receive a higher score.
+
+\paragraph{} In this view of a document, known as bag of words model, the exact ordering of the terms in a document is ignored, but the number of occurrences of each term is material.
+
+We only retain information on the number of occurrences of each term. Neverthless, it seems intuitive that two documents with similar bags of word representations are similar in content
+
+Given a term $t_i$ and a document $doc_j$ we can provide a measure of how well $doc_j$ fits the term $t_i$ that is which is the relevance of $doc_j$ according to $t_i$.
+
+In the tf.idf weighting schema the weight $w_{i,j}$ depends on two factors. The first is the number of occurrences of the term $t_i$ within the document $doc_j$ and is called the \emph{term frequency} of $t_i$ in $doc_j$ also denoted by $tf_{i,j}$
+
+Raw term frequency suffers from a critical problem: all terms are considered equally important when it comes to assessing relevancy on a query. Certain terms have little or no discriminating power in determining relevance.
+
+The second is a factor that is related to the discrimintative power of $t_i$ in the collection, and it is negatively correlated with the numbers of documents $N_i$ in which $t_i$ appears. This is called the inverse document frequency $idf_i$ of $t_i$ and can be computed as defined in (\ref{eq:idf-definition}) where $N$ is the number of documents in the collection. According to this definition, a term present in each document of the collection has no discriminative power, that is $idf_i = 0$
+
+
+we now combine the definitions of term frequency and inverse document frequency to produce a composite weight for each term in each document. The tfidf weighting scheme assigns to term $t$ a weight $w$ given by (\ref{eq:idf-wij_definition})
+
+The tf-idf weighting scheme computes the weight $w_{ij}$ as defined in (\ref{eq:idf-wij_definition}). We still have $w_{ij}=0$ if $t_i$ is not present in $doc_j$.
+
+
+
+It assigns to term $t$ a weight in documen $d$ that is highest when $t$ occurs many times within a small number of documents; lower when the term occurs fewer times in a document or occurs in many documents; lower when the term occurs in virtually all documents.
+
+\subsubsection{Ranking the documents}
+In order to rank the documents it is sufficient to compute their similarities with respect to the query vector $\vec{q}$.
+
+To compute the similarity of a document with respect to a query, we need to accumulate the weights over the query terms.
+
+\begin{equation}
+ sim(\vec{doc_j}, \vec{q}) = \vec{doc_j} \cdot \vec{q}
+\end{equation}
+
+\subsubsection{Computing the $k$ best documents}
+The idea is take the posting lists of the query terms in each of them we have the frequency of terms and in the vocabulary the inverse document frequency. Take the union of such lists, sort by decreasing similarity values and return the first k documents.
+
+The problem is that we have to completely process all the lists, however notice that cosine similarity is an aggregation function of QT scores.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=120mm]{img/tfidf.png}
+\caption{Tf$\times$IDF weighting scheme}
+\end{center}
+\end{figure*}
+
+
+
+

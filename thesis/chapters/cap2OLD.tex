@@ -1,0 +1,171 @@
+\tool{Compendio}
+breve introduzione al capitolo \ldots
+
+\sezione{bla bla bla}
+bla bla bla
+
+\textit{abstract della tesi}
+
+\sezione{Introduzione (Generalità sul modello p2p e problema della localizzazione di contenuti)}
+Nel capitolo~\ref{chap:intro} viene illustrato il modello di computazione peer-to-peer (p2p) \ldots applicazione nei sistemi di distribuzione di contenuti \textit{file-sharing} e viene delineata la problematica della localizzazione di contenuti (in reti p2p)
+
+\subsezione{Modello di computazione peer-to-peer DRAFT(brainstorm)}
+Il modello di computazione p2p offre un modello di distribuzione di applicazioni basato sulla condivisione di risorse. La scalabilità non è una prerogativa del modello di computazione, bensì p2p si riferisce al modello di computazione per cui ciascun agente agisce allo stesso modo, i.e. non esistono agenti con ruoli diversificati come nel modello client-server (C/S).
+
+Nel senso più generale il modello p2p si riferisce \ldots [omissis] \ldots faremo riferimento a modelli di computazione p2p con un alto numero di agenti(?). Esempi paradigmatici sono le applicazioni di file-sharing in cui ciascun utente mette a disposizione contenuti e banda.
+
+Il modello p2p offre la possibilità di realizzare applicazioni distribuite su vasta scala con caratteristiche di alta affidabilità, (availability?) a fronte di un costo in termini di infrastrutture molto basso. 
+
+\paragraph{Considerazioni sulla scalabilità} Sebbene la scalabilità di sistemi basati su un modello C/S sia fattibile (e.g. Google, YouTube), è richiesta un elevata disponibilità di risorse economiche. Il vantaggio dei sistemi p2p è essenzialmente nella loro economicità.
+
+Esempio paradigmatico sono le applicazioni di \textit{file-sharing} nel quale vengono condivisi banda e contenuti. L'aspetto di computazione p2p è generalmente riferito al traffico di contenuti tra un nodo e l'altro.
+
+La fase di scambio prevede che l'agente richiedente sia a conoscenza della localizzazione dell'oggetto di interesse.
+
+\subsezione{Localizzazione di contenuti DRAFT(brainstorm)}
+Un sistema di \textit{Information Retrieval} (IR). richiede di specificare un modello dei dati che si vogliono cercare, un modello che specifichi le necessità dell'utente e un modello che permetta al sistema di classificare l'insieme degli oggetti presenti nel sistema in modo da selezionare quelli ritenuti in grado di soddisfare le richieste dell'utente.
+
+\ldots (censorship)
+
+\sezione{Panoramica sui modelli di distribuzione di un sistema di IR}
+Nel capitolo~\ref{chap:p2p_content_location} vengono esaminati i modelli che sono stati applicati in letteratura per localizzare contenuti che sono distribuiti su vari nodi di una rete (focus sul reti p2p) \ldots campo di applicabilità, punti di forza e limiti (di scalabilità)
+
+\paragraph{Modelli proposti in letteratura}
+\ldots modello centralizzato (Napster, Bittorrent) \ldots modello completamente distribuito su reti non strutturate (Gnutella) \ldots modello di distribuzione basato su middleware DHT \ldots problematiche di scalabilità per le reti oggetto di studio (i.e. reti p2p su vasta scala ad elevata dinamicità) \ldots tecniche adottate per limitare lo spazio di ricerca (raggruppamento (\textit{clustering}) di nodi semanticamente vicini)
+
+\paragraph{Modello "ispirante"}\ldots esempio adottato da \cite{TXD03} \ldots uso di un middleware CAN (Content Addressable Network) per raggruppare nodi semanticamente correlati \ldots calcolo della semantica di un nodo con LSI \ldots problema: condivisione della base della matrice tra tutti i nodi della rete
+
+\paragraph{Scenario di applicabilità}
+Ruolo della topologia della rete nel limitare lo spazio di ricerca \ldots gestione pro-attiva della topologia della rete facendo uso di protocolli epidemici \ldots topologia basata sulla nozione di vicinanza semantica \ldots ciascun nodo ha un proprio profilo che riassume la propria semantica
+
+\paragraph{Cosa è stato fatto: soluzione adottata}l'approccio usato in Tribler \cite{PGW+08} usa come profilo dell'utente la lista di download \ldots per contenuti testuali quali ad esempio articoli scientifici è più opportuno dare un modello della semantica facendo uso del modello spazio vettoriale \ldots la soluzione adottata in questo lavoro prevede di dare un profilo dell'utente basato sul centroide della matrice VSM \ldots (cfr. figura~\ref{fig:clustering-abstract3d_frankleomartin}) \ldots tentativo di usare LSI: principale ostacolo mancanza di una base comune a tutti i nodi \ldots facendo uso del protocollo epidemico ciascun nodo diffonde il suo profilo che consiste nel centroide della sua matrice VSM \ldots per limitare la banda il centroide è approssimato con i $k$ termini che costituiscono $l'80\%$ della norma \ldots vengono trasmessi i termini (cioè la base) con i rispettivi pesi (normalizzati) \ldots sui quali ciascun nodo calcola la vicinanza semantica con gli altri nodi della rete
+
+scopo di dimostrarne la fattibilità o la fondatezza di alcuni principi o concetti costituenti.
+
+Il termine "Proof of Concept" in Italia è utilizzato prevalentemente in ambito informatico e consiste nella dimostrazione pratica dei funzionamenti di base di un applicativo od intero sistema 
+
+%------------------------------------------------------------------------------------------------%
+%                                                                                                %
+%------------------------------------------------------------------------------------------------%
+\sezione{Un modello per i dati da cercare}
+La disciplina che si occupa dei problemi legati al recupero automatico d’informazione a partire da una richiesta dell’utente è conosciuta come information retrieval o IR. Il principale obiettivo dell’IR è quello di far pervenire all’utente le informazioni rilevanti a partire da una esplicita richiesta inoltrata al sistema, minimizzando la quantità d’informazione superflua.
+
+Un sistema di recupero delle informazioni mira a soddisfare le richieste di utenti restituendo gli oggetti che più possano soddisfare le richieste espresse dagli utenti. Il modello usato dal sistema per catturare la nozione di soddisfacimento fa uso di un opportuno modello dei dati che mira a catturare le informazioni più importanti. Un sistema di recupero per motivi di efficienza organizza la collezione dei dati in una modalità che ne favorisce l'accesso cioè la indicizza.
+
+L'efficacia del modello di recupero dipende dal modello che viene impiegato per i dati da cercare. In generale, un modello che catturi molte caratteristiche si presta ad un'analisi più accurata ed approfondita. Analizzeremo le tecniche applicabili nel paragrafo?. In questo ci limiteremo a fornire un modello.
+
+Dal momento che i dati che vogliamo ricercare sono articoli scientifici, siamo vincolati alle modalità con le quali questi sono diffusi che sono nella forma di articoli pdf che è un formato orientato alla presentazione dei dati piuttosto che ad una memorizzazione strutturata che faccia uso di un qualche schema.
+
+Questo capitolo discute dei compromessi tra la preferibilità di avere un modello ricco che permetta un analisi accurata è la difficoltà di estrarre in modo automatico queste informazioni da documenti visuali come pdf.
+
+Le soluzioni possibili sono quella di recuperare questi dati da qualche archivio disponibile on-line oppure fare uso di forme collaborative basate sull'intervento umano.
+
+All'opposto si può cercare di restituire una qualche forma di strutturazione facendo uso delle convenzioni tipografiche usate nella visualizzazione. Ad esempio è possibile estrarre titolo, autori, separare l'abstract estrarre le citazioni ed usarle per costruire un grafo diretto. Queste tecniche fanno uso in larga parte di tecniche di intelligenza artificiale data la difficoltà di formalizzazione di un modello di riconoscimento.
+
+
+\subsezione{Un modello per gli articoli scientifici}
+
+Un'articolo scientifico può essere modellate con due modelli estremi. Il più semplice considera un articolo come un semplice testo. Il modello usato in questi casi è il modello a spazio vettoriale delle parole. Ciò pone un limite alle possibilità di analisi del modello di recupero delle informazioni.
+
+Viceversa si potrebbe considerare rappresentare la conoscenza con delle ontologie.
+
+Dal momento che il sistema che ricerca le informazioni usa come oggetti file pdf, deve poter adottare per questi un modello dei dati
+
+Considereremo un articolo scientifico formato da blocchi di testo, ciascuno con una semantica associata. Distingueremo il titolo, gli autori, l'abstract, il corpo e la bibliografia. Caratteristica fondamentale che distingue la letteratura scientifica e che la rende simile come caratteristiche alle pagine web è la presenza di collegamenti tra oggetti che codificano una qualche forma di conoscenza.
+
+\subsezione{Tecniche per il recupero dei metadati}
+Assumiamo che gli utenti collezionino articoli scientifici in formato pdf. Il problema maggiore è quello di estrarre informazioni strutturate, quali ad esempio il titolo, le citazioni da questi file che per loro natura sono orientati alla presentazione dei contenuti.
+
+metadati secondo le specifiche DublinCore appaiono restrittive.
+
+Una possibile soluzione potrebbe essere quella di recuperare i dati in modo collaborativo, secondo l'esempio di CiteULike nel quale gli utenti forniscono manualmente i metadati, oppure usare archivi disponibili che indicizzino tali informazioni. In tal caso è necessario tenere in considerazione due problemi fondamentali che si presentano in generale ogniqualvolta si dà accesso distribuito alle informazioni. Quello di garantire una modalità di identificazione univoca degli oggetti e un formato comune di rappresentazione dei metadati.
+
+\paragraph{Unicità dei nomi} caratteristiche di unicità e persistenza. Benché il DOI si propone di risolvere questo problema, è ancora una soluzione a basso uso
+
+\paragraph{Formato dei metadati} librerie digitali quali ad esempio Google Scholar espongono i propri metadati secondo formati comuni alla comunità scientifica come ad esempio BibTeX o EndNote. Tuttavia non esiste uno standard comunemente adottato.
+
+
+\subsezione{Estrazione automatica di dati strutturati da sorgenti non strutturate}
+
+\subsubsezione{Categorizzazione di blocchi di testo}
+
+\subsubsezione{Approcci usati in letteratura e stato dell'arte} Gli approcci proposti in letteratura possono essere classificati 
+
+Classificatori basati su regole
+
+Classificatori basati su una base di conoscenze
+
+
+\subsezione{Prototipo di un sistema di estrazione di dati strutturati da articoli scientifici in formato \textsc{pdf}}
+
+\subsubsezione{Motivazione e logica delle scelte}
+
+\subsubsezione{Estrazione delle informazioni bibliografiche}
+
+\paragraph{Segmentazione delle citazioni}
+
+\subsubsezione{Costruzione del grafo delle citazioni}
+
+\subsubsezione{Valutazione del prototipo}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%------------------------------------------------------------------------------------------------%
+%                                                                                                %
+%------------------------------------------------------------------------------------------------%
+\sezione{Tecniche di analisi per collezioni di articoli scientifici}
+Nel capitolo~\ref{chap:irmodels} vengono illustrate le tecniche maggiormente utilizzate per l'analisi di collezione di documenti testuali tra loro collegate.  Modello VSM \ref{sec:VSM} \ldots (bibliometria?) analisi delle citazioni \ref{sec:link_analysis} \ldots applicazione dell'algebra lineare per analisi semantica (LSI) \ref{sec:LSI}
+
+\subsezione{Modello del a spazio vettoriale del testo}
+valuta la similarità tra due documenti in base alla distanza tra i due vettori che può essere misurata con il coseno dell'angolo sotteso dai due vettori
+
+la ricerca dell'informazione rilevante avviene secondo un criterio di corrispondenza lessicale
+
+algoritmo predilige documenti che contengono i termini specificati dall'utente o una loro combinazione logica secondo uno schema di peso che basata su un modello statiscico di occorrenza dei termini nel testo.
+
+\subsezione{Analisi della semantica latente}
+Il modello a spazio vettoriale non tiene in considerazione il fatto che un termine può avere più significati (polisemia) né del fatto che uno stesso concetto può essere espresso utilizzando termini che sono tra loro sinonimi.
+
+è possibile trattare i vettori privilegiandone gli aspetti semantici trascurando la loro rappresentazione puramente morfologica legata al lessico
+
+proiettare in uno spazio semantico
+
+\subsezione{Partizionamento dei documenti indotto dalla similarità}
+
+\subsezione{Analisi delle citazioni}
+
+
+%------------------------------------------------------------------------------------------------%
+%                                                                                                %
+%------------------------------------------------------------------------------------------------%
+\sezione{Prototipo: proof-of-concepts(?)}
+Il capitolo~\ref{chap:prototype} illustra il prototipo realizzato per provare proof-of-concepts \ldots scopo di dimostrarne la fattibilità o la fondatezza di alcuni principi o concetti costituenti \ldots dimostrazione pratica dei funzionamenti di base di un applicativo od intero sistema integrandolo all'interno di un ambiente già esistente
+
+
+%------------------------------------------------------------------------------------------------%
+%                                                                                                %
+%------------------------------------------------------------------------------------------------%
+\sezione{Conclusioni}
+capitolo~\ref{chap:conc} conclusioni
+\subsezione{Contributo}
+bla bla bla
+\subsezione{Discussione e critica}
+bla bla bla
+\subsezione{Direzioni di sviluppo futuro}
+bla bla bla
+
+\sezione{Esempio: profilo della tesi}
+Nell'appendice~\ref{chap:bib_an} viene proposto ad esempio il profilo dei contenuti trattati nella tesi, ottenuto facendo uso degli strumenti sviluppati 
+

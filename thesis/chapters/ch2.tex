@@ -1,0 +1,452 @@
+\chapter{Document and query representation}
+bla bla
+
+\section{The Vector Space Model}
+In the Vector Space Model (VSM) each document in a collection is represented as a vector. Each component of the vector reflects a particular concept, keyword or term associated with the given document. The value assigned to that component reflects the importance of the term in representing the semantics of the document. Typically, the value is a function of the frequency with which the term occurs in the document or in the whole collection.
+
+A database containing a total of $d$ documents described by $t$ terms is represented by a $t \times d$ term-by-document matrix $A$ (\ref{eq:term_doc_matrix}). The $d$ vectors representing the $d$ documents form the columns of the matrix. Thus, the matrix element $w_{i,j}$ gives a measure on how well the term $i$ represent the semantics of the document $doc_j$. 
+
+\begin{equation}\label{eq:term_doc_matrix}
+A = 
+\bordermatrix{
+  & \mbox{doc}_1   & \mbox{doc}_2      & \cdots & \mbox{doc}_d \cr
+\mbox{term}_1      & w_{11} & w_{12} & \cdots & w_{1d} \cr
+\mbox{term}_2      & w_{21} & w_{22} & \cdots & w_{2d} \cr
+  \; \;     \vdots      & \vdots & \vdots & \ddots & \vdots \cr
+\mbox{term}_t      & w_{t1} & w_{t2} & \cdots & w_{td} \cr}
+\end{equation}
+
+We refer the columns of $A$ as \emph{document vectors} and the rows of $A$ as \emph{term vectors}. The semantic content of the database is wholly contained in the column space of $A$, meaning that the document vectors span the content. We can exploit geometric relationships between document vectors to model similarities and differences in content.
+
+\subsection{Stoplisting and word stemming}
+The choice of terms used to describe the database determines not only its size but also its utility. Including very common terms like \emph{to} or \emph{the} would do little to improve the quality of the term-by-document matrix. The process of excluding such high-frequency words is known as \emph{stoplisting}.
+
+In constructing a term-by-document matrix, terms are usually identified by their word stems. For example, the word \emph{communities} counts as the term \emph{community} and the word \emph{downloading} counts as the term \emph{download}. Stemming reduces storage requirements by decreasing the number of words maintained. We use the Porter Stemming algorithm for this purpose.
+
+
+\subsection{The tf-idf weighting scheme}
+A variety of schemes are available for weighting the matrix elements $w_{ij}$. The tf-idf weighting scheme assigns to each element a weight that depends on two factors, as defined in (\ref{eq:idf-wij_definition}).
+
+\begin{equation}\label{eq:idf-wij_definition}
+ w_{i,j} = \mbox{tf}_{ij} \cdot \mbox{idf}_i
+\end{equation}
+
+The term frequency $\mbox{tf}_{i,j}$ is a local weight that reflects the importance of a term $t_i$ within the document $doc_j$. A document $doc_j$ that mentions a term $t_i$ more often than a document $doc_k$ should receive an higher score with respect to the term $t_i$.
+
+The inverse document frequency $idf_i$ is a global weight that reflects the overall value of term $t_i$ as an indexing term for the entire collection. Terms common to many documents give less information about the semantic content of a document. As one example, consider a very common term like \emph{computer} within a collection of papers on \emph{computer science}. Including that term in the description of a document gives little information about its content. The $idf_i$ factor takes into account the discriminative power of the term $t_i$ within the collection and it is negatively correlated with the number of documents $N_i$ in which $t_i$ appears. It can be computed as defined in (\ref{eq:idf-definition}), where $N$ is the total number of document in the collection. According to this definition, a term present in each document of the collection as no discriminative power, that is $\mbox{idf}_i = 0$.
+
+\begin{equation}\label{eq:idf-definition}
+ idf_i = \log\frac{N}{N_i}, \quad N_i =|\{doc_j : t_i \in doc_j\}|
+\end{equation}
+
+The tf-idf weighting scheme assigns to term $t_i$ a weight $w_{i,j}$ with respect to the document $doc_j$ that is: higest when $t_i$ occurs many times within a small number of documents; lower when $t_i$ occurs fewer times in a document, or occurs in many documents; lowest when the term occurs in virtually all documents.
+
+\subsection{Documents similarity}
+For a document $doc_j$, the set of weights may be viewed as a quantitative digest of the document. According to this view, known as \emph{bags of words model}, the exact ordering of the terms is ignored, but we only retain statistical information about the frequency of occurrence of each term. This model assumes that two documents with similar bags of words representations are close in their semantic content.
+
+The VSM proposes to evaluate the similarity of two documents by measuring the correlation of the corresponding document vectors. A common way to measure correlation is computing the cosine of the angles between the two vectors, as defined in (\ref{eq:similarity}).
+
+\begin{equation}\label{eq:similarity}
+ sim(\buvec{doc_j},\buvec{doc_k}) = \cos \theta_{j,k} = \frac{\buvec{doc_j} \cdot \buvec{doc_k}}{\|\buvec{doc_j}\| \|\buvec{doc_k}\|} = \frac{\sum_i w_{i,j} \cdot w_{i,k}}{\sqrt{\sum_i w_{i,j}^2 } \sqrt{\sum_i w_{i,k}^2 }  }
+\end{equation}
+
+Because the query and document vectors are typically sparse, the dot product and norms in (\ref{eq:similarity}) are generally inexpensive to compute. Furthermore, the document vector norms need to be computed only once for any given term-by-document matrix. Note that multiplying either $\buvec{doc_j}$ or $\buvec{doc_k}$ by a constant does not change the cosine value. Thus we may scale the document vectors by any convenient value. Because the content of a document is determined by the relative frequencies of the terms and not by the total number of times particular terms appear, the matrix element in (\ref{eq:term_doc_matrix}) can be scaled so that the Euclidean norm of each column is 1. That is $\|w_{i}\| = 1$. With this choice the similarity computed with (\ref{eq:similarity}) gives the geometric distance between the two document vectors.
+
+\subsection{Query representation}
+When a user is wishing to retrieve some information from the collection, he queries the system by describing his information needs. This can be done by providing a set of terms, perhaps with weights, that aims to reflect the semantic of his information need. According to the VSM, the query can be represented just like a document. It is likely that many of the terms in the database do not appear in the query, meaning that many of the query vector components are zero.
+
+\begin{equation}
+\buvec{q} = \left(
+\begin{array}{ccc}
+   q_1 & \cdots & q_t
+\end{array}
+\right)^T
+\end{equation}
+
+Query matching is finding the documents most similar to the query. In the VSM the documents selected are those geometrically closest to the query, according to the similarity measure defined in (\ref{eq:similarity}). The search for relevant document is carried out by computing the cosines of the angles $\theta_{j}$ between the query vector $\buvec{q}$ and the document vectors $w_i$. Relevant documents can be ranked according to their similarity with the query.
+
+\subsection{Inverted index and posting files}
+As a document generally uses only a small subset of the entire dictionary of terms generated for a given database, most of the elements of a term-by-document matrix are zero. Storing the matrix in a naive way results in a wasteful use of the memory. A much better representation is to record only the non-zero values. The commonest solution adopted in text retrieval system is a data structure known as \emph{inverted index}. Basically it is a list containing all the $t$ different terms of the collection, so it has as many items as the number of rows in (\ref{eq:term_doc_matrix}). For each term we maintain a list, known as \emph{posting list}, that stores the weights only for the documents in which the given word occurs. By using this solution we store the same information retained by the term-by-document matrix avoiding the zero entries.
+
+\begin{figure*}
+\begin{center}
+%\includegraphics[width=120mm]{img/pdfParser-state_chart-v3.png}
+\includegraphics[width=110mm]{img/inverted-index_building.pdf}
+\caption{State diagram of the Finite State Automaton responsible for classifying the text chunks within a paper. Each state encodes a defined data item. Transition coditions between states are modelled by using heuristics that relies on regular expressions, text formatting properties and EWMA filters.}%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+%\includegraphics[width=120mm]{img/pdfParser-state_chart-v3.png}
+\includegraphics[width=75mm]{img/inverted-index_example.pdf}
+\caption{bla bla bla}%\label{fig:pdfParser_statechart}
+\end{center}
+\end{figure*}
+
+%\begin{figure}
+%\centering
+%\subfigure[bla bla bla]{
+%\begin{equation*}
+% A = 
+%\bordermatrix{
+%                & \mbox{doc}_1 & \mbox{doc}_2  & \mbox{doc}_3 & \mbox{doc}_4 & \mbox{doc}_5 & \mbox{doc}_6 \cr
+%\mbox{content}  &            0 &        0.807  &            0 &            0 &        0.938 &            0 \cr
+%\mbox{network}  &        0.653 &            0  &        0.610 &        0.863 &        0     &            0 \cr
+%\mbox{overlay}  &        0.653 &        0.509  &        0.610 &            0 &        0     &            0 \cr
+%\mbox{peer-to-peer} &        0 &        0      &        0.357 &        0.505 &        0.346 &        0.707 \cr
+%\mbox{semantic}  &       0.382 &        0.298  &        0.357 &            0 &        0     &        0.707 \cr
+%}
+%\end{equation*}
+%}
+%\hspace{15mm}
+%\subfigure[bla bla bla]{
+%\includegraphics[width=70mm]{img/inverted-index_example.pdf}
+%\label{fig:markov-chain_example_B}
+%}
+%\caption{bla bla bla}
+%\label{fig:markov-chain_example}
+%\end{figure}
+
+\begin{equation*}
+ A = 
+\bordermatrix{
+                & \mbox{doc}_1 & \mbox{doc}_2  & \mbox{doc}_3 & \mbox{doc}_4 & \mbox{doc}_5 & \mbox{doc}_6 \cr
+\mbox{content}  &            0 &        0.807  &            0 &            0 &        0.938 &            0 \cr
+\mbox{network}  &        0.653 &            0  &        0.610 &        0.863 &        0     &            0 \cr
+\mbox{overlay}  &        0.653 &        0.509  &        0.610 &            0 &        0     &            0 \cr
+\mbox{peer-to-peer} &        0 &        0      &        0.357 &        0.505 &        0.346 &        0.707 \cr
+\mbox{semantic}  &       0.382 &        0.298  &        0.357 &            0 &        0     &        0.707 \cr
+}
+\end{equation*}
+
+
+When a user queries the system, the search for relevant document are carried out by retrieving the posting lists of the query terms and taking their intersection in order to compute the cosine similarities as defined in (\ref{eq:similarity}).
+
+\subsection{Zone indexing}\label{sec:zone_indexing}
+The VSM treats a document as an unstructured sequence of terms. It aims to model the semantic of a document by using statistical informations about words occurrences. However most documents have additional structure. Text within human readable document often comes with typographic information. As example, a word written in bold font should be considered much more important because the author emphasized it. Moreover the text content could be organized within a number of paragraphs that may have different importance. For instance the abstract section within a scholarly work, that aims to summarize the whole paper's content, can convey better the semantic of the document. The words chosen for the title can be very important as well. In order to improve the notion of relevance we can exploit the structure within the document.
+
+Because we are dealing with scholarly literature, we treat each document as a container of prefefined text zones, such as the title, the abstract and the body. We can represent each zone with its zone vector and store as column in the matrix  (\ref{eq:term_doc_matrix}). When we are going to compute the weights of the zone vector using the tf-idf weighting scheme we refer to zone instead of document in order to compute the global \emph{idf} factor (\ref{eq:idf-definition}).
+
+Instead of use the matrix we can use multiple inverted index, each of them charged for a specific zone. A much more efficient solution could be using a unique inverted index encoding the zones directly in the posting lists.
+
+The relevance of a document to a given query is computed by calculating the linear combination of the relevance scores of each zone (\ref{eq:zone_indexing_scoring}). Coefficient are properly chosen in order to reflect the importance of each section within the document. For instance, we can consider finding the word \emph{Tribler} in the title more important than in the body. We can also support queries as search for documents that contains a certain words in a certain section of the document, e.g.\ search for documents that contains the word \emph{Tribler} in the title.
+
+\begin{equation} \label{eq:zone_indexing_scoring}
+ sim(\buvec{q},\buvec{doc_j}) = \alpha \, sim(\buvec{q}, \buvec{title_j}) + \beta \, sim(\buvec{q}, \buvec{abs_j})
+\end{equation}
+
+\subsection{Implementation issues}
+
+
+bla bla
+
+\begin{algorithm}
+\caption{Global Inverse Document Frequency computation algorithm}%\label{alg:updateIDF}
+\begin{algorithmic}[1]
+\Procedure{UpdateIdf}{$dictionary, N$}\Comment{$N$ documents in the collection}
+\ForAll {$term \in dictionary$}
+	\State $postingFile \gets dictionary[term]$
+	\State $N_i \gets \|postingFile\|$ %\Comment{Number of documents in which $term$ occurs}
+	\State $idf \gets \log\frac{N}{N_i}$
+
+	\ForAll {$docID \in postingFile$}
+		\State $(t_f, w_{ij}) \gets postingFile[docID]$
+		\State $w_{ij} \gets t_f \cdot idf$
+		\State $postingFile[docID] \gets (t_f, w_{ij})$
+	\EndFor
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Document vectors normalization algorithm}%\label{alg:normalization}
+\begin{algorithmic}[1]
+\Procedure{NormalizeDocumentVectors}{$dictionary$}
+\State $docWeights \gets \{\}$
+\ForAll {$term \in dictionary$}
+	\State $postingFile \gets dictionary[term]$
+	\ForAll {$docID \in postingFile$}
+		\State $(t_f, w_{i,j}) \gets postingFile[docID]$
+		\State $docWeights[docID] \gets docWeights[docID] + w_{i,j}^2$
+	\EndFor
+\EndFor
+\ForAll {$term \in dictionary$}
+	\State $postingFile \gets dictionary[term]$
+	\ForAll {$docID \in postingFile$}
+		\State $(t_f, w_{i,j}) \gets postingFile[docID]$
+		\State $w_{i,j} \gets w_{i,j} / \sqrt{docWeights[docID]}$
+	\EndFor
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}
+\caption{Computation of the $k$ best documents}%\label{alg:searching}
+\begin{algorithmic}[1]
+\Function{ComputeTopKDocuments}{$query$}
+\State $resultSet \gets \{\}$
+\ForAll {$term \in query$}
+	\If{$term \in dictionary$}
+		\State $postingFile \gets dictionary[term]$
+		\ForAll {$docID \in postingFile$}
+			\State $(t_f, w_{i,j}) \gets postingFile[docID]$
+			\State $resultSet[docID] \gets resultSet[docID] + w_{ij}$
+		\EndFor
+
+	\EndIf
+\EndFor
+\State $topK \gets$ \textsc{orderK}$(ResultSet)$
+\State \textbf{return} $topK$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\section{Link analysis}
+(...) seek to quantify the influence of scholarly articles by analyzing the pattern of citations among them. Much as citations represent the conferral of authority. Clearly not every citation implies such authority conferral. For this reason, simply measuring the quality of a page by the number of in-links (citations from other papers) is not robust enough (...) evaluate the importance of a publication (...) theory of Markov chains (....) however such a theory can be applied only under the assumption that the graph does not contain dangling nodes.
+
+(...) page authority measure only emerges from the topological structure (...) the authority of a page $p$ depends on the number of incoming links (citations) and on the authority of the page $q$ which cite $p$ with a forward link.
+
+(...) the random walk theory has been widely used to compute the authority of a page (...) a common assumption is that the rank of a page p is modeled by the probability $P(p)$ of reaching that page during a random walk in the graph. The motivation underlying the stochastic interpretation of link analysis is that a random surfer spends a lot of time in important pages: in fact $P(p)$ describes how often a page will be visited.
+
+(this) Markov chain is a random walk on the graph defined by the link structure (...)
+
+\cite{chakrabarti2003mwd, manning2008iir}
+\cite{langville2004dip, langville2005sem, langville2006rpp, bianchini2005ip}
+
+\subsection{Citation graph}
+Each document is represented ad a node in a very large graph. The directed arcs connecting these nodes represents the citations between the documents.
+
+\begin{figure}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=48mm]{img/markov-chain_example_bis_A.pdf}
+\label{fig:markov-chain_example_A}
+}
+\hspace{15mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=55mm]{img/markov-chain_example_bis_B.pdf}
+\label{fig:markov-chain_example_B}
+}
+\caption{bla bla bla}
+\label{fig:markov-chain_example}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=48mm]{img/markov-chain_example_bis_A_02.pdf}
+\label{fig:markov-chain_example_A}
+}
+\hspace{15mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=55mm]{img/markov-chain_example_bis_B_002.pdf}
+
+\label{fig:markov-chain_example_B}
+}
+\caption{bla bla bla}
+\label{fig:markov-chain_example}
+\end{figure}
+
+\subsection{Markov chains}
+A Markov chain is a discrete-time stochastic process, i.e.\ a process that occurs in a series of time steps in each of which a random choiche is made. A Markov chain consists of N states. Each node will correspond to a state in the Markov chain we will formulate.
+
+A Markov chain is characterized by a $N \times N$ transition probability matrix $P$ each of whose entries is in the interval $[0,1]$; the entries in each row of $P$ add up to $1$. The Markov chain can be in one of the $N$ states at any given time-step; then the entry $p_{ij}$ is the probability that the state at next step is $j$, conditioned on the current state being $i$. Each entry $p_{ij}$ is known as a transition probability and depends only on the current state $i$. This is known as the Markov property. thus:
+
+\begin{subequations}
+\begin{equation}
+P = 
+ \left[
+ \begin{array}{ccc}
+ p_{11} & \ldots & p_{1n}\\
+ \vdots & \ddots & \vdots\\
+ p_{n1} & \cdots & p_{nn}\\
+\end{array}
+ \right]
+p_{ij} \in [0,1]
+\end{equation}
+\begin{equation}, \;
+\sum_{j=1}^N p_{ij} = 1
+\end{equation}
+\end{subequations}
+
+\paragraph{Stochastic matrix} a matrix that satisfies (above) is known as a stochastic matrix. A key property of such a matrix is that it has a principal left eigenvector corresponding to its largest eigenvalue, which is $1$ (Perron-Frobenius theorem)
+
+\paragraph{Perron-Frobenius theorem (application of)} Positive stochastic matrix (...) the eigenvalue $\lambda = 1$  (...) all other eigenvalues $\lambda < |1|$. (...) exists a vector having positive entries, summing to $1$, which is a positive eigenvector associated to $\lambda = 1$
+
+(...) The Perron-Frobenius theorem ensures that an irreducible nonnegative matrix possesses a unique normalized dominant eigenvector, called the Perron vector (..?..)
+
+
+
+\paragraph{Irreducible markov chain (matrix)}  A matrix is irreducible if its graph shows that every node is reachable from every other node. An irreducible Markov chain is one in which every state is reachable from every other state. That is, there exists a path from node $i$ to node $j$ for all $i,j$.
+
+\paragraph{Periodicity} A state i has period k if any return to state i must occur in multiples of k time steps. If k = 1, then the state is said to be aperiodic; otherwise (k>1), the state is said to be periodic with period k.
+
+\paragraph{Ergodic Markov Chain} A state i is said to be ergodic if it is aperiodic and positive recurrent. If all states in a Markov chain are ergodic, then the chain is said to be ergodic.
+
+A finite state irreducible Markov chain is said to be ergodic if its states are aperiodic.
+
+For a Markov chain to be ergodic, two technical conditions are required of the its states and the nonzero transition probabilties. These conditions are known as irreducibility and aperiodicity. The first ensures that there is a sequence of transitions of nonzero probability from any state to any other, while the latter ensures that the states are not partitioned into sets such that all state transitions occur cyclically?.
+
+
+
+
+We can depict the probability distribution of a random walk at any time by a probability vector $\buvec{x}$. At $t=0$ we can start the walk may begin at a state $s_i$ whose correspondig component in the vector is $1$. After $t$ steps the probability to be in each of the chain state is given by
+
+\begin{equation}
+ \buvec{x}_{k+1} = \buvec{P} \buvec{x}_k
+\end{equation}
+
+If we contnue a random walk on the Markov chain, each state is visited at a different frequency that depends on the topological structure of the Markov chain.
+
+For any ergodic Markov chain, there is a unique steady-state probability vector $\buvec{x}_s$ that is the principal left eigenvector of P, such that if $\eta_{i,t}$ is the number of visits to state $i$ in $t$ steps, then
+
+\begin{equation}
+ \lim_{t \rightarrow \infty} \dfrac{\eta_{i,t}}{t} = \pi_i
+\end{equation}
+
+If $\buvec{x}_0$ is the initial distribution over the states, then the distribution at step t is given by $\buvec{x}_0 \buvec{P}^t$. As $t$ grows large we would expect that the distribution probability attain to a steady-state ?. Because the theorem ensures that the steady state distribution is unique, it does not depend on the initial distriution.
+
+\begin{equation}
+\lim_{k \rightarrow \infty} (\buvec{x}_0 \buvec{P}^{k+1} - \buvec{x}_0 \buvec{P}^k )= \buvec{0}^T
+\end{equation}
+
+The row vector $\buvec{\pi}^T$ can be found by solving the eigenvector problem:
+\begin{equation}
+\begin{cases}
+    \buvec{\pi}^T \buvec{P} = \lambda \buvec{\pi}^T\\
+    \sum_i \pi_i = 1
+  \end{cases}
+\end{equation}
+
+The normalization equation ensure that $\buvec{\pi}$ is a probability vector.
+
+
+
+Consider the small graph in figure with corresponding adjacency matrix
+\begin{equation}
+A = 
+\bordermatrix{
+  & a & b & c & d \cr
+a & 0 & 1 & 0 & 0 \cr
+b & 0 & 1 & 0 & 0 \cr
+c & 1 & 1 & 0 & 0 \cr
+d & 0 & 0 & 0 & 0 \cr}
+\end{equation}
+
+The Markov model represents the directed graph as a square transition propability matrix $P$ whose elements $p_{ij}$ is the probability of moving from state $i$ (i.e.\ document $i$) to page $j$ in one step (click)
+\begin{equation}
+P =
+ \left(
+ \begin{array}{cccc}
+  0   & 1   & 0 & 0 \\
+  0   & 1   & 0 & 0 \\
+  1/2 & 1/2 & 0 & 0 \\
+  0   & 0   & 0 & 0 \\
+ \end{array}
+ \right)
+\end{equation}
+
+Some rows of the matrix, such as rows 2 and 3 in ?, contains all zeros. Thus P is not stochastic. This occurs whenever a node contains no outgoing edges; many such nodes exist in our graph ?. Such nodes are called dangling nodes. One remedy is to replace all zero rows, $\buvec{0}^T$ with $\buvec{1}^T/n$
+
+The second and third rows of P is entirely zero because there are no edges from the second and third nodes, and consequently P is not a stochastic matrix. Add $\frac{1}{5}$ to each entry in those rows to remedy
+
+\begin{equation}
+\bar{P} =
+ \left[
+ \begin{array}{ccccc}
+  0   & 1   &   0 &   0 \\
+  0   & 1   &   0 &   0 \\
+  1/2 & 1/2 &   0 &   0 \\
+  1/4 & 1/4 & 1/4 & 1/4 \\
+ \end{array}
+ \right]
+\end{equation}
+
+
+in order to make ? irreducible and aperiodic (...)
+
+\begin{equation}
+\bar{\bar{\buvec{P}}} = \alpha \bar{\buvec{P}} + (1-\alpha) \buvec{E} , \; \alpha \in [0,1]
+\end{equation}
+
+
+is a convex combination of two stochastic matrices P and E such that P2 is stochastic and irreducible and hence P2 has a unique stationary distribution $\pi$ (...) This convex combination of the stochastic matrix $P$ and a stochastic perturbation matrix $E$ ensures that $P$ is both stochastic, irreducible (aperiodic?). Every node is now connected to every other node, making the chain irreducible (and aperiodic?) by definition. Altough the probability of transitioning may be very small in some cases, it is always nonzero.
+
+Google PageRank \cite{page98} reasoning was that this stochastic matrix models a Web surfer's ``teleportation'' tendency to randomly jump to a new page by entering a URL on the command line and it assumes that each URL has an equal likelihood of being selected.
+
+with $\alpha=0.8$
+
+\begin{equation}
+\bar{P} =
+ \left[
+ \begin{array}{cccc}
+  1/20 & 17/20 & 1/20 & 1/20 \\
+  1/20 & 17/20 & 1/20 & 1/20 \\
+  9/20 &  9/20 & 1/20 & 1/20 \\
+  1/4 & 1/4 & 1/4 & 1/4 \\
+ \end{array}
+ \right]
+\end{equation}
+
+we yield
+
+\begin{equation}
+\buvec{\pi}^T =
+\left(
+\begin{array}{cccc}
+  ? & ? & ? & ? \\
+ \end{array}
+\right)
+\end{equation}
+
+\subsection{Implementation}
+
+
+python  implementation of PageRank\footnote{\url{http://kraeutler.net/vincent/essays/google\_page\_rank\_in\_python}}
+
+The algorithm to compute the $\buvec{\pi}^T$ for the matrix $P_2$ (...) after specifying a value for $\alpha$ set $\buvec{\pi}_0^T = \buvec{1}_N^T/N$ where $N$ is the size of $\buvec{P}$ and iterate the eq? until the desired degree of convergence is attained.
+
+(...) traditionally, computing the $\buvec{\pi}^T$ has been viewed as an eigenvector problem (...) power iteration is an eigenvalue algorithm: given a matrix A, the algorithm will produce a number $\lambda$ (the eigenvalue) and a nonzero vector v (the eigenvector), such that $Av = \lambda v$.
+
+The power iteration is a very simple algorithm. It does not compute a matrix decomposition, and hence it can be used when A is a very large sparse matrix. However, it will find only one eigenvalue (the one with the greatest absolute value) and it may converge only slowly
+
+\begin{equation}
+\buvec{\pi}_{k+1}^T =
+\alpha \buvec{\pi}_k^T \buvec{P_1} + (1-\alpha) \buvec{E}
+\end{equation}
+
+
+\begin{figure*}
+\centering
+%\includegraphics[width=140mm]{img/pagerank_test_neato_sep9.png}
+\includegraphics[width=140mm]{img/pagerank_test_neato_sep9_ratio11.png}
+\caption{$\alpha=0.85$}\label{fig:graphviz_pageranktest}
+\end{figure*}
+
+%\begin{figure*}
+%\centering
+%\subfigure[Documents $i, j$ are co-cited by $k,m,n$. However, since $m$ also cites $p,q$, the co-citation of $i,j$ by $m$ is not as significant as the co-citation by either $k$ or $n$. This can be compensated by normalizing the weights on the out-bound ]{
+%\includegraphics[width=55mm]{img/citation_graph_A.pdf}
+%\label{fig:cit_graph_A}
+%}
+%\hspace{10mm}
+%\subfigure[Documents $i, j$ co-reference documents $k,m,n$]{
+%\includegraphics[width=55mm]{img/citation_graph_B.pdf}
+%\label{fig:cit_graph_B}
+%}
+%\caption{Importance of link weight normalization}
+%\label{fig:cit_graph}
+%\end{figure*}
+
+
+
+
+
+
+

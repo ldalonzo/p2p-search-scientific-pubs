@@ -1,0 +1,527 @@
+\chapter{Document representation}
+bla bla
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=110mm]{img/system_architecture.pdf}
+\caption{Class diagram of the PDF information extraction subsystem}\label{fig:sys_arch}
+\end{center}
+\end{figure*}
+
+
+\section{Data Model}
+Today, scientific research data and results are shared primarily through publishing paper. Concept and ideas are encapsulated within a paper coding them in natural language that humans can understand. 
+
+In order to provide a search service tailored for scholarly literature we should define a proper data model for the scientific literature. We will try to provide a general model for the scientific literature apart from the form in which it is carried.
+
+At first step we can model a scholarly work as a simple text document without consider its distinctive features. If we choose this option we lose a lot of valuable information that is coded within the text. For instance with this model we can build an index that collects only words limiting the search capabilities.
+
+\subsection{A proposed model}
+We can recognize that each scholarly work is characterized by a title and it is written by one or more authors. Usually its content is summarized in a short section, the abstract. The document body contains the explanations of the concepts and ideas. Sometimes they refer to previous published work. The set of the referenced work is called bibliography. A reference is a link to an existing work. In order to identify with a reasonable accuracy a previous published work, authors usually provides a descritpion in natural language of the work, i.e. the citation string. Using that description we can try to look for the described resource. If we have a global unique identifier for each paper we could provide simply it rather than a description of the referred work.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=110mm]{img/paper.pdf}
+\caption{Class diagram of a collection of papers}\label{fig:papers}
+\end{center}
+\end{figure*}
+
+The viability to adopt this simple model for a collection of papers depends on the capability of the system to build this structure from a collection. For instance, if the collection is made up PDF files, a machine could be able to gather all of the required data from the files.
+
+\subsection{A vision of the future}
+Going further we could treat a scientific work as a container of ideas, concepts and experiments provided by an author. Concepts within a paper could have relationships between them or also with others from previous work. We can model a collection of scientific works as a graph of concepts. In this sense the knowledge unit is not still the scientific work, but the concepts within it.
+
+The adoption of this model involves the ability of the machine to understand the concepts coded within a paper and link them together. Altough we can ask a machine to understand people's languages, the new technology involves asking people to make some extra effort on producing self-describing documents that can be easily managed both for humans and machines \cite{bernerslee2001psw}.
+
+Though the semantic web has been proposed as a general solution to this, it is currently a largely unrealized vision of the future. The new semantic web technology may change the way scientific knowledge is produced and shared. Moving towards this direction will facilitate data sharing, discovery and integration. One can easily imagine how many new possibilities will open up if most of research data are available on the web as units of single experiment, which can be searched by everyone and consumed by computers. Of course, the challenge is how to get the scientific community to publish experiment data on the web in an appropriate format.
+
+\section{Building the models}
+The adoption of the model depicted in figure~\ref{fig:papers} depends on the capability of a machine to build it from underlying source documents. Nowadays most of the scientific literature available over the web is in the PDF or in HTML formats, which were originally designed mainly for human consumption. A machine can easily display their content, but it can not easily understand the knowledge coded within them. Computers are better at handling carefully structured and well-designed data.
+
+We will focus our analysis on PDF format because it has the most spread. Nevertheless is more difficult to mine the data from PDFs rather than from HTML. PDF format is much more oriented to the document presentation while HTML describes, to some degree, also the semantics of a document by using structural markups (e.g.\ \texttt{<h1>Title</h1>}). Structural markups does not denote any specific rendering, but most Web browsers have standardized on how elements should be formatted.
+
+\subsection{Portable Document Format}
+Portable Document Format (PDF) is a file format originally developed by Adobe Systems in 1993 for document exchange and lately it has became an open standard\footnote{It has been published on July 1, 2008 by the ISO as ISO 32000-1:2008}. PDF is used for representing two-dimensional documents in a manner independent of the application software, hardware, and operating system. Each PDF file encapsulates a complete description of a fixed-layout 2-D document that includes the text, fonts, images, and even 2-D vector graphics which comprise the documents. The openness and fidelity to paper of this standard has lead the PDF to become the ubiquitous format for electronic publishing of academic papers.
+
+\subsection{PDF metadata}
+Since PDF format was originally designed only for human consumption, it is not easy for a machine to mine and give semantic to the data that it stores. We could have the following two options: the former is that we can ask a computer to mine the data by understanding the natural language and by using the usual text formatting rules. This is a wide current research activity and involves the use of artificial intelligence techniques. The latter is to couple some extra information directly with the PDF file so an extra effort could be required during the document editing.
+
+\subsubsection{Embedding metadata}
+The PDF standard has the ability to store a pre-defined and limited set of metadata in the Document Information Dictionary (DID). It has fields like \emph{title}, \emph{authors}, etc.  Perhaps because of these strictly limitations, these fields are extremely rarely used in the academic world. None of the academic electronic document publishers use these inadequate fields.
+
+Adobe has produced a relatively new open standard for storing metadata which can be used for PDFs and for a wide variety of file formats as well. The eXtensible Metadata Platform (XMP) defines a metadata model that can be used with any defined set of metadata items. The most common metadata tags recorded in XMP data are those from the Dublin Core Metadata Initiative, which include things like title, description, creator, and so on. The standard is designed to be extensible, allowing users to add their own custom types of metadata into the XMP data. XMP is most commonly serialized and stored using a subset of the W3C Resource Description Framework (RDF), which is in turn expressed in XML.
+
+The XMP proposal has excellent potential for reaching ubiquity as the cross-platform container for machine readable data. It appears to be the candidate most likely for bringing together the digital academic paper with its machine readable metadata ensuring that the metadata travels with the file content. Embedding metadata avoids many problems that occur when metadata is stored separately from the described object.
+
+\subsubsection{Storing as separate object}
+Currently many scholars and authors manage their knowledge of the scientific literature by using some kind of computerized reference management system (e.g.\ Bib\TeX, EndNote, Reference Manager, RefWorks). These software are designed mainly for recording and utilising bibliographic citations. Each scholarly work is described by a set of bibliographic items. For instance, the popular BibTeX tool uses some standard data entries depending on the kind of the scholarly work, such as articles, books, theses. For example the data in figure~\ref{fig:bibtex_example} describes an article published by a journal. Besides the standard data entries we can store other valuable information by defining customized data entries. For instance we can store the abstract section by using the key \texttt{abstract}. By following that idea we could manage almost the same information retained by the model depicted in figure~\ref{fig:papers}.
+
+\begin{figure*}
+\centering
+\begin{verbatim}
+@article{bernerslee2001psw,
+  title={{Publishing on the semantic web}},
+  author={Berners-Lee, T. and Hendler, J.},
+  journal={Nature},
+  volume={410},
+  pages={1023--1023},
+  month={April},
+  year={2001}
+}\end{verbatim}
+\caption{Snippet example of the content of a BibTeX \texttt{.bib} file that stores the bibliographic information of a paper.}\label{fig:bibtex_example}
+\end{figure*}
+
+Instead of using the BibTeX or EndNote file formats, we could retain the same information by defining an XML schema and storing the data according to that definition. However BibTeX, and EndNote formats are used by wide communities, altough none of them has been recognized as universal standard. Also some popular digital libraries (e.g.\ Google Scholar, IEEE XPlore, ACM digital library) expose the metadata of their indexed document by using these formats.
+
+\paragraph{Uniform Resorce Names}\label{sec:urn_issues}
+Even if we have identified an established format for describing metadata, if we keep them as a separate object we need a mechanism for linking the metadata with the described document. Basically we need to identify each document by using a Uniform Resource Name (URN) that is intended to serve as persistent, location-independent resource identifier\footnote{RFC~3986 Uniform Resource Identifier (URI): Generic Syntax}. URNs are required to remain globally unique and persistent even when the resource ceases to exist or becomes no longer available.
+
+Nowadays there is no single way of identifying publications across all digital libraries on the Web. Although various identification schemes such as the Digital Object Identifier (DOI), International Standard Book Number (ISBN), PubMed identifier (which is used by PubMed digital library) and many others exist, there is not yet one identity system to rule them all.
+
+A DOI is a URN that allows persistent and unique identification of a publication (or indeed part of a publication), indipendently of its location. Despite their usefulness, DOIs has not yet been wide adopted.
+
+We could also consider the use of non-standard URNs, i.e. identifiers that don't use officially registered namespaces and thus are invalid URNs in terms of RFC~2141 (URN Syntax) and RFC~3406 (URN Namespace Definition Mechanisms). For instance we can use the digest of the document,  which can be computed by using an hash function, as its URN. With this solution we are confusing the abstract idea of the resource, with its distribution media. For example we can encode a given scholarly work by using a different types of files that have different digests. It is not unusual to find on the Web different files that stores the same paper.
+
+Another interesting solution is the one adopted by \cite{bergmark2000aer}. They builds a URN for each scholarly work by using its bibliographic informations as the title, the first author, the journal and the year of publication. Of course the viability of this option depends on the availability of high quality metadata. In section~\ref{sec:citation_graph_urn} we will discuss important advantages of using this solution in building the citation graph.
+
+\section{Information extraction}\label{sec:information_extraction}
+Information Extraction (IE) is an automatic process which mines information about predefined types of entities or relationships from unstructured or loosely structured document. Human-readable text document usually provides only a visual description of their content so the logical structure of the document is encoded by using typographical conventions. Different techniques can be used in order to give back a structure to the document. We first provide a formal description of the Information Extraction task then we review the tecniques that have been used to address the problem.
+
+We consider the text content within a document $D$ as a set of text chunks $t_i$ (i.e.\ \emph{tokens}) with no associated semantics. Given a pre-defined set of \emph{data items} $type_i$ some tokens $t_i$ within $D$ can be labeled according to those data items. For each pre-defined data type we can define an equivalence relation $\sim_r$ on $D$ that specifies how to partition the set $D$ into two subset that we label as \emph{relevant} and \emph{non relevant} with respect to the equivalence relation $\sim_r$.
+
+\begin{equation}\label{eq:equivalence_relation}
+ [\mbox{type}_i] := \{t_i \in D | t_i \sim_r \mbox{type}_i\}
+\end{equation}
+
+The feasibility of an automated Information Extraction system rely on the definition of those equivalence relations, one for each of the pre-defined data types. This task belongs to a class of problems that are difficult to solve using traditional algorithms. This is typically caused by one or more of the following factors:
+\begin{itemize}
+ \item difficult in formalizing the problem. For example a human can be easily recognize and classify the different sections within a paper, but it is hard to describe a sequence of computational steps that performed on the text and its visual properties allows a computer to do the same work;
+ \item a high number of variables. As instance, there is no a unique standardized way to locate the various sections within a paper. Usual methods to distinguish different sections rely on different fonts properties, such as size, font face and so on, use of spacing or different page alignments;
+ \item lack of theory;
+ \item the need for customization. For example, if we are going to classify documents as whether relevant or not, the distinction may depends significantly by the specific user.
+\end{itemize}
+
+Several approaches have been proposed for automatic metadata extraction, with the most common tools including regular expressions, rule-based parsers, and machine learning algorithms. Regular expressions and rule-based parsers are easily implemented and can perform acceptably well if data are well-behaved. They rely on the use of heuristic algorithms which are a class of algorithms that are able to produce an acceptable solution to a problem in many practical scenarios, but for which there is no formal proof of their correctness. Alternatively, it may be correct, but may not be proven to produce an optimal solution, or to use reasonable resources.
+
+Machine learning algorithms are used to automatically induce models, such as rules and patterns, by using observations (experiences, data, patterns). By receiving feedback on the performance, the learning algorithm adapts the performance element to enhance its capabilities. Dependening on the feedback we can distinguish between the following forms of learning:
+\begin{itemize}
+ \item \emph{supervised learning}. The learning algorithms receives inputs and the correct outputs, and searches for a function which approximates the unknown target function.
+ \item \emph{Unsupervised learning}. The agent receives only input data and uses an objective function (such as a distance function) to extract clusters in the input data or particular features which are useful for describing the data.
+ \item \emph{Reinforcement learning}. The agent receives an input and an evaluation (reward) of the action selected by the agent, and the learning algorithm has to learn a policy which maps inputs to actions resulting in the best performance.
+\end{itemize}
+
+Machine learning methods used for information extraction \cite{dietterich2002mls} include inductive logic programming, grammar induction, symbolic learning, Hidden Markov Models (HMM), Conditional Random Fields (CRFs) (e.g.\ \cite{peng2004aie}) and Support Vector Machines (SVMs) (e.g.\ \cite{han2003adm, kudoh2000usv, seymore1999lhm}). SVMs are becoming increasingly popular tools for classification as they have been proven to be effective for chunk identification and named entity extraction.
+
+An perfect Information Extraction system should use the equivalence relations stated in equation~\ref{eq:equivalence_relation} for automatically classification of the data. Because  the afore-mentioned reasons each of the methods that have been used yelds to an approximation of the ideal equivalence relations. We discuss how to evaluate the extent of this approximation, and therefore the effectiveness of the automated IE task, in section~\ref{sec:ie_evaluation}.
+
+Information extraction has been used in many applications such as information gathering in a variety of domains, automatic annotation of web pages for semantic web, knowledge management. Digital libraries such as CiteSeer \cite{lawrence1999dla,giles1998cac,bollacker1998caw} and Google Scholar automatically mine metadata from crawled PDF documents without human intervention.
+
+\subsection{Design choices}
+Because the purpose of our case study we are interested in an automatic process which builds the model depicted in figure~\ref{fig:papers} by mining the required data from a underlying collection of PDF files. We split this task into three steps that are parsing the PDF, extracting the bibliographic informations and building the citation graph by using the reference strings.
+
+In the following sections we will investigate the available options for the design of each task. However because our goal is to provide a prototype of the system, we do not care too much to achieve high levels of accuracy. Therefore our design choices are driven by fast prototyping constraints, which depends also on the availability of software modules that performs well the single steps.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=120mm]{img/core-pdfParser-2.pdf}
+\caption{Class diagram of the PDF information extraction subsystem.}\label{fig:pdfParser}
+\end{center}
+\end{figure*}
+
+In the figure \ref{fig:pdfParser} is depicted the class diagram of the software module which is charged of mine the information from the PDF documents. We highlight the single modules which are in charge of the single tasks.
+
+\subsection{Parsing PDFs}
+The PDF format, in its basic definition, provides only the geometric description of a document. With the assumption that no metadata is available, the logical structure must be rediscovered by the process of document understanding, which attempts to reverse the document authoring process by examining the layout conventions that have been used.
+
+PDF format are not easy to parse. A document page encoded in PDF format is represented by a collection of primitive objects, wich can be characters, simple graphics shapes, or embedded objects. Each primitive has properties, such as font size and type for characters, and position on the page, given as coordinates of the object's bounding rectangle. For example given a document, we could see that the text content is mixed with PDF's instructions. Moreover spaces are not explicit, but they are coded implicitly in terms of the placement of words on the page. Whole words are not always bracketed together: to give greater control over spacing, letters and words fragments are often placed individually. In order to mine and to categorize data from PDF documents we can take one of the two following approaches.
+
+\subsubsection{Direct parsing}
+The first option is to direct parse and analyze the information retained by PDF. We can have access to each element stored in the page and its corresponding properties. For instance, \texttt{PDFMiner} is a PDF parser and interpreter written entirely in Python that aims to help analyzing text data from PDF documents. Unlike other PDF-related tools, it allows to obtain the exact location of text in a page, as well as other layout information such as font size or font name, wich could be useful for analyzing the document.
+
+The task of information extraction should use all of these properties in order to identify and to categorize the various text chunks.
+
+However, if we pursue this option we must also be concerned to group together sentences and paragraphs. Text extraction is complicated as PDF files are internally built on page drawing primitives, meaning the boundaries between words and paragraphs often must be inferred based on their position on the page. For these reasons, text cannot be extracted reliably by syntactic analysis of the PDF file.
+
+\subsubsection{Conversion to another format}
+The second option is to transform the original PDF document into a format more tractable to analysis. The two most common target formats are plain text and HTML. In general the conversion process is prone to errors and it could cause a loss of some valuable informations about the original document structure.
+
+We tested many conversion to find the most suitable one. The tool \texttt{pdftotext}, which is part of the Xpdf\footnote{\url{http://www.foolabs.com}} project, is an open source command-line utility for converting PDF files to plain text files. Because the simplicity of the target format all of the extra information, such as font size is lost. Mining and categorizing data from plain text without any kind of typographical information can be very hard. First versions on CiteSeer \cite{giles1998cac} used a modified version of \texttt{pdftotext} which inserts font tags into the output.
+
+The tool \texttt{pdftohtml}, that is also based on the Xpdf package, converts PDF documents into HTML. It aims to build an HTML document that resembles the original document layout hence a huge amount of information is enclosed within the output document. Because it is easier to parse the HTML output than directly dealing with PDF, we choose this latter option. Whereas well-formed text extraction is difficult to do with PDF files, we exploit the well-formedness constraints of HTML format to ease the extraction process. We use a standard SGML parser to gather the necessary data to be provided to the information classification task.
+
+\subsection{Extraction of bibliographic details}
+As we described in section~\ref{sec:information_extraction} the best approach for dealing with text classification rely on the use of machine learning algorithms, such as SVMs. However, because our fast prototyping constraints, we choose to implement this stage by using a simple Deterministic Finite State Automaton (DFSA) that relies on heuristics for carrying out the transition conditions between its states.
+
+\begin{figure*}
+\centering
+\includegraphics[width=120mm]{img/pdfParser-stateMachine3.pdf}
+\caption{State diagram of the Finite State Automaton (FSA) employed for the categorization of text chunks which are enclosed within a paper. Each state encodes a well-defined data item. Transition coditions between states are implemented by using heuristics which aims to disclose the features that help in distinguishing the different data types. They rely on text typesets and regular expression in order to capture well-known text patterns.}\label{fig:pdfParser_statechart}
+\end{figure*}
+
+As described in the state chart diagram depicted in figure~\ref{fig:pdfParser_statechart}, we consider the document to be composed as a sequence of predefined usually recurring blocks: the header material, which comprises the title and the authors, the body, which can be splitted into sections, including the abstract that is the most important and recurring one, and finally the bibliography, which contains the reference strings. We encode the semantics of each block by using a different state of the FSA. Once a PDF document is submitted, we first convert it into HTML format for ease the access to the information, then we check for the existence of some of the specified text blocks in order to identify the submitted document as a scholarly work. If we recognize the document as a scholarly work we start analyzing the text chunks in order to classify them.
+The transition conditions between states are modelled by using an heuristic algorithm that relies on the use of some scoring functions which aims to estimate the likelihood that a given text chunk could be classified as one of the predefined data types.
+For instance, referring to the state chart in the figure~\ref{fig:pdfParser_statechart}, if we are currently in the \texttt{Idle} state, we compute three different scoring functions, one for each transition towards not accepting state. We enable one of the available transitions according to the exceeding of certains thresholds by the scoring functions. We implemented the scoring functions using heuristic algorithms that rely on the use of regular expressions and text typesets such as font size, font face and position of the text on the page. Each scoring function is custom-tailored to the kind of data type, i.e.\ one of the FSA state, that we are going to recognize.
+
+\paragraph{Exploiting text typesets}
+Text typesets are an important features used by authors to encode the document structure. We should leverage layout features in order to rediscover the document's logical structure. Since each journal has its own formatting style preferences, there is not a general rule to rediscover the document structure.
+
+Authors usually rely on different font sizes to highlight the importance of text chunks. As instance, title and section titles are usually drawn in a rather larger font than the normal text. However this is not a general rule and a lot of variants are possible. As instance different sections could be also divided by using some extra vertical space or even different font faces and styles.
+
+\begin{figure*}
+\centering
+\subfigure[Usage of font size through the document~1. The largest font size is used only for the title. Also the title sections and their relative importance are high correlated with the font size.]{
+\includegraphics[width=65mm]{img/font_size_source2.pdf}
+\label{fig:typeface_properties_A}
+}
+\hspace{1mm}
+\subfigure[Absolute vertical placement of characters through document~1. In the last column, which contains the bibliography, we can distiguish to a certain extent the single reference strings.]{
+\includegraphics[width=66mm]{img/font_placement_source2.pdf}
+\label{fig:typeface_properties_B}
+}\\
+\subfigure[Usage of font size through the document~2. Most of the sections sections within the document can not be located relying on font size. We can easily distinguish the title, the figure's captions and the references at the end that are drawn by using a smaller font.]{
+\includegraphics[width=65mm]{img/font_size_source5.pdf}
+\label{fig:typeface_properties_C}
+}
+\hspace{1mm}
+\subfigure[Absolute vertical placement of characters through document~2. Columns can be easily identified. Geometric positions can be leveraged for cluster words in the same sections. In the last two columns single reference strings can be identified.]{
+\includegraphics[width=66mm]{img/font_placement_source5.pdf}
+\label{fig:typeface_properties_D}
+}
+\caption{Exploitation of text typesets for re-discoverying the document's logical structure. We treat a document as an array of characters, each of which with associated typographical properties, we plotted some of these properties through all the document length. We analyzed two different documents that portray two different scenarios on using text typesets for encoding the logical structure of the document.}
+\label{fig:typeface_properties}
+\end{figure*}
+
+In figure~\ref{fig:typeface_properties} we analyzed two typical scenarios in which authors rely on different text typesets in order to encode the document structure. By treating documents as streams of typefaces, we plot the text typographical features over all the typefaces in the document, from the first one, that usually belongs to the title, to the last one, which usually is part of the bibiliography. We considered font size and the vertical placement on the page, computed from its top edge.
+
+First document we analyzed make large use of font size to give structure to the document. As we can see in figure~\ref{fig:typeface_properties_A} it is quite easy to distinguish the various sections and their relatively importance by using text font size properties. We can also distinguish the title, which is standed for the largest fonts, which are represented by the beginning markers, and the entire authors sections, which comprises the authors' names and their affiliation. In figure~\ref{fig:typeface_properties_B} we can distiguish the columns enclosed in the document. The last column comprises the bibliography section, which could be located by relying on the font size features. To a certain extent we can get a glimpse of the single citation strings.
+
+Second document uses a different style to separate the various sections. As we can see in figure~\ref{fig:typeface_properties_C}, it makes little use of font size. We can distinguish only the abstract and the reference sections, that are both entirely drawn with a smaller font size. Within the body is not possible to distinguish the various sections since the section title has the same size of the normal text\footnote{The smaller fonts within the body section belong to figure's captions}. As the previous case we can make out the single reference sections by observing the font placements in figure~\ref{fig:typeface_properties_D}.
+
+We are going to use these insights in order to implement the scoring functions for each of the predefined data types. However, because these wide range, it is not easy to find a general model which performs well with all the conceivable formatting styles. The machine learning algorithms try to overcome the difficulty to find a model by automatically induce it by receiving feedback on the performance.
+
+\paragraph{Title and authors} The title of the document is usually written in the largest font size in the document at it appears at the beginning of the document. Altough can be quite easy to identify the header material, which comprise besides the title also the authors and their affiliation, categorize the text as the authors can be quite hard. Because we did not find considerable distinguishing criteria to label the authors, we assume that they come next to the title. Therefore finding the authors section is dependent on the success of finding the title.
+
+\paragraph{Abstract and body} The keywords \emph{Abstract} or \emph{Summary} drawn in a rather large font than the document body is assumed to be a marker for the beginning of the abstract section. We also take into account the location in the document, that is assumed to be next to the front matter. The beginning of the body is assumed to be the first title section that the parser encounte after the abstract section. If the system can not reliable locate it, we assume the length of the abstract up to 1000 words.
+
+\paragraph{References} Most commonly references are found in a late section of an article. They are usually introduced by the strings \emph{References}, \emph{Bibliography} or \emph{List of References} or their common variations, that are drawn in a rather large font than the text content. Processing then begins to find the end point by searching for subsequent sections or the end of the document.
+
+\begin{table}
+ \centering
+ \begin{tabular}{l p{120mm}}
+ \toprule
+  Style & Reference style example\\
+ \midrule
+ IEEE & [1] S.\ Lawrence, C.\ L.\ Giles, and K.\ Bollacker, ``Digital libraries and autonomous citation indexing,'' Computer, vol.\ 32, no.\ 6, pp.\ 67-71, 1999.\\
+ ACM  & 1.\ Lawrence, S., Giles, L.\ and Bollacker, K. 1999. Digital libraries and autonomous citation indexing. Computer, 32 (6). 67-71.\\
+ MISQ\footnote{MIS Quarterly} & Lawrence, S., Giles, L., and Bollacker, K. ``Digital libraries and autonomous citation indexing,'' Computer (39:2) 1999, pp.\ 67-71.\\
+ JMIS\footnote{Journal of Management Information Systems} & 1. Lawrence, S.; Giles, L.; and Bollacker, K. Digital libraries and autonomous citation indexing. Computer, 32, 6 (1999), 67-71.\\
+ ISR\footnote{Information System Research is a journal of the Institute for Operations Research and the Management Science (INFORMS) }  & Steve Lawrence, C. Lee Giles and Kurt Bollacker, ``Digital libraries and autonomous citation indexing,'' Computer, 39, 2, (1999), 67-71.\\
+ APA\footnote{American Psychological Association}  & Lawrence, S., Giles, L., and Bollacker, K. (1999). Digital libraries and autonomous citation indexing. \emph{Computer}, \emph{32}(6), 67-71.\\
+ \bottomrule
+ \end{tabular}
+ \caption{Examples of different journal reference styles (adapted from \cite{day2007})}
+ \label{tab:citation_styles}
+\end{table}
+
+
+Once the complete reference section is extracted, the next phase is to segment individual reference strings. While there are various different styles for delineating individual citations (six major styles are detailed in \cite{day2007}) we considered only the two most frequently used styles:
+\begin{itemize}
+ \item citation strings are marked with square bracket or parenthetical reference indicators.
+ \item strings are marked with naked numbers (e.g. ``\emph{1}'' or ``\emph{1.}'')
+\end{itemize}
+
+The first step is therefore to find the marker type for the citation list. This is done by constructing a number of regular expressions matching common marker styles for the for the considered cases, then counting the number of matches to each expression in the reference string text. If either cases yields more matches than a certain threshold the case with the greatest number of matches is indicated. In both cases, the same regular expressions that were used to find the marker type may be used to indicate the starting point of a citation, and citations are segmented in this manner. If no reference string markers are found, several heuristics are used to decide where individual citation strings start and end based on the relative position on the page and ending punctuation.
+
+\subsubsection{Parsing the reference strings}
+Each reference string is made-ip as a set of fields (e.g., author, title, year, journal) that are represented as a string, with implicit cues such as punctuation to assist in recovering the encoded data. Although it is often straightforward for human readers to divide a citation into its constituent fields, the different grammars used to produce citations by different communities, coupled with inadvertent errors on the part of authors, makes this process difficult to automate.
+
+We first formally define the problem to be solved. We say that a reference string $R$ has first to be broken down into a sequence of tokens $\{r_1, r_2, \ldots, r_n \}$. Each token has to be assigned the correct label from a set of classes $C:=\{c_1, c_2, \ldots, c_m\}$. Evidence used in classifying some token $r_i$ can be any data that can derived from the surface reference string, as well as previously-assigned $r_1, \ldots, r_{i-1}$ classifications.
+
+This sequence labeling problem is common to a large of Natural Language Processing (NLP) tasks. Numerous studies have been proposed in recent years. Those approaches can be classified into three categories: rule-based, knowledge-based and learning-based approaches.
+
+Rule-based methods are widely used in real-world applications. CiteSeer \cite{lawrence1999dla} uses heuristics to extract subfields. It identifies titles and author names in citations with roughly 80\% accuracy \cite{giles1998cac}. As a major drawback of the rule-based approach should be recorded that it requires a domain expert who has to explicitly formulate his knowledge about each reference style that should be recognized by the information extraction component. Therefore each style has to be manually analyzed first and then implemented in the system as a rule, dependent on the symbols already parsed, which is error-prone and time-consuming.
+
+Knowledge-based methods work by using several template databases with various styles of citation templates. INFOMAP \cite{day2007} is a hierarchical template-based reference metadata extraction method with an overall average accuracy level of 92.39\% for the six major citation styles. FLUX-CiM \cite{cortez2007} estimates the probability that a token can be labeled as a certain type by using the information encoded on an automatically constructed knowledge-base (KB). As example for identifing author names KB methods relies on an author name database so the quality of the database greatly affects the parsing accuracy. BibPro \cite{chen2008bcp} does not need KB, only the order of punctuation marks in a citation string is used to represent its format. It employs the BLAST algorithm\footnote{Basic Local Alignment Search Tool (BLAST) algorithm has been widely used in bioinformatics for comparing primary biological sequence information, such as the amino-acid sequences of different proteins or the nucleotides of DNA sequences. A \emph{BLAST search} enables a researcher to compare a query sequence with a library or database of sequences, and identify library sequences that resemble the query sequence above a certain threshold.} to find the most similar citation formats.
+
+Learning-based methods utilizes machine learning techniques (e.g.\ Hidden Markov Model (HMM) \cite{hetzner2008smc}, Support Vector Machines (SVMs), Conditional Random Fields (CRFs) \cite{peng2004aie, councill:pos}, Probabilistic Finite State Transducers (PFST) \cite{kramer2007}).
+
+\paragraph{ParsCit} ParsCit \cite{councill:pos} employs state-of-the-art machine learning models to achieve an overall word accuracy of 97.4\% in reference string segmentation. It relies on the use of a trained Conditional Random Field model for label the token sequence within the reference string. CRFs are a probabilistic framework for labeling and segmenting structured data, such as sequences, trees and lattices. It relies on an undirected graphical model in which each vertex represents a random variable whose distribution is to be inferred, and each edge represents a dependency between two random variables. A common special-case graph structure is a linear chain, which corresponds to a finite state machine, and is suitable for sequence labeling. The distribution of each discrete random variable $Y$ in the graph is conditioned on an input sequence $X$. The underlying idea is that of defining a conditional probability distribution over label sequences given a particular observation sequence \cite{lafferty2001crf}.
+
+ParsCit classifies tokens within a set of of 13 classes, corresponding to common fields used in bibliographic reference management software (e.g.\ EndNote, BibTeX). It has been successfully deployed within CiteSeer$^\chi$ \cite{li2006} and its source code, written in Perl, is freely available to the community\footnote{\url{http://wing.comp.nus.edu.sg/parsCit/}}. It rely on \texttt{CRF++}\footnote{\url{http://crfpp.sourceforge.net/}}, an open source implementation written in C++ of Conditional Random Field.
+
+We make extensive use of these packages for parsing reference strings and build the model depicted in figure~\ref{fig:papers}. Nevertheless we have not yet considered performance issues. Because we chose Python as prototyping language, as a result the process of parsing citations is quite slow because we call a Perl interpreter for each citation that has been found in the document.
+
+\subsection{Evaluation}\label{sec:ie_evaluation}
+As we described in section~\ref{sec:information_extraction}, the task of labeling the text chunks within a document $D$ according to certain pre-defined data types partitions the set $D$ into two subsets, i.e.\ the subset of \emph{relevant} and the subset of \emph{not relevant} tokens with respect to a given data type. The partition of the set $D$ is induced by the equivalence relation $\sim_r$ that specifies how to assign each token $t_i$ to a subset. 
+
+The automated Information Extraction system relyies on an approximation $\sim_r^*$ of this equivalence relation, that induce a different partition of the set $D$ into the subset of the \emph{retrieved} and the subset of \emph{not retrieved} tokens. In order to assess the extent of the approximation of $\sim_r^*$, and therefore the effectiveness of the automated Information Extraction system, we can evaluate the degree of the overlap between those different partitions induced on $D$. By taking the cartesian product of those two partition we can identify a new partition of $D$ made up of four subsets, as depicted in table~\ref{tab:relevant_retrieved_partition}. Each element $t_i$ of the set $D$ belongs to one of the subsets depending if its known type is predicted correctly.
+
+\begin{table}
+ \centering
+ \begin{tabular}{lcc}
+ \toprule
+   & \multicolumn{2}{c}{\textsc{Known Items}}\\
+\cline{2-3}
+   & \textsc{Relevant} & \textsc{Non Relevant}\\
+ \midrule
+ %\cline{2-3}
+ \textsc{Retrieved}     & true positives ($t_p$)  & false positives ($f_p$)\\
+ \textsc{Not Retrieved} & false negatives ($f_n$) & true negatives ($t_n$)\\
+ \bottomrule
+ \end{tabular}
+ \caption{The table of confusion (also known as confusion matrix) summarizes predictions on a set of known examples.}
+ \label{tab:relevant_retrieved_partition}
+\end{table}
+
+By analyzing how elements $t_i$ are mapped into each block we can evaluate the effectiveness of the classifier, i.e.\ how much the approximation $\sim_r^*$ is close to the ideal $\sim_r$.
+
+Different measures \cite{manning2008iir} are used in order to summarize the content of the confusion matrix. This because different problem domains call for the need to use different measures for summarizing prediction quality. We are going to review these measure and their scope of usage, then we evaluate our implementation of the Information Extraction system.
+
+\emph{Accuracy} is the fraction of predictions that are correct. Since a classifier attempts to label instances as neither relevant or non relevant according to a given data type, the accuracy gives a measure of how many elements $t_i$ are properly labeled considering both the true negatives $t_n$ and the true positives $t_p$.
+\begin{equation}
+ \mbox{accuracy} = \frac{|t_p+t_n|}{|t_p+f_p+f_n+t_n|}
+\end{equation}
+
+Accuracy is not an appropriate measure in all of circumstances in which the data are extremely skewed\footnote{\emph{Skewness} is a measure of the asymmetry of the probability distribution of a random variable. The probability distribution of skewed data are not simmetrical about the mean.}. In these situations most of the elements $t_i$ are mapped into the true negatives $t_n$ subset. A system tuned to maximize accuracy can appear to perform well as long as the classifier is not predicting too many positives or just by simply label all the item $t_i$ as non relevant (i.e\. with no items in the true positive $t_p$ subset). However labeling all the items $t_i$ as non relevant is completely unsatisfying. The accuracy will always be high 
+
+The measures of precision and recall concentrate the evaluation on the return of true positive ($t_p$), asking what fraction of the relevant documents have been found and how many false positives have also been returned.
+
+\emph{Precision} is the fraction of positive predictions that are correct.
+\begin{equation}
+ \mbox{precision} = P(\mbox{retrieved}|\mbox{relevant}) = \frac{|t_p|}{\left|t_p+f_p\right|}
+\end{equation}
+
+\emph{Recall} (also called sensitivity) is the fraction of positive labeled instances that were predicted as positive.  Note that an high level of recall can be easily achieved by simply labeling all the items $t_i$ as true positives $t_p$. This because recall does not take into account the number of false positives $f_p$ since they affects the precision measure.
+\begin{equation}
+ \mbox{recall} = P(\mbox{retrieved|relevant}) = \frac{| t_p |}{| t_p+f_n |}
+\end{equation}
+
+\paragraph{F-measure} A single measure that trades off precision versus recall is the F-measure, which is the weighted harmonic mean of precision and recall (equation~\ref{eq:armonic_mean_definition}). Values of $\beta < 1$ emphasize precision, whereas values of $\beta > 1$ emphasize recall.
+\begin{subequations}
+  \begin{equation}
+    F = \frac{1}{\frac{\alpha}{\mbox{precision}}+\frac{1-\alpha}{\mbox{recall}}}, \; \alpha \in [0,1]
+  \label{eq:armonic_mean_definition}
+  \end{equation}
+  \begin{equation}
+    \beta^2 =\frac{1-\alpha}{\alpha} \Rightarrow F = \dfrac{(\beta^2+1) \: \mbox{precision} \cdot \mbox{recall}}{\beta^2 \cdot \mbox{precision} + \mbox{recall}}
+  \label{eq:fmean_definition}
+  \end{equation}
+\end{subequations}
+
+The default balanced F-measure equally weights precision and recall, which means making $\beta=1$. In this case the equation~\ref{eq:fmean_definition} simplifies to equation~\ref{eq:fmean_1}.
+\begin{equation}
+    F_{\beta = 1} = \frac{2 \; \mbox{precision} \: \mbox{recall}}{\mbox{precision} + \mbox{recall}}
+  \label{eq:fmean_1}
+\end{equation}
+
+The armonic mean is used rather than the simply average (i.e.\ the arithmetic mean), which is less suitable for weighting both precision and recall. For instance suppose than we achieve an high level of recall by simply labeling all the instance $t_i$ as relevant. As instance if we assume that $1$ item in $10,000$ is relevant to a given data type, we yield $\mbox{precision} = 10^{-3}$. By using the arithmetic mean we yield a value of $F_1\approx50\%$. In contrast if we use the armonic mean by equally weight precision and recall, the strategy is scored as $F_1\approx0.02\%$. The armonic mean is always less than or equal to the arithmetic mean and the geometric mean, hence when the values of two numbers differ greatly, the harmonic mean is closer to their minimum than to their arithmetic mean (see~\cite{manning2008iir}).
+
+\begin{figure*}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=65mm]{img/parsCit-timing_normal_quantiles.pdf}
+\label{fig:parscit_timing_eval_A}
+}
+\hspace{1mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=66mm]{img/parsCit-timing_distribution.pdf}
+\label{fig:parscit_timing_eval_B}
+}
+\caption{bla bla bla}
+\label{fig:parscit_timing_eval}
+\end{figure*}
+
+
+\begin{figure*}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=65mm]{img/parscit-title-performance.pdf}
+\label{fig:parscit_title_eval_A}
+}
+\hspace{1mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=66mm]{img/parscit-performance-distrib.pdf}
+\label{fig:parscit_title_eval_B}
+}
+\caption{bla bla bla}
+\label{fig:parscit_title_eval}
+\end{figure*}
+
+
+
+
+\begin{figure*}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=65mm]{img/title-effectiveness.pdf}
+\label{fig:title_extraction_eval_A}
+}
+\hspace{1mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=66mm]{img/title-distribution.pdf}
+\label{fig:title_extraction_eval_B}
+}
+\caption{bla bla bla}
+\label{fig:title_extraction_eval}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=65mm]{img/authors-effectiveness.pdf}
+\label{fig:authors_extraction_eval_A}
+}
+\hspace{1mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=66mm]{img/authors-distribution.pdf}
+\label{fig:authors_extraction_eval_B}
+}
+\caption{bla bla bla}
+\label{fig:authors_extraction_eval}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=65mm]{img/abstract-effectiveness.pdf}
+\label{fig:abstract_extraction_eval_A}
+}
+\hspace{1mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=66mm]{img/abstract-distribution.pdf}
+\label{fig:abstract_extraction_eval_B}
+}
+\caption{bla bla bla}
+\label{fig:abstract_extraction_eval}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\subfigure[bla bla bla]{
+\includegraphics[width=65mm]{img/references-effectiveness.pdf}
+\label{fig:references_extraction_eval_A}
+}
+\hspace{1mm}
+\subfigure[bla bla bla]{
+\includegraphics[width=66mm]{img/references-distribution.pdf}
+\label{fig:references_extraction_eval_B}
+}
+\caption{bla bla bla}
+\label{fig:references_extraction_eval}
+\end{figure*}
+
+bla bla bla
+
+
+\subsection{Building the Citation Graph}
+In the previous section we analyzed techniques for information extraction from visual layout documents such as PDFs in order to build a model for scientific literature. Hence we assume that once a PDF document is submitted, the system automatically gather the necessary information in order to build the model depicted in figure~\ref{fig:papers}. We are going to use the information retained by the reference strings enclosed in the reference section in order to build a citation network. Each \emph{reference string} is a comprehensive description of the cited work provided by the author in natural language, that helps on identifying the cited work.
+
+\paragraph{Problem statement} In order to treat a citation index as a graph \cite{garner1967} we have a collection of scholarly documents $D:=\{d_1, d_2, \ldots, d_n\}$ and a function $T$ that we call \emph{citing function}, mapping $D$ into $D$, $T:D \mapsto D$. The expression $Td_i$ will mean the set of papers which have cited the paper $d_i$. The entire graph is denoted by $G:=(D,T)$. This states that the graph is composed of papers and a function which relates these papers.
+
+\paragraph{Related works} The automated linking of related information within a collection of document was first introduced by CiteSeer project \cite{bollacker1998caw, giles1998cac, lawrence1999dla, lawrence1999iar} carried out at NEC research institute. Later, OpCit project \cite{bergmark2000aer, bergmark2001sad} and some other researches (e.g.\ \cite{claivaz2001fds}) addressed the problem. These were later followed by large scale academic domain citation system such as the well-known Google Scholar.
+
+The viability and accuracy of an Autonomous Citation Indexing (ACI) system depends mainly on its ability to build a model, such as the one depicted in figure~\ref{fig:papers}, from underlying source of documents which can be leveraged for building the citation graph.
+
+\paragraph{Key issues}\label{sec:citation_graph_urn} Shaping the citing function $T$ depends strictly on how authors provide citations to previous works and how scholarly works are being identified. There is an important difference between analyzed items and the works cited by those items. Both are writings, but while we know about analyzed items, references are to works which may or not be available.
+
+Nowadays authors usually use reference strings for providing citations to previous work. Each reference string is a description in natural language that aims to identify a unique previous scholarly work by describing its bibliographical features such as the author names, the title, the journal in which it appears and so on. If there is no correlation between those bibliographical features and the URN that is used for identifying each work, we need to perform a search within a database of known works in order to identify if there is one that corresponds to the description provided by the reference string. In this scenario the citing function $T$ should accept as input a reference string, splitted by its component fields, and should provide an identifier, if it exists, of the described work. The task of identifying the cited work by using a description of it, often inaccurate, in natural language, is a typical problem of information retrieval.
+
+A different scenario is adopted by \cite{bergmark2000aer}. It uses a non standard URN scheme for identifying documents which is built by using its bibliographic details. It builds each URN by concatenating three strings: the first author's last name, the 4-digit year of publication and the first 20 characters of the lower-cased title. This become a sufficient precise hash key for identify the cited work just by parsing the reference string. Despite its certain advantage in shaping the citing function $T$, its viability depends strictly on the availability of high quality metadata.
+
+Sometimes, especially in recent papers, authors include within each reference string a field that gives also the DOI reference to the cited work. If we identify each work by using a DOI (likewise any kind of URN), the resolution of the links by the citing function $T$ becomes straightforward since it does not need to resolve the name of the citing work relying on its description. However DOI URNs has not been yet wide adopted. Moreover its use is subjected to the registration to a central authority, i.e.\ the registrant.
+
+Building the citation graph requires the analysis of all the citation strings within each paper in order to locate the cited document. We have different scenarios depending on how the citing function $T$ looks for the target work. If we choose to use URNs that can be simply retrieved by parsing the reference string, we can build the citation graph by analyzing each document at most once. If some of the cited document has not yet been known to the system, we simply put a placeholder which could be turned into an active work if the system will encounter it. Conversely, if the citing funtion needs to look for the cited work by perform a search in a database, it is quite likely that it is unable to match the description with one of the known works. For that reason we need to look again for the missed references each time a new document is submitted to the system.
+
+\paragraph{Implementation} For the sake of ease we identify each scholarly work by using a non-standard URN (i.e.\ in the sense that it does not use registered namespaces) that is built by using the SHA-1 checksum of the PDF file. The main drawback of this solution is that since we are assigning names to the medium (i.e.\ the PDF file) rather to the scholarly work, we are prone to treat different representations of the same work as different ones. As a result the citation graph could contain more nodes than the correct one.
+
+We rely on the reference strings in order to identify the cited works by a given paper. By using these design choices, the citing function $T$ needs to perform a search within the database of the known works in order to identify if one of them corresponds to the given description.
+
+\begin{algorithm}[t]
+\caption{Citation graph building by using reference strings}\label{alg:citation_graph_building}
+\begin{algorithmic}[1]
+\Procedure{BuildCitationsGraph}{}
+\ForAll{$document$}
+	\ForAll{referenceString $\in$ document}
+		\State citedDocument $\gets$ \textsc{LookForCitedPaper}(citationString)
+		\If{$citedDocument$}
+			\State append $citedDocument$ to $document.references$
+			\State append $document$ to $citedDocument.citedBy$
+		\EndIf
+	\EndFor
+\EndFor
+\EndProcedure
+\Statex
+\Function{LookForCitedPaper}{$referenceString$}
+
+\State $topK \gets$ \textsc{ComputeTopK}$(referenceString)$
+
+\State $resultSet \gets \{\}$
+\ForAll{$document \in topK$}
+	\State \textsc{CheckAttributes}($document$)
+\EndFor
+
+\State $describedDocument \gets$ \textsc{order1}$(resultSet)$
+\State \textbf{return} $describedDocument$
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+As encoded by the function \textsc{LookForCitedPaper} in the algorithm ?, we adopt a filter and refine strategy in order to identify the work described by a given citation string. First we select a small set, which contains at most $K$ elements, of candidate papers that have their title similar to the title field provided by the reference string. This is done by performing a keyword search on the database of the known documents using as query string all of the title's words field within the reference string. We aims to retrieve the $K$ nearest neighbours in terms of the similarity to the given description.
+
+We rely on zone indexing in order to distinguish the title from other zones of the document (cfr. section~\ref{sec:zone_indexing}). Document relevance are computed relying on the equation~\ref{eq:zone_indexing_scoring} by giving an high value to the $\alpha$ coefficient which weights the title's index (i.e.\ $\alpha \in \left[0.85, 0.95\right]$). We choose to give a little degree of importance also to others document's zones in order to deal with parsing errors within the title field of the reference string.
+
+Once we selected this set of candidate documents (which should be the $K$-nearest neighbours, in terms of similarity, to the given description), we evaluate the similarity degree between those documents and the description provided by the reference string by using a scoring function. We take into account authors, the number of common words between the document's title and the title field of the reference string. Because the fields within the reference string could be affected by errors, that could be due both by the author or by the information extraction subsystem, we rely on some techniques such as the computation of the edit distance between the strings we are going to compare. The edit distance between two strings of characters is the number of operations required to transform one of them into the other. We use the metric defined by the Levenshtein distance that is given by the minimum number of operations needed to transform one string into the other, where an operation is an insertion, deletion, or substitution of a single character. If one of the document within the set of candidate is evaluated by the scoring function above a certain threshold, we assume the document as the target of the description given by the reference string and we mark the corresponding reference as \emph{``shot''}.
+
+Building the citation graph of the entire document's collection requires the analysis of all the references within each document. Because the citing function $T$ could not be able to match some citations with a target document, we should analyze again all of them whenever a new document joins the collection.
+
+\begin{figure*}
+\centering
+%\includegraphics[width=120mm]{img/leo-neato_9.pdf}
+%\includegraphics[width=140mm]{img/leo-neato_8.png}
+\includegraphics[width=140mm]{img/cgraph-20090322_3.png}
+\caption{bla bla bla}\label{fig:graphviz_1}
+\end{figure*}
+
+\begin{table}
+ \centering
+ \begin{tabular}{llcccccccc}
+ \toprule
+ & ds & $t_p$ & $f_p$ & $f_n$ & $t_n$ & Precision & Recall & F$_1$ & Accuracy\\
+ \midrule
+%& & \multicolumn{4}{|c|}{Primes} \\ \cline{3-6}
+%& & 2 & 3 & 5 & 7 \\ \cline{1-6}
+\multicolumn{1}{l}{\multirow{2}{*}{$k=3$}} &
+\multicolumn{1}{l}{$D$}   & 39 & 2 & 43 & 3,165 & 0.95 & 0.48 & 0.63 & 0.99 \\
+\multicolumn{1}{l}{}                        &
+\multicolumn{1}{l}{$D_r$} & 39 & 2 & 28 & 3,180 & 0.95 & 0.58 & 0.72 & 0.99 \\
+
+\midrule
+
+\multicolumn{1}{l}{\multirow{2}{*}{$k=5$}} &
+\multicolumn{1}{l}{$D$}   & 64 & 2 & 19 & 3,164 & 0.97 & 0.77 & 0.86 & 0.99 \\
+\multicolumn{1}{l}{}                        &
+\multicolumn{1}{l}{$D_r$} & 64 & 2 &  4 & 3,179 & 0.97 & 0.94 & 0.96 & 1.00 \\
+
+\bottomrule
+\end{tabular}
+\caption{bla bla bla}
+ \label{tab:cgraph_accuracy_metrics}
+\end{table}
+
+\begin{figure*}
+\centering
+\includegraphics[width=110mm]{img/cgraph_timecost.pdf}
+\caption{bla bla bla}\label{fig:cgraph_timecost}
+\end{figure*}
+
+
+
+
+
+
+
+
+
+
+

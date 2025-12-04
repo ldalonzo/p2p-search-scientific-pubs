@@ -1,0 +1,45 @@
+digraph citation_graph {
+
+compound=true;
+        ranksep=1.25;
+        label="From Past to Future...";
+
+        node [shape=plaintext, fontsize=16];
+
+        bgcolor=white;
+        edge [arrowsize=1, color=black]; 
+
+0 [label="A Hybrid P2P/Inf..."]  // node 0367f9a10eb69873558158dbfc3255637fd767d1
+1 [label="Managing Clouds:..."]  // node 0ba7b11446f1b4b44c902ad8d766e94cb54cea7c
+2 [label="First experience..."]  // node 0df45563c458f17b8759ba90315b11e11d9b3f7b
+3 [label="On the Quality o..."]  // node 1122f5392019411084b94f3287fceab98f98eab6
+4 [label="ON THE ROLE OF H..."]  // node 2ddd687edd23339fcd6e35775931db11768413fe
+5 [label="Range queries in..."]  // node 2deec6017a4beee8050ea7646ba2d131639b8653
+6 [label="Survey of resear..."]  // node 33831e82544ce07ac6e640c3c8037693bb09d799
+7 [label="Epidemic-Style M..."]  // node 478f0473a03872729c1e43dd10a559f89c7ec494
+8 [label="The Orchard Algo..."]  // node 519eed9c8d99a20d547b1f3b30ef4716209c5d56
+9 [label="Tribler: A socia..."]  // node 6472a6da8102b17758a8f6d7ca250003d5ea5bcf
+10 [label="Peer-to-Peer Inf..."]  // node 6a7a253bb87c1d9da8bf5cd64fa2a45f6ca47a7e
+11 [label="Give-to-Get: Fre..."]  // node 73f15f93097621822865f43cca023cb9b9b9f92d
+12 [label="One hop Reputati..."]  // node 833c5de91fb5fd06ed63e1779079a0714c3bb20e
+13 [label="Associative sear..."]  // node 9679327a9eaa5ddadae8a46db9b19459e9b915b6
+14 [label="Personalization ..."]  // node 999b69584737d53f29e39743c724ae4dd52c0ccb
+15 [label="MOB: Zero-config..."]  // node ac38b3c851ded8e6916c17c7c868d555ae4e3939
+16 [label="Peer-to-Peer Man..."]  // node b90737de01b28a14d19ca5396c958ead02e8732a
+17 [label="Managing peer-to..."]  // node c6896e2556d452094b0e26304e56eb31ea3f6cb0
+18 [label="Scalable Resourc..."]  // node cf520ce4bc5dd1473043ae2823ed1ac2bfab2c42
+19 [label="Searching for An..."]  // node d03f15a538657690b7a2be16841748d3cd2c9878
+20 [label="Efficient Top-k ..."]  // node e527d6aa498cd203b725fcd7e70803e3c842e6bf
+21 [label="Peer-to-Peer Soc..."]  // node e5c130a23bf385c8c76f7d1094091ef92feee174
+22 [label="An Amortized Tit..."]  // node f82228d81e51a8dbdb05542c0257b4c90c0b4478
+23 [label="Design Patterns ..."]  // node fede801cbe77efae1f5521acfab78b2d9ef8c4d9
+5->6
+13->6
+16->6
+9->7
+4->9
+18->9
+22->9
+20->10
+13->13
+}

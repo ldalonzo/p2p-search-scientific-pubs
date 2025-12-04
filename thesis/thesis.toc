@@ -1,0 +1,183 @@
+\contentsline {chapter}{Preface}{vii}{chapter*.1}
+\contentsline {chapter}{Contents}{ix}{section*.2}
+\contentsline {part}{Ricerca e raccomandazioni di articoli scientifici in reti p2p}{3}{part*.3}
+\contentsline {chapter}{\chapternumberline {I}Introduzione}{3}{chapter.Tool-I}
+\contentsline {section}{\numberline {I.1}Modello di computazione peer-to-peer}{3}{section.0.1}
+\contentsline {subsection}{\numberline {I.1.1}Applicabilit\IeC {\`a}}{4}{subsection.0.1.1}
+\contentsline {subsection}{\numberline {I.1.2}Distribuzione di contenuti}{4}{subsection.0.1.2}
+\contentsline {section}{\numberline {I.2}Localizzazione di contenuti}{4}{section.0.2}
+\contentsline {section}{\numberline {I.3}Contributo}{6}{section.0.3}
+\contentsline {chapter}{\chapternumberline {II}Un sistema decentralizzato di ricerca e raccomandazioni}{7}{chapter.Tool-II}
+\contentsline {section}{\numberline {II.1}Architettura del sistema informativo}{7}{section.0.1}
+\contentsline {section}{\numberline {II.2}Raccolta dei dati}{8}{section.0.2}
+\contentsline {section}{\numberline {II.3}Stima delle esigenze informative}{9}{section.0.3}
+\contentsline {subsection}{\numberline {II.3.1}Modello a spazio vettoriale del testo}{9}{subsection.0.3.1}
+\contentsline {paragraph}{Criticit\IeC {\`a}}{10}{section*.4}
+\contentsline {subsection}{\numberline {II.3.2}Stima della semantica associata a una collezione}{10}{subsection.0.3.2}
+\contentsline {section}{\numberline {II.4}Gestione del social network}{11}{section.0.4}
+\contentsline {subsection}{\numberline {II.4.1}Profilo dell'agente}{12}{subsection.0.4.1}
+\contentsline {subsection}{\numberline {II.4.2}Funzione di similarit\IeC {\`a}}{12}{subsection.0.4.2}
+\contentsline {section}{\numberline {II.5}Ricerca e raccomandazione di contenuti}{13}{section.0.5}
+\contentsline {chapter}{\chapternumberline {III}Conclusioni e direzioni di sviluppo}{15}{chapter.Tool-III}
+\contentsline {section}{\numberline {III.1}Riepilogo e contributo}{15}{section.0.1}
+\contentsline {subsection}{\numberline {III.1.1}Contributo}{15}{subsection.0.1.1}
+\contentsline {section}{\numberline {III.2}Discussione e critica}{16}{section.0.2}
+\contentsline {section}{\numberline {III.3}Direzioni di sviluppo}{16}{section.0.3}
+\contentsline {subsection}{\numberline {III.3.1}Visione}{17}{subsection.0.3.1}
+\contentsline {part}{P2P search and recommendations of scientific literature}{21}{part*.5}
+\contentsline {chapter}{\chapternumberline {1}Introduction}{21}{chapter.1}
+\contentsline {section}{\numberline {1.1}Peer-to-Peer computing model}{21}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Scope}{22}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Content distribution systems}{22}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}Content location}{22}{section.1.2}
+\contentsline {section}{\numberline {1.3}Contribution}{23}{section.1.3}
+\contentsline {section}{\numberline {1.4}Thesis outline}{24}{section.1.4}
+\contentsline {chapter}{\chapternumberline {2}Data model and mining techniques}{27}{chapter.2}
+\contentsline {section}{\numberline {2.1}Data models for scholarly literature}{27}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Design requirements trade-offs}{28}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}A proposed model}{28}{subsection.2.1.2}
+\contentsline {paragraph}{Bibliographic data}{28}{section*.6}
+\contentsline {paragraph}{Citations}{28}{section*.7}
+\contentsline {section}{\numberline {2.2}Mining data from unstructured text document}{29}{section.2.2}
+\contentsline {paragraph}{Retrieving metadata from the Web}{29}{section*.8}
+\contentsline {paragraph}{Mining metadata from unstructured source}{30}{section*.9}
+\contentsline {subsection}{\numberline {2.2.1}Unstructured text documents}{30}{subsection.2.2.1}
+\contentsline {paragraph}{Portable Document Format \textsc (PDF)}{30}{section*.10}
+\contentsline {paragraph}{Embedding metadata}{31}{section*.11}
+\contentsline {subsection}{\numberline {2.2.2}Metadata representation}{31}{subsection.2.2.2}
+\contentsline {paragraph}{Adobe XMP}{31}{section*.12}
+\contentsline {paragraph}{Reference manager software metadata formats}{31}{section*.13}
+\contentsline {paragraph}{Lack of standardization}{31}{section*.14}
+\contentsline {subsection}{\numberline {2.2.3}Uniform Resource Names}{32}{subsection.2.2.3}
+\contentsline {paragraph}{Standard URN proposals}{32}{section*.15}
+\contentsline {paragraph}{Non-standard solutions}{33}{section*.16}
+\contentsline {section}{\numberline {2.3}Automatic information extraction}{33}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Problem statement}{33}{subsection.2.3.1}
+\contentsline {paragraph}{Problem definition}{34}{section*.17}
+\contentsline {paragraph}{Common adopted solutions}{34}{section*.18}
+\contentsline {subsection}{\numberline {2.3.2}Machine learning algorithms}{34}{subsection.2.3.2}
+\contentsline {paragraph}{Common adopted solutions}{35}{section*.19}
+\contentsline {paragraph}{Evaluation}{35}{section*.20}
+\contentsline {section}{\numberline {2.4}Information extraction from scientific literature in \textsc {pdf}}{35}{section.2.4}
+\contentsline {paragraph}{Overview}{36}{section*.21}
+\contentsline {subsection}{\numberline {2.4.1}Parsing PDFs}{36}{subsection.2.4.1}
+\contentsline {subsubsection}{Direct parsing}{36}{section*.22}
+\contentsline {subsubsection}{Conversion to another format}{37}{section*.23}
+\contentsline {subsection}{\numberline {2.4.2}Extraction of bibliographic details}{37}{subsection.2.4.2}
+\contentsline {paragraph}{Exploiting text typesets}{39}{section*.24}
+\contentsline {paragraph}{Title and authors}{41}{section*.25}
+\contentsline {paragraph}{Abstract and body}{41}{section*.26}
+\contentsline {paragraph}{Bibliography}{41}{section*.27}
+\contentsline {subsubsection}{Parsing the reference strings}{42}{section*.28}
+\contentsline {paragraph}{Problem statement}{42}{section*.29}
+\contentsline {paragraph}{Approaches to the solution}{42}{section*.30}
+\contentsline {paragraph}{ParsCit}{43}{section*.31}
+\contentsline {subsection}{\numberline {2.4.3}Building the citation graph}{44}{subsection.2.4.3}
+\contentsline {paragraph}{Problem statement}{44}{section*.32}
+\contentsline {paragraph}{Related works}{45}{section*.33}
+\contentsline {paragraph}{Key issues}{45}{section*.34}
+\contentsline {paragraph}{Implementation}{46}{section*.35}
+\contentsline {section}{\numberline {2.5}Prototype evaluation}{48}{section.2.5}
+\contentsline {paragraph}{Table of confusion}{48}{section*.36}
+\contentsline {subsection}{\numberline {2.5.1}Effectiveness metrics}{48}{subsection.2.5.1}
+\contentsline {paragraph}{Accuracy}{48}{section*.37}
+\contentsline {paragraph}{Precision}{49}{section*.38}
+\contentsline {paragraph}{Recall}{49}{section*.39}
+\contentsline {paragraph}{F-measure}{49}{section*.40}
+\contentsline {chapter}{\chapternumberline {3}Models and techniques for linked text collections analysis}{55}{chapter.3}
+\contentsline {section}{\numberline {3.1}The Vector Space Model}{55}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Stop-listing and word stemming}{56}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}The tf-idf weighting scheme}{56}{subsection.3.1.2}
+\contentsline {paragraph}{Term frequency}{56}{section*.41}
+\contentsline {paragraph}{Inverse document frequency}{56}{section*.42}
+\contentsline {subsection}{\numberline {3.1.3}Documents similarity}{57}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Query representation}{58}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Inverted index and posting files}{58}{subsection.3.1.5}
+\contentsline {paragraph}{Example}{58}{section*.43}
+\contentsline {subsection}{\numberline {3.1.6}Zone indexing}{59}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}Implementation issues}{60}{subsection.3.1.7}
+\contentsline {section}{\numberline {3.2}Latent Semantic Indexing}{62}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Singular Value Decomposition}{62}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Low rank approximation}{63}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Examples}{63}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Clustering}{65}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Problem statement}{65}{subsection.3.3.1}
+\contentsline {paragraph}{Example}{65}{section*.44}
+\contentsline {subsection}{\numberline {3.3.2}Clustering algorithms}{65}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Cluster hypothesis}{66}{subsection.3.3.3}
+\contentsline {paragraph}{Example}{66}{section*.45}
+\contentsline {section}{\numberline {3.4}Link analysis}{68}{section.3.4}
+\contentsline {paragraph}{Summary}{68}{section*.46}
+\contentsline {subsection}{\numberline {3.4.1}Finite-state, discrete-time Markov chains}{69}{subsection.3.4.1}
+\contentsline {paragraph}{Stochastic matrix}{69}{section*.47}
+\contentsline {paragraph}{Periodic Markov chain}{69}{section*.48}
+\contentsline {paragraph}{Irreducible Markov chain}{69}{section*.49}
+\contentsline {paragraph}{Ergodic Markov chain}{70}{section*.50}
+\contentsline {paragraph}{Steady-state analysis}{70}{section*.51}
+\contentsline {subparagraph}{Theorem}{70}{section*.52}
+\contentsline {subsection}{\numberline {3.4.2}Application to link analysis}{71}{subsection.3.4.2}
+\contentsline {paragraph}{Perturbation of the chain}{72}{section*.53}
+\contentsline {subsection}{\numberline {3.4.3}Implementation}{73}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Applicability and criticism}{73}{subsection.3.4.4}
+\contentsline {chapter}{\chapternumberline {4}Distributed content location}{75}{chapter.4}
+\contentsline {section}{\numberline {4.1}Problem definition}{75}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Client-server mapping}{76}{subsection.4.1.1}
+\contentsline {paragraph}{Publishing contents}{76}{section*.54}
+\contentsline {paragraph}{Criticism}{76}{section*.55}
+\contentsline {subsection}{\numberline {4.1.2}Peer-to-peer mapping}{76}{subsection.4.1.2}
+\contentsline {paragraph}{Requirements}{77}{section*.56}
+\contentsline {section}{\numberline {4.2}Distribution models}{77}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Partition-by-document}{78}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Partition-by-term}{78}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Support of DHTs middlewares}{78}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Literature proposed solutions and scope of usage}{79}{subsection.4.2.4}
+\contentsline {paragraph}{Scope}{79}{section*.57}
+\contentsline {subsection}{\numberline {4.2.5}Query routing over random connection topologies}{79}{subsection.4.2.5}
+\contentsline {paragraph}{Gnutella's flooding}{79}{section*.58}
+\contentsline {subsubsection}{Exploiting connection topology}{80}{section*.59}
+\contentsline {section}{\numberline {4.3}Semantic Overlay Networks}{81}{section.4.3}
+\contentsline {paragraph}{Solutions adopted in literature}{81}{section*.60}
+\contentsline {subsection}{\numberline {4.3.1}Strategies on exploiting network topology}{81}{subsection.4.3.1}
+\contentsline {paragraph}{Reactive approach}{81}{section*.61}
+\contentsline {paragraph}{Proactive approach}{82}{section*.62}
+\contentsline {subsubsection}{Locality of interest principle}{82}{section*.63}
+\contentsline {subsection}{\numberline {4.3.2}Topology construction problem}{82}{subsection.4.3.2}
+\contentsline {paragraph}{Ranking functions}{82}{section*.64}
+\contentsline {section}{\numberline {4.4}Gossip-based topology management}{83}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Gossip protocols}{83}{subsection.4.4.1}
+\contentsline {paragraph}{Typical application}{83}{section*.65}
+\contentsline {paragraph}{Model}{84}{section*.66}
+\contentsline {subsection}{\numberline {4.4.2}General requirements}{84}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Peer sampling service}{84}{subsection.4.4.3}
+\contentsline {paragraph}{Newscast}{85}{section*.67}
+\contentsline {paragraph}{Cyclon}{85}{section*.68}
+\contentsline {subsection}{\numberline {4.4.4}Topology management protocols}{85}{subsection.4.4.4}
+\contentsline {paragraph}{Tribler BuddyCast}{86}{section*.69}
+\contentsline {subsubsection}{Design key issues}{86}{section*.70}
+\contentsline {paragraph}{Gossip items}{86}{section*.71}
+\contentsline {paragraph}{Cache size}{87}{section*.72}
+\contentsline {paragraph}{Gossip length}{87}{section*.73}
+\contentsline {paragraph}{Gossip period}{87}{section*.74}
+\contentsline {paragraph}{Node profile and ranking function}{87}{section*.75}
+\contentsline {paragraph}{Bandwidth considerations}{88}{section*.76}
+\contentsline {chapter}{\chapternumberline {5}A proof-of-concepts prototype}{89}{chapter.5}
+\contentsline {section}{\numberline {5.1}System architecture}{89}{section.5.1}
+\contentsline {section}{\numberline {5.2}Collecting data}{89}{section.5.2}
+\contentsline {section}{\numberline {5.3}Learning user's information needs}{90}{section.5.3}
+\contentsline {paragraph}{PoC design}{91}{section*.77}
+\contentsline {section}{\numberline {5.4}Social network management}{91}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}User's profile}{91}{subsection.5.4.1}
+\contentsline {paragraph}{PoC design}{92}{section*.78}
+\contentsline {subsection}{\numberline {5.4.2}Ranking function}{92}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}Bandwidth requirements estimation}{93}{subsection.5.4.3}
+\contentsline {section}{\numberline {5.5}Searching and recommending contents}{93}{section.5.5}
+\contentsline {paragraph}{PoC design}{93}{section*.79}
+\contentsline {section}{\numberline {5.6}Putting all together: a fully functioning prototype}{94}{section.5.6}
+\contentsline {chapter}{\chapternumberline {6}Conclusions and future work}{97}{chapter.6}
+\contentsline {section}{\numberline {6.1}Summary and contributions}{97}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Contributions}{97}{subsection.6.1.1}
+\contentsline {section}{\numberline {6.2}Discussion and reflection}{98}{section.6.2}
+\contentsline {section}{\numberline {6.3}Future work}{98}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Vision}{98}{subsection.6.3.1}
+\contentsline {appendix}{\chapternumberline {A}Bibliography analysis}{99}{appendix.A}
+\contentsline {chapter}{Bibliography}{103}{section*.81}

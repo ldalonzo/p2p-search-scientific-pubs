@@ -1,0 +1,37 @@
+%\part*{Delft}
+%\addcontentsline{toc}{part}{Delft Partition}
+
+%\setcounter{chapter}{0}
+%\renewcommand{\thechapter}{\arabic{chapter} }
+%\def\chaptername{Chapter}
+
+\chapter{Introduction}
+
+This chapter introduces all aspects that form the context and
+motivations of the graduate project. We will describe \ldots
+
+\section{Peer-to-Peer architectures}
+
+\subsection{Drawbacks of client-server model}
+The traditional client-server computing model is not adequate to address reliability and scalability properties. Even when servers are replicated for fault-tolerance, the synchronization mechanism needed to preserve replica consistency is a major source of overhead.
+
+\subsection{P2P approach}
+The peer-to-peer computing model represents a radically different and a plausible alternative for many large scale applications in internet-wide settings. In this model resources are shared between end-user processes themselves in a peer style, meaning that every such process potentially acts both as client and a server.
+
+\subsubsection{Advantages}
+Central point of failures disappear as well as the associated performance bottlenecks.
+
+Scalability is achieved because the load is balanced between all processes of the system.
+
+\subsubsection{Disvantages}
+In addition, each process requires only local knowledge of the state of the system.
+
+\section{Epidemic protocols}
+Epidemic algorithms have been recently recognized as robust and scalable means to disseminate information in large-scale settings. Information is disseminated reliably in a distributed system the same way an epidemic would be propagated throughout a group of individuals: each process of the system chooses random peers to whom it relays the information it has received.
+
+Epidemic algorithms have recently gained popularity as a robust and scalable way of propagating information in distributed systems.
+A process that wishes to disseminate a new piece of information to the system does not send it to a server, or a cluster of servers, in charge of forwarding it, but rather to a set of other peer processes, chosen at random. In turn each of each processes does the same, and also forward the information to randomly selected processes, and so fort
+
+The underlying peer-to-peer communication paradigm is the key to the scalability of the dissemination scheme.
+Epidemic algorithms have been studied theoretically and their analysis is built on sound mathematical foundations.
+

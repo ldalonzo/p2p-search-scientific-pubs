@@ -1,0 +1,150 @@
+\section{Abstract}
+
+We focus on enhancing decentralized search for content by forming semantic overlay networks, that is, by forming links among semantically related peers.
+
+\subsection{General requirements}
+Large-scale, dynamic, fully distributed systems (\ldots) In our scenario we are considering the high dynamic nature of file-sharing communities (\ldots)
+
+%------------------------------------------------------------------------%
+%------------------------------------------------------------------------%
+%------------------------------------------------------------------------%
+
+\section{Peer-to-Peer architectures}
+
+\subsection{Limitations of client-server model}
+The traditional client-server computing model is not adequate to address reliability and scalability properties. Even when servers are replicated for fault-tolerance, the synchronization mechanism needed to preserve replica consistency is a major source of overhead.
+
+\ldots centralyzed \ldots benefit form replication \ldots improve availability and throughput in exchange for additional hardware and update costs.
+
+\subsection{Generalities of P2P approach}
+The peer-to-peer computing model represents a radically different and a plausible alternative for many large scale applications in internet-wide settings. In this model resources are shared between end-user processes themselves in a peer style, meaning that every such process potentially acts both as client and a server.
+
+p2p systems are gaining popularity quickly due to their scalability, fault-tolerance, and self-organizing nature
+
+\subsubsection{Advantages}
+Central point of failures disappear as well as the associated performance bottlenecks.
+Scalability is achieved because the load is balanced between all processes of the system.
+
+building large scale information retrieval systems at low cost
+
+A serverless p2p system can achieve astounding aggregate download capacities without requiring any additional expenditure for bandwidth or server farms. p2p file-sharing systems are self-scaling in that as more peers join the system to look for files, they add to the aggregate download capacity as well.
+
+Web search engines have traditionally relied on enumerating the entire Web using crawlers, which results in \ldots popular file sharing systems use a push model for updates \ldots through explicit document publishing \ldots distributed keywords index delivers improved completeness and accuracy relative to traditional spiderig techniques
+
+rapidly changing data makes difficult to keep a central IR server up to date
+
+\subsubsection{Disvantages}
+In addition, each process requires only local knowledge of the state of the system.
+
+\subsection{Reflection and motivations}
+From a financial standpoint, while scaling a centralized search site is technically feasible, it requires a sizable capital investment in the infrastructure. \ldots this approach can only be adopted when there is an underlying business model to the application. Decentralized designs need no large infrastructure expenditures.
+
+
+
+\section{Searching within p2p networks}
+A large number of p2p keyword search systems have been proposed \ldots document based, keyword based, semantic indexing \ldots \cite{ZMS+05} provide an evaluation and comparison of existing p2p keyword search techniques. It suggests that there is no absolute best choice among current p2p keyword search techniques \ldots choice based on network size, number of document, query throughput 
+
+variety of search applications (from Web search to searching networks of digital libraries)
+
+[applicability of the solution] well-managed stable environments (e.g. Google-like search engines, data centers and corporations) and more dynamic p2p environments.
+
+\cite{YDR+06} provides a quantitative comparison of full text keyword search in structured and unstructured p2p systems
+
+\subsection{Overview}
+placement of content is an orthogonal problem. there is little or no benefit placing documents and their keyword in the same place.
+
+Content-based full-text search is challenging problem in p2p networks
+
+The capability to locate desired documents usinf full-text keyword search is essential for large-scale p2p networks
+
+Locating content in decentralized p2p systems is a challenging problem. Gnutella, a popular file-sharing application relies on flooding queries to all peers. Altough flooding is simple and robust, it is not scalable.
+
+An extensive study \cite{risson2006srt, andro2004} has been published on search methods in peer-to-peer networks, be they structured, unstructured or of a hybrid form.
+
+it is not feasible to maintain a full view of a dynamic system at each node since the cost of maintenance would be unacceptable.
+
+altough a number of p2p search techniques have been proposed in recent years most of them are based on simple keyword match, ignoring advanced relevance ranking algorithms
+
+\paragraph{Centralized solutions} Napster used a centralized search facility based on file list provided by each peer.
+
+Centralized search engines can be employed in p2p networks and provide look-up services. Altough these systems may provide a high level of scalability and availability, a p2p keyword search system may be preferable due to its robustness, low maintenance cost and data freshness.
+
+Web search engines such Google \cite{BP98} operate in a centralized manner. A farm of servers retrieves all reachable content on the web and build an inverted index. Another farm of servers \ldots
+
+\paragraph{Gnutella} Gnutella uses an unstructure overlay network in that the topology of the overlay network and placement of files within it is largely unconstrained. It floods (multicast based flooding) each query across this overlay with a limited scope. Upon receiving a query, each peer sends a list of all content matching the query of the originating node. Because the load on each node grows linearly with the total number of queries, which in turn grows with sistem size, this approach is clearly not scalable \cite{CRB+03}.
+
+Gnutella protocol uses a flooding-based search method to find files within its p2p network. To locate a file a node queries each of its neighbors, which in turn propagate the query to their neighbors and so on until the query reaches all of the clients within  certain radius from the original querier. Altough this approach can locate files even if they are replicated at an extremely small number of nodes, it has scaling problems.
+
+\paragraph{dhts} another class of p2p systems achieve scalability by structuring the data so that it can be found with fal less expense than flooding. \ldots DHTs are well suited for exact match lookup using unique identifiers, but do not directly support text search. There are some proposals for p2p text search over DHTs e.g. \cite{RV03}
+
+\cite{RV03}  suggest several optimizations to reduce the cost of transporting inverted lists. They propose encoding inverted lists as Bloom filters to reduce their size \ldots
+
+
+
+\subsection{Motivation}
+File sharing p2p systems have gained enormous popularity in recent years. This has stimulated significant research activity in the area of content based searching. Sparkled by the legal adventures of Napster, and challenged to defeat the inherent limitations concerning the scalability and failure resilience of centralized systems, research has focused on decentralized solutions for content-based searching.
+
+The inherent limitations of centralized systems (e.g. scalability, failure tolerance and administration costs) as well as the desire to avoid centralized control over content searching (e.g. censorship or result manipulation by political or financial interests) have urged researchers to seek decentralized solutions.
+
+
+\subsection{Problems and solutions}
+\cite{CRB+03} proposes several modifications to Gnutella's design that dinamically adapts the overall topology and the search algorithms in order to accomodate the natural heterogeneity in most p2p systems. (...) exploits node heterogeneity making the selection of supernodes and construction of the topology around them more dynamic and adaptive than KaZaA. (...) replacing Gnutella's flooding with random walks (...) topology adaptation algorithm (...) token-based flow control algorithm. \cite{CRB+03} key proposals (\ldots) dynamic topology adaptation protocol \ldots active flow control scheme to avoid overloaded hot spots \ldots one-hop replication of pointers to content \ldots random walks instead of flooding.
+
+\cite{LCC+02} proposed replacing floodings with random walks (\ldots) a query is forwarded to a randomly chosen neighbor at each step until sufficient responses to the query are found (\ldots) a random walk is essentially a blind search at each step a query is forwarded to a random node without taking into account any indication of how likely it is that node will have responses for the query.
+
+\cite{LLH+03} showed that p2p networks does not have enough capacity to make naive use of either of search techniques attractive for Web search \ldots presents optimizations for p2p search based on DHTs \ldots naive implementations of p2p web search are not feasible and mapped out some possible optimizations \ldots the key problem is the cost to transport the inverted lists betweeen peers so they can be intersected
+
+to minimize the number of nodes a query probes, heuristic based approaches direct a search to only a fraction of the node population. These approaches can be further divided into three categories: random walk, employing summarizations, and organizing nodes with similar contents or sharing interest into groups.
+
+PlanetP \cite{CPM+03} uses a Bloom filter to summarize contents on each node and floods the summaries to the entire system \ldots \cite{CFK07} use guide rules to organize nodes into an associative network
+
+\subsection{DHTs vs. unstructured overlays}
+
+DHTs provide a service that hides request routing, churn costs\footnote{costs associated with managing node joins and departures}, load balancing and unavailability
+
+Application built using DHTs request documents using an opaque key. The means for choosing the key is left for the application built on top of the DHT \ldots users must have a single unique name to retrieve content. No functionality is provided for keyword searches
+
+A straightforward application of keyword search techniques on top of DHTs results in performance that is unfeasible by at least an order of magnitude \cite{LLH+03}
+
+\paragraph{P2P clients are extremely transients}
+
+\paragraph{Keyword searches are more prevalent and more important than exact-match queries} DHTs are designed for exact-match lookup. Supporting such keyword searching on top of DHTs is not a trivial task. For example a typical approach of constructing an inverted index per keyword can be expensive to maintain in the face of frequent node churn.
+
+However DHTs have exact recall, in that knowing the name of a file allows you to find it, even if there is a single copy of that file in the system (\ldots) gnutella-like design are more robust in the face of transients and support general search facilities, both important properties of P2P file sharing.
+
+\subsection{Naive models}
+This section outlines the costs of naive implementations of two common p2p text search strategies: partition-by-document and partition-by-keyword. \ldots typically precompute an inverted index, for each word a posting list of the identifiers of documents that contains that words. These posting are intersected in a query involving more than one term. \ldots Systems typically combine many ranking factors, these may include the importance of document themselves, the frequency of search terms, how close the terms occur to each other within the documents.
+
+\cite{LLH+03} storage and bandwidth constraints \ldots propose optimizations such regarding caching and precomputation, compression.
+
+\paragraph{Partition by-document} documents are divided up among the hosts and each peer maintains a local inverted index of the documents it is responsible for. Each query must be broadcast or flooded to all peers, each peer returns its most highly ranked documents. \ldots partition-by-doc requires that all nodes be contacted, regardless the number of keywords in the query
+
+document are divided among nodes and each node maintains local inverted index \ldots a query is broadcast to all nodes, and each node returns the $k$ most higly ranked document in its local inverted index \ldots a
+
+\paragraph{Partition by keyword} in this scheme responsibility for the words that appear in the document corpus is divided among the peers. Each peer stores the posting list of the words it is responsible for. A DHT would be used to map a word to the peer responsible for it e.g. \cite{RV03}. A query involving multiple terms requires that the postings for one or more of the terms be sent over the network. \ldots partition by keyword minimizes the cost of searches by ensuring that no more k servers must partecipate in answering a query containing $k$ keywords \ldots operation requires contacting multiple peers across the wide area \ldots requisite intersection operation across the sets returned by each peer can become expensive, both in terms of consumed bandwidth and latency
+
+communication cost of keyword-based partitioning grows linearly with the number of documents in the system
+
+\paragraph{Hybrid indexing} Hybrid indexing \ldots identify top-k terms in a document and only publishes the term list of the document to the inverted lists of these top terms
+
+\paragraph{Semantic search} Semantic search \cite{TXD03} map each document and queries to points in a semantic space with reduced dimensionality. For each query semantic search returns the top a few closest points to the query point in the multidimensional semantic space, \ldots semantic search can be characterized as nearest neighbour search
+
+pSearch \cite{TXD03} distributes document indices through the p2p network based on document semantics generated by Latent Semantic Indeing (LSI) \ldots the search cost for a given query is thereby reduced, since the indices of semantically related documents are likely to be co-located in the network.
+
+
+
+\subsection{Searching within semantic groups}
+Much research on content-based p2p searching for file-sharing applications has focused on exploiting semantic relations between peer to enhance searching.
+
+We are interested in those group of networks in which searching is based on grouping semantically related nodes. In these networks, a node first queries its semantically close peers before resorting to search methods that span the entire network.
+
+A node searches for content by first querying its semantically close peers and then resorting to search methods that span the entire netowk only if the former attempt provided no satisfactory results.
+
+The fundamental problem that makes search in existing p2p systems difficult is that with respect to semantics, document are randomly distributed. Given a query, the system either has to search a large number of nodes or the user runs a high risk of missing relevant documents.
+
+\paragraph{Semantic overlay} logical network where contents are organized around their semantics such that the distance (e.g. routing hops) between two documents in the network is proportional to their dissimilarity in semantics.
+
+\cite{TXD03} produces document semantics using LSI \ldots uses a CAN to create a semantic overlay by using the semantic vector of a document as a key to store the document index in the CAN \ldots documents close in the semantic space have similar contents \ldots each query can also be positioned in this semantic space \ldots to find documents relevant to a query we only need to compare the query against documents within a small region centered at the query, because the relevance of documents outside the region is relatively low.
+
+pSearch \cite{TXD03} relies on some globa statistics, i.e. the idf and the basis of the semantic space. Distributing this information to each engine allows the nodes to compte semantic vectors of new documents and queries independently.
+

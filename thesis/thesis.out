@@ -1,0 +1,52 @@
+\BOOKMARK [0][-]{chapter*.1}{Preface}{}
+\BOOKMARK [0][-]{section*.2}{Contents}{}
+\BOOKMARK [-1][-]{part*.3}{Ricerca e raccomandazioni di articoli scientifici in reti p2p}{}
+\BOOKMARK [0][-]{chapter.Tool-I}{I Introduzione}{part*.3}
+\BOOKMARK [1][-]{section.0.1}{I.1 Modello di computazione peer-to-peer}{chapter.Tool-I}
+\BOOKMARK [1][-]{section.0.2}{I.2 Localizzazione di contenuti}{chapter.Tool-I}
+\BOOKMARK [1][-]{section.0.3}{I.3 Contributo}{chapter.Tool-I}
+\BOOKMARK [0][-]{chapter.Tool-II}{II Un sistema decentralizzato di ricerca e raccomandazioni}{part*.3}
+\BOOKMARK [1][-]{section.0.1}{II.1 Architettura del sistema informativo}{chapter.Tool-II}
+\BOOKMARK [1][-]{section.0.2}{II.2 Raccolta dei dati}{chapter.Tool-II}
+\BOOKMARK [1][-]{section.0.3}{II.3 Stima delle esigenze informative}{chapter.Tool-II}
+\BOOKMARK [1][-]{section.0.4}{II.4 Gestione del social network}{chapter.Tool-II}
+\BOOKMARK [1][-]{section.0.5}{II.5 Ricerca e raccomandazione di contenuti}{chapter.Tool-II}
+\BOOKMARK [0][-]{chapter.Tool-III}{III Conclusioni e direzioni di sviluppo}{part*.3}
+\BOOKMARK [1][-]{section.0.1}{III.1 Riepilogo e contributo}{chapter.Tool-III}
+\BOOKMARK [1][-]{section.0.2}{III.2 Discussione e critica}{chapter.Tool-III}
+\BOOKMARK [1][-]{section.0.3}{III.3 Direzioni di sviluppo}{chapter.Tool-III}
+\BOOKMARK [-1][-]{part*.5}{P2P search and recommendations of scientific literature}{}
+\BOOKMARK [0][-]{chapter.1}{1 Introduction}{part*.5}
+\BOOKMARK [1][-]{section.1.1}{1.1 Peer-to-Peer computing model}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{1.2 Content location}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{1.3 Contribution}{chapter.1}
+\BOOKMARK [1][-]{section.1.4}{1.4 Thesis outline}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{2 Data model and mining techniques}{part*.5}
+\BOOKMARK [1][-]{section.2.1}{2.1 Data models for scholarly literature}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{2.2 Mining data from unstructured text document}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{2.3 Automatic information extraction}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{2.4 Information extraction from scientific literature in pdf}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{2.5 Prototype evaluation}{chapter.2}
+\BOOKMARK [0][-]{chapter.3}{3 Models and techniques for linked text collections analysis}{part*.5}
+\BOOKMARK [1][-]{section.3.1}{3.1 The Vector Space Model}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{3.2 Latent Semantic Indexing}{chapter.3}
+\BOOKMARK [1][-]{section.3.3}{3.3 Clustering}{chapter.3}
+\BOOKMARK [1][-]{section.3.4}{3.4 Link analysis}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{4 Distributed content location}{part*.5}
+\BOOKMARK [1][-]{section.4.1}{4.1 Problem definition}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{4.2 Distribution models}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{4.3 Semantic Overlay Networks}{chapter.4}
+\BOOKMARK [1][-]{section.4.4}{4.4 Gossip-based topology management}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{5 A proof-of-concepts prototype}{part*.5}
+\BOOKMARK [1][-]{section.5.1}{5.1 System architecture}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{5.2 Collecting data}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{5.3 Learning user's information needs}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{5.4 Social network management}{chapter.5}
+\BOOKMARK [1][-]{section.5.5}{5.5 Searching and recommending contents}{chapter.5}
+\BOOKMARK [1][-]{section.5.6}{5.6 Putting all together: a fully functioning prototype}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{6 Conclusions and future work}{part*.5}
+\BOOKMARK [1][-]{section.6.1}{6.1 Summary and contributions}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{6.2 Discussion and reflection}{chapter.6}
+\BOOKMARK [1][-]{section.6.3}{6.3 Future work}{chapter.6}
+\BOOKMARK [0][-]{appendix.A}{A Bibliography analysis}{part*.5}
+\BOOKMARK [0][-]{section*.81}{Bibliography}{part*.5}

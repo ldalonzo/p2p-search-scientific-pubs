@@ -1,0 +1,97 @@
+digraph citation_graph {
+graph [margin=0, ratio=1.3, sep=.05, overlap=false, splines=true, ranksep=0.2];
+node [colorscheme=ylgnbu9, fontname="Times-Roman-Oblique", style=filled, fillcolor="#def5ff", fontsize=40];
+edge [arrowhead=normal, arrowsize=3];
+
+/* Nodes */
+1 [label="[AHPE09]\nDelft University\nof Te...\n0.0157", fillcolor=1];  // node AHPE09
+2 [label="[ATS04]\nSurvey of\nresearch\ntow... \n0.0272", fillcolor=4];  // node ATS04
+3 [label="[BDJ99]\nMatrices,\nVector Space...\n0.0201", fillcolor=3];  // node BDJ99
+4 [label="[BGS05]\nInside PageRank\n0.0372", fillcolor=5];  // node BGS05
+5 [label="[BLG98]\nCiteSeer:\nAn Autonomou...\n0.0157", fillcolor=1];  // node BLG98
+6 [label="[BPZ01]\nScraping\nthe ACM Digit...\n0.0157", fillcolor=1];  // node BPZ01
+7 [label="[Ber00]\nAutomatic\nExtraction\no... \n0.0157", fillcolor=1];  // node Ber00
+8 [label="[CAPMN03]\nPlanetP:\nUsing Gossipi...\n0.0157", fillcolor=1];  // node CAPMN03
+9 [label="[CFK07]\nAssociative\nsearch in\n... \n0.0246", fillcolor=4];  // node CFK07
+10 [label="[CGK08]\nParsCit:\nAn open-sourc...\n0.0157", fillcolor=1];  // node CGK08
+11 [label="[CRB+03]\nMaking Gnutella-like\nP... \n0.0194", fillcolor=2];  // node CRB+03
+12 [label="[CYKH08]\nBibPro: A\nCitation\nPar... \n0.0157", fillcolor=1];  // node CYKH08
+13 [label="[Cho03]\nIncentives\nBuild Robus...\n0.0157", fillcolor=1];  // node Cho03
+14 [label="[DTS+07]\nReference\nmetadata\next... \n0.0228", fillcolor=3];  // node DTS+07
+15 [label="[Die02]\nMachine Learning\nfor S...\n0.0157", fillcolor=1];  // node Die02
+16 [label="[EGKM04]\nFrom Epidemics\nto Dist...\n0.0346", fillcolor=5];  // node EGKM04
+17 [label="[GBL98]\nCiteSeer:\nAn Automatic...\n0.0157", fillcolor=1];  // node GBL98
+18 [label="[Gar67]\nThree Drexel\nInformati...\n0.0157", fillcolor=1];  // node Gar67
+19 [label="[HGM+03]\nAutomatic\nDocument\nMet... \n0.0157", fillcolor=1];  // node HGM+03
+20 [label="[Het08]\nA Simple\nMethod for\nCi... \n0.0157", fillcolor=1];  // node Het08
+21 [label="[JB06]\nT-Man: Gossip-based\nOv... \n0.0157", fillcolor=1];  // node JB06
+22 [label="[JKvS03]\nNewscast\nComputing\n0.0223", fillcolor=3];  // node JKvS03
+23 [label="[KKKB07]\nBibliographic\nMeta-Dat...\n0.0183", fillcolor=2];  // node KKKB07
+24 [label="[LBG99]\nIndexing\nand Retrieval...\n0.0404", fillcolor=6];  // node LBG99
+25 [label="[LCB+06]\nCiteSeer\n0.0581", fillcolor=7];  // node LCB+06
+26 [label="[LCC+02]\nSearch and\nReplication...\n0.0346", fillcolor=5];  // node LCC+02
+27 [label="[LGB99]\nDigital Libraries\nand ... \n0.0228", fillcolor=3];  // node LGB99
+28 [label="[LLH+03]\nOn the Feasibility\nof ... \n0.0313", fillcolor=5];  // node LLH+03
+29 [label="[LM04]\nDeeper Inside\nPageRank\n0.0157", fillcolor=1];  // node LM04
+30 [label="[LM05]\nA Survey\nof Eigenvecto...\n0.0157", fillcolor=1];  // node LM05
+31 [label="[LM06]\nA Reordering\nfor the P...\n0.0201", fillcolor=3];  // node LM06
+32 [label="[LMP01]\nConditional\nRandom Fie...\n0.0334", fillcolor=5];  // node LMP01
+33 [label="[LSH01]\nThe Open\nArchives\nInit... \n0.0157", fillcolor=1];  // node LSH01
+34 [label="[PGW+08]\nTribler:\nA social-base...\n0.0157", fillcolor=1];  // node PGW+08
+35 [label="[PM04]\nAccurate\nInformation\nE... \n0.0228", fillcolor=3];  // node PM04
+36 [label="[RV03]\nEfficient\nPeer-to-Peer...\n0.0535", fillcolor=7];  // node RV03
+37 [label="[SMR99]\nLearning\nHidden Markov...\n0.0228", fillcolor=3];  // node SMR99
+38 [label="[SMZ03]\nEfficient\nContent Loca...\n0.0310", fillcolor=5];  // node SMZ03
+39 [label="[TXD03]\nPeer-to-Peer\nInformati...\n0.0251", fillcolor=4];  // node TXD03
+40 [label="[VKMvS04]\nExploiting\nsemantic\npr... \n0.0220", fillcolor=3];  // node VKMvS04
+41 [label="[VvS05]\nEpidemic-style\nManagem...\n0.0223", fillcolor=3];  // node VvS05
+42 [label="[VvSI07]\nProactive\ngossip-based...\n0.0157", fillcolor=1];  // node VvSI07
+43 [label="[YDRC06]\nPerformance\nof Full Te...\n0.0157", fillcolor=1];  // node YDRC06
+44 [label="[ZMSM05]\nAn Evaluation\nand Comp...\n0.0201", fillcolor=3];  // node ZMSM05
+
+/* Edges */
+9->2;
+41->2;
+30->3;
+30->4;
+31->4;
+9->9;
+40->9;
+40->11;
+12->14;
+20->14;
+22->16;
+34->22;
+20->23;
+25->24;
+12->25;
+17->25;
+25->25;
+9->26;
+11->26;
+40->26;
+43->26;
+19->27;
+20->27;
+11->28;
+43->28;
+44->28;
+30->31;
+15->32;
+19->32;
+12->35;
+20->35;
+11->36;
+28->36;
+44->36;
+19->37;
+20->37;
+9->38;
+40->38;
+41->38;
+40->39;
+44->39;
+41->40;
+34->41;
+43->44;
+}

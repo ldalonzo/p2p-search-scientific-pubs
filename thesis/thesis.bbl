@@ -1,0 +1,369 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CAPMN03}
+
+\bibitem[AHPE09]{AHP+09}
+Ali Abbas, David Hales, Johan Pouwelse, and Dick Epema.
+\newblock A gossip-based distributed social networking system.
+\newblock Technical Report PDS-2009-001, Delft University of Technology, 2009.
+
+\bibitem[ATS04]{ATS04}
+S.~Androutsellis-Theotokis and D.~Spinellis.
+\newblock {A Survey of Peer-to-Peer Content Distribution Technologies}.
+\newblock {\em ACM Computing Surveys}, 36(4):335--371, 2004.
+
+\bibitem[BDJ99]{berry1999mvs}
+M.W. Berry, Z.~Drmac, and E.R. Jessup.
+\newblock {Matrices, vector spaces, and information retrieval}.
+\newblock {\em SIAM Review}, 41(2):335--362, 1999.
+
+\bibitem[Ber00]{bergmark2000aer}
+D.~Bergmark.
+\newblock {Automatic extraction of reference linking information from online
+  documents}.
+\newblock Technical Report 2000-1821, Cornell University, Ithaca, NY, 2000.
+
+\bibitem[BGS05]{bianchini2005ip}
+M.~Bianchini, M.~Gori, and F.~Scarselli.
+\newblock {Inside pagerank}.
+\newblock {\em ACM Transactions on Internet Technology (TOIT)}, 5(1):92--128,
+  2005.
+
+\bibitem[BLG98]{bollacker1998caw}
+K.D. Bollacker, S.~Lawrence, and C.L. Giles.
+\newblock {CiteSeer: an autonous Web agent for automatic retrieval and
+  identification of interesting publications}.
+\newblock In {\em Proceedings of the second international conference on
+  Autonomous agents}, pages 116--123. ACM New York, USA, 1998.
+
+\bibitem[BLH01]{bernerslee2001psw}
+T.~Berners-Lee and J.~Hendler.
+\newblock {Publishing on the semantic web}.
+\newblock {\em Nature}, 410:1023--1023, April 2001.
+
+\bibitem[BP98]{BP98}
+Sergey Brin and Lawrence Page.
+\newblock {The anatomy of a large-scale hypertextual Web search engine}.
+\newblock {\em Computer Networks and ISDN Systems}, 30(1-7):107--117, 1998.
+
+\bibitem[BPZ01]{bergmark2001sad}
+Donna Bergmark, Paradee Phempoonpanich, and Shumin Zhao.
+\newblock Scraping the acm digital library.
+\newblock {\em SIGIR Forum}, 35(2):1--7, 2001.
+
+\bibitem[CAPMN03]{CPM+03}
+F.M. Cuenca-Acuna, C.~Peery, R.P. Martin, and T.D. Nguyen.
+\newblock {PlanetP: Using Gossiping to Build Content Addressable Peer-to-Peer
+  Information Sharing Communities}.
+\newblock In {\em Proceedings of the IEEE International Symposium on High
+  Performance Distributed Computing (HPDC)}, 2003.
+
+\bibitem[CdSG{\etalchar{+}}07]{cortez2007}
+Eli Cortez, Altigran~S. da~Silva, Marcos~Andr\'{e} Gon\c{c}alves, Filipe
+  Mesquita, and Edleno~S. de~Moura.
+\newblock Flux-cim: flexible unsupervised extraction of citation metadata.
+\newblock In {\em JCDL '07: Proceedings of the {7$^{th}$} ACM/IEEE-CS joint
+  conference on Digital libraries}, pages 215--224, New York, USA, 2007.
+
+\bibitem[CFK07]{CFK07}
+E.~Cohen, A.~Fiat, and H.~Kaplan.
+\newblock {Associative search in peer to peer networks: Harnessing latent
+  semantics}.
+\newblock {\em Computer Networks}, 51(8):1861--1881, 2007.
+
+\bibitem[CGK08]{councill:pos}
+I.G. Councill, C.L. Giles, and M.Y. Kan.
+\newblock {ParsCit: An open-source CRF reference string parsing package}.
+\newblock In {\em International Conference on Language Resources and Evaluation
+  (LREC)}. Marrakech, Morocco, 2008.
+
+\bibitem[Cha03]{chakrabarti2003mwd}
+S.~Chakrabarti.
+\newblock {\em {Mining the Web: Discovering knowledge from hypertext data}}.
+\newblock Morgan Kaufmann, 2003.
+
+\bibitem[CLMR01]{claivaz2001fds}
+J.B. Claivaz, J.Y. Le~Meur, and N.~Robinson.
+\newblock {From Fulltext Documents to Structured Citations: CERN's Automated
+  Solution}.
+\newblock {\em HEP Libraries Webzine}, 5(2), 2001.
+
+\bibitem[Coh03]{Coh03}
+B.~Cohen.
+\newblock {Incentives build robustness in BitTorrent}.
+\newblock In {\em Workshop on Economics of Peer-to-Peer Systems}, volume~6,
+  2003.
+
+\bibitem[CRB{\etalchar{+}}03]{CRB+03}
+Yatin Chawathe, Sylvia Ratnasamy, Lee Breslau, Nick Lanham, and Scott Shenker.
+\newblock Making gnutella-like p2p systems scalable.
+\newblock In {\em SIGCOMM '03: Proceedings of the 2003 conference on
+  Applications, technologies, architectures, and protocols for computer
+  communications}, pages 407--418, New York, NY, USA, 2003. ACM.
+
+\bibitem[CYKH08]{chen2008bcp}
+C.C. Chen, K.H. Yang, H.Y. Kao, and J.M. Ho.
+\newblock {BibPro: A Citation Parser Based on Sequence Alignment Techniques}.
+\newblock In {\em {22$^{nd}$} International Conference on Advanced Information
+  Networking and Applications Workshops (AINAW)}, pages 1175--1180, 2008.
+
+\bibitem[DDF{\etalchar{+}}90]{deerwester1990ils}
+S.~Deerwester, S.T. Dumais, G.W. Furnas, T.K. Landauer, and R.~Harshman.
+\newblock {Indexing by latent semantic analysis}.
+\newblock {\em Journal of the American Society for Information Science},
+  41(6):391--407, 1990.
+
+\bibitem[Die02]{dietterich2002mls}
+T.G. Dietterich.
+\newblock {Machine Learning for Sequential Data: A Review}.
+\newblock {\em Lecture Notes in Computer Science}, pages 15--30, 2002.
+
+\bibitem[DTS{\etalchar{+}}07]{day2007}
+Min-Yuh Day, Richard Tzong-Han Tsai, Cheng-Lung Sung, Chiu-Chen Hsieh,
+  Cheng-Wei Lee, Shih-Hung Wu, Kun-Pin Wu, Chorng-Shyong Ong, and Wen-Lian Hsu.
+\newblock {Reference metadata extraction using a hierarchical knowledge
+  representation framework}.
+\newblock {\em Decision Support Systems}, 43(1):152--167, 2007.
+
+\bibitem[EGKM04]{EUG04}
+P.T. Eugster, R.~Guerraoui, A.M. Kermarrec, and L.~Massouli{\'e}.
+\newblock {From epidemics to distributed computing}.
+\newblock {\em IEEE computer}, 37(5):60--67, 2004.
+
+\bibitem[Gar67]{garner1967}
+R.~Garner.
+\newblock {\em {A computer oriented, graph theoretic analysis of Citation Index
+  structures}}.
+\newblock PhD thesis, Drexel University Press, Philadelphia, 1967.
+
+\bibitem[Gar79]{garfield1979}
+E.~Garfield.
+\newblock {\em {Citation Indexing - Its Theory and Application in Science,
+  Technology and Humanities}}.
+\newblock John Wiley and Sons, 1979.
+
+\bibitem[GBL98]{giles1998cac}
+C.L. Giles, K.~Bollacker, and S.~Lawrence.
+\newblock {CiteSeer: An Automatic Citation Indexing System}.
+\newblock In {\em Digital Libraries}, volume~98, pages 89--98, 1998.
+
+\bibitem[Het08]{hetzner2008smc}
+Erik Hetzner.
+\newblock A simple method for citation metadata extraction using hidden markov
+  models.
+\newblock In {\em JCDL '08: Proceedings of the 8th ACM/IEEE-CS joint conference
+  on Digital libraries}, pages 280--284, New York, NY, USA, 2008. ACM.
+
+\bibitem[HGM{\etalchar{+}}03]{han2003adm}
+H.~Han, C.L. Giles, E.~Manavoglu, H.~Zha, Z.~Zhang, and E.A. Fox.
+\newblock {Automatic document metadata extraction using support vector
+  machines}.
+\newblock In {\em Joint Conference on Digital Libraries}, pages 37--48, 2003.
+
+\bibitem[HPK08]{HPK08}
+Duncan Hull, Steve~R. Pettifer, and Douglas~B. Kell.
+\newblock Defrosting the digital library: Bibliographic tools for the next
+  generation web.
+\newblock {\em PLoS Computational Biology}, 4(10), October 2008.
+
+\bibitem[HR08]{HR08}
+Victor Henning and Jan Reichelt.
+\newblock {Mendeley - A Last.fm For Research?}
+\newblock In {\em Proceedings of the $4^{th}$ IEEE International Conference on
+  e-Science}, pages 327--328, Washington, DC, USA, December 2008. IEEE Computer
+  Society.
+
+\bibitem[JB06]{JB04}
+M.~Jelasity and O.~Babaoglu.
+\newblock {T-Man: Gossip-based overlay topology management}.
+\newblock {\em Lecture Notes in Computer Science}, 3910:1, 2006.
+
+\bibitem[JKvS03]{JKvS03}
+M.~Jelasity, W.~Kowalczyk, and M.~van Steen.
+\newblock {Newscast computing}.
+\newblock Technical Report IR-CS-006, Vrije Universiteit Amsterdam, Department
+  of Computer Science, November 2003.
+
+\bibitem[KKKB07]{kramer2007}
+M.~Kramer, H.~Kaprykowsky, D.~Keysers, and T.~Breuel.
+\newblock {Bibliographic Meta-Data Extraction Using Probabilistic Finite State
+  Transducers}.
+\newblock {\em Document Analysis and Recognition, 2007. ICDAR 2007. Ninth
+  International Conference on}, 2:609--613, September 2007.
+
+\bibitem[KM00]{kudoh2000usv}
+Taku Kudoh and Yuji Matsumoto.
+\newblock {Use of Support Vector Learning for Chunk Identification}.
+\newblock In {\em Proceedings of CoNLL-2000 and LLL-2000}, pages 142--144.
+  Lisbon, Portugal, 2000.
+
+\bibitem[LBG99]{lawrence1999iar}
+S.~Lawrence, K.~Bollacker, and C.L. Giles.
+\newblock {Indexing and retrieval of scientific literature}.
+\newblock In {\em Proceedings of the eighth international conference on
+  Information and knowledge management}, pages 139--146. ACM Press New York,
+  NY, USA, 1999.
+
+\bibitem[LCB{\etalchar{+}}06]{li2006}
+Huajing Li, Isaac~G. Councill, Levent Bolelli, Ding Zhou, Yang Song, Wang-Chien
+  Lee, Anand Sivasubramaniam, and C.~Lee Giles.
+\newblock Citeseer$^{\chi}$: a scalable autonomous scientific digital library.
+\newblock In {\em Infoscale}, page~18, 2006.
+
+\bibitem[LCC{\etalchar{+}}02]{LCC+02}
+Qin Lv, Pei Cao, Edith Cohen, Kai Li, and Scott Shenker.
+\newblock Search and replication in unstructured peer-to-peer networks.
+\newblock In {\em ICS '02: Proceedings of the {$16^{th}$} international
+  conference on Supercomputing}, pages 84--95, New York, NY, USA, 2002. ACM.
+
+\bibitem[LGB99]{lawrence1999dla}
+Steve Lawrence, C.~Lee Giles, and Kurt Bollacker.
+\newblock Digital libraries and autonomous citation indexing.
+\newblock {\em Computer}, 32(6):67--71, 1999.
+
+\bibitem[LLH{\etalchar{+}}03]{LLH+03}
+J.~Li, B.T. Loo, J.M. Hellerstein, M.F. Kaashoek, D.R. Karger, and R.~Morris.
+\newblock {On the Feasibility of Peer-to-Peer Web Indexing and Search}.
+\newblock {\em Lecture Notes in Computer Science}, pages 207--215, 2003.
+
+\bibitem[LM04]{langville2004dip}
+A.N. Langville and C.D. Meyer.
+\newblock {Deeper inside pagerank}.
+\newblock {\em Internet Mathematics}, 1(3):335--380, 2004.
+
+\bibitem[LM05]{langville2005sem}
+A.N. Langville and C.D. Meyer.
+\newblock {A survey of eigenvector methods for web information retrieval}.
+\newblock {\em SIAM Review}, 47(1):135--161, 2005.
+
+\bibitem[LM06]{langville2006rpp}
+A.N. Langville and C.D. Meyer.
+\newblock {A reordering for the PageRank problem}.
+\newblock {\em SIAM Journal on Scientific Computing}, 27(6):2112--2120, 2006.
+
+\bibitem[LMP01]{lafferty2001crf}
+J.~Lafferty, A.~McCallum, and F.~Pereira.
+\newblock {Conditional Random Fields: Probabilistic Models for Segmenting and
+  Labeling Sequence Data}.
+\newblock In {\em {10$^{th}$} conference on Machine Learning International
+  Workshop}, pages 282--289, 2001.
+
+\bibitem[LVdS01]{LSH01}
+Carl Lagoze and Herbert Van~de Sompel.
+\newblock The open archives initiative: building a low-barrier interoperability
+  framework.
+\newblock In {\em JCDL '01: Proceedings of the 1st ACM/IEEE-CS joint conference
+  on Digital libraries}, pages 54--62, New York, NY, USA, 2001. ACM.
+
+\bibitem[MH08]{MH08}
+A.~Marcozzi and D.~Hales.
+\newblock {Emergent social rationality in a peer-to-peer system}.
+\newblock {\em Advances in Complex Systems (ACS)}, 11(4):581--595, 2008.
+
+\bibitem[MRS08]{manning2008iir}
+C.D. Manning, P.~Raghavan, and H.~Sch{\"u}tze.
+\newblock {\em {Introduction to Information Retrieval}}.
+\newblock Cambridge University Press, 2008.
+
+\bibitem[PBMW98]{page98}
+Lawrence Page, Sergey Brin, Rajeev Motwani, and Terry Winograd.
+\newblock The pagerank citation ranking: Bringing order to the web.
+\newblock Technical report, Stanford Digital Library Technologies Project,
+  1998.
+
+\bibitem[PGW{\etalchar{+}}08]{PGW+08}
+JA~Pouwelse, P.~Garbacki, J.~Wang, A.~Bakker, J.~Yang, A.~Iosup, DHJ Epema,
+  M.~Reinders, MR~Van~Steen, and HJ~Sips.
+\newblock {Tribler: a social-based peer-to-peer system}.
+\newblock {\em Concurrency and Computation: Practice and Experience},
+  20(2):127--138, 2008.
+
+\bibitem[PM04]{peng2004aie}
+F.~Peng and A.~McCallum.
+\newblock {Accurate information extraction from research papers using
+  conditional random fields}.
+\newblock In {\em Proceedings of Human Language Technology Conference and North
+  American Chapter of the Association for Computational Linguistics
+  (HLT-NAACL)}, pages 329--336, 2004.
+
+\bibitem[Por97]{POR97}
+M.~F. Porter.
+\newblock An algorithm for suffix stripping.
+\newblock {\em Readings in information retrieval}, pages 313--316, 1997.
+
+\bibitem[PYM{\etalchar{+}}08]{PYM+08}
+J.A. Pouwelse, J.~Yang, M.~Meulpolder, D.H.J. Epema, and H.J. Sips.
+\newblock Buddycast: an operational peer-to-peer epidemic protocol stack.
+\newblock In {\em Proc. of the {$14^{th}$} Annual Conf. of the Advanced School
+  for Computing and Imaging}, pages 200--205. ASCI, 2008.
+
+\bibitem[RM06]{RM06}
+J.~Risson and T.~Moors.
+\newblock {Survey of research towards robust peer-to-peer networks: Search
+  methods}.
+\newblock {\em Computer Networks}, 50(17):3485--3521, 2006.
+
+\bibitem[RV03]{RV03}
+P.~Reynolds and A.~Vahdat.
+\newblock {Efficient Peer-to-Peer Keyword Searching}.
+\newblock {\em Lecture Notes in Computer Science}, pages 21--40, 2003.
+
+\bibitem[SMR99]{seymore1999lhm}
+K.~Seymore, A.~McCallum, and R.~Rosenfeld.
+\newblock {Learning hidden Markov model structure for information extraction}.
+\newblock In {\em AAAI-99 Workshop on Machine Learning for Information
+  Extraction}, pages 37--42, 1999.
+
+\bibitem[SMZ03]{SMZ03}
+K.~Sripanidkulchai, B.~Maggs, and H.~Zhang.
+\newblock Efficient content location using interest-based locality in
+  peer-to-peer systems.
+\newblock In {\em {$22^{nd}$} Annual Joint Conference of the IEEE Computer and
+  Communications Societies}, volume~3, pages 2166--2176, April 2003.
+
+\bibitem[TXD03]{TXD03}
+C.~Tang, Z.~Xu, and S.~Dwarkadas.
+\newblock {Peer-to-peer information retrieval using self-organizing semantic
+  overlay networks}.
+\newblock In {\em Proceedings of the 2003 conference on Applications,
+  technologies, architectures, and protocols for computer communications},
+  pages 175--186. ACM New York, NY, USA, 2003.
+
+\bibitem[VGVS05]{VGvS05}
+S.~Voulgaris, D.~Gavidia, and M.~Van~Steen.
+\newblock {Cyclon: Inexpensive membership management for unstructured p2p
+  overlays}.
+\newblock {\em Journal of Network and Systems Management}, 13(2):197--217,
+  2005.
+
+\bibitem[VKMvS04]{VKM+04}
+Spyros Voulgaris, Anne-Marie Kermarrec, Laurent Massouli{\'e}, and Maarten van
+  Steen.
+\newblock Exploiting semantic proximity in peer-to-peer content searching.
+\newblock In {\em {$10^{th}$} IEEE International Workshop on Future Trends of
+  Distributed Computing Systems}, pages 238--243, 2004.
+
+\bibitem[VvS05]{VS05}
+S.~Voulgaris and M.~van Steen.
+\newblock {Epidemic-Style Management of Semantic Overlays for Content-Based
+  Searching}.
+\newblock {\em Lecture Notes in Computer Science}, 3648:1143, 2005.
+
+\bibitem[VvSI07]{VSI06}
+S.~Voulgaris, M.~van Steen, and K.~Iwanicki.
+\newblock {Proactive gossip-based management of semantic overlay networks}.
+\newblock {\em Concurrency and Computation}, 19(17):2299, 2007.
+
+\bibitem[YDRC06]{YDRC06}
+Y.~Yang, R.~Dunlap, M.~Rexroad, and B.F. Cooper.
+\newblock {Performance of full text search in structured and unstructured
+  peer-to-peer systems}.
+\newblock In {\em IEEE INFOCOM}, pages 2658--2669. IEEE Press, 2006.
+
+\bibitem[ZMSM05]{ZMSM05}
+M.~Zhong, J.~Moore, K.~Shen, and A.L. Murphy.
+\newblock {An evaluation and comparison of current peer-to-peer full-text
+  keyword search techniques}.
+\newblock In {\em Proceedings of the {$8^{th}$} International Workshop on the
+  Web \& Databases (WebDB2005), ACM SIGMOD/PODS 2005 Conference}, 2005.
+
+\end{thebibliography}
